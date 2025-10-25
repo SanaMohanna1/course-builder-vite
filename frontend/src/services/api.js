@@ -1,43 +1,50 @@
-// Mock API service for Course Builder
-// This simulates all microservice interactions
+// API service for Course Builder
+// Connects to Railway backend API
 
-// Helper function to simulate API delay
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+// Backend API base URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://course-builder-backend-production.up.railway.app'
 
-// Mock API responses
-const mockResponses = {
-  courses: () => import('../mock/courses.json').then(m => m.default),
-  lessons: () => import('../mock/lessons.json').then(m => m.default),
-  users: () => import('../mock/users.json').then(m => m.default),
-  learningPaths: () => import('../mock/learning-paths.json').then(m => m.default),
-  userProgress: () => import('../mock/user-progress.json').then(m => m.default),
-  achievements: () => import('../mock/achievements.json').then(m => m.default),
-  skillsEngine: () => import('../mock/integrations/skills-engine.json').then(m => m.default),
-  contentStudio: () => import('../mock/integrations/content-studio.json').then(m => m.default),
-  assessmentReport: () => import('../mock/integrations/assessment-report.json').then(m => m.default),
+// Helper function to make API requests
+const apiRequest = async (endpoint, options = {}) => {
+  const url = `${API_BASE_URL}${endpoint}`
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    },
+    ...options,
+  }
+
+  try {
+    const response = await fetch(url, config)
+    const data = await response.json()
+    
+    if (!response.ok) {
+      throw new Error(data.message || `HTTP error! status: ${response.status}`)
+    }
+    
+    return data
+  } catch (error) {
+    console.error('API request failed:', error)
+    throw error
+  }
 }
 
 // Course API functions
 export const courseAPI = {
   // Get all courses
   async getCourses() {
-    await delay(300) // Simulate network delay
-    const data = await mockResponses.courses()
-    return {
-      success: true,
-      data: data.courses
-    }
+    return await apiRequest('/api/courses')
   },
 
   // Get single course by ID
   async getCourse(id) {
-    await delay(200)
-    const data = await mockResponses.courses()
-    const course = data.courses.find(c => c.id === id)
-    return {
-      success: !!course,
-      data: course || null
-    }
+    return await apiRequest(`/api/courses/${id}`)
+  },
+
+  // Get lessons for a course
+  async getCourseLessons(id) {
+    return await apiRequest(`/api/courses/${id}/lessons`)
   },
 
   // Create new course
@@ -135,44 +142,28 @@ export const assessmentAPI = {
 export const userAPI = {
   // Register learner for course
   async registerLearner(courseId, learnerId) {
-    await delay(300)
-    return {
-      success: true,
-      data: {
-        enrollmentId: `enrollment_${Date.now()}`,
-        learnerId,
-        courseId,
-        enrolledAt: new Date().toISOString(),
-        status: 'active'
-      }
-    }
+    return await apiRequest(`/api/courses/${courseId}/enroll`, {
+      method: 'POST',
+      body: JSON.stringify({ learnerId })
+    })
   },
 
   // Submit feedback
   async submitFeedback(courseId, learnerId, rating, comments) {
-    await delay(250)
-    return {
-      success: true,
-      data: {
-        feedbackId: `feedback_${Date.now()}`,
-        learnerId,
-        courseId,
-        rating,
-        comments,
-        submittedAt: new Date().toISOString(),
-        status: 'submitted'
-      }
-    }
+    return await apiRequest(`/api/courses/${courseId}/feedback`, {
+      method: 'POST',
+      body: JSON.stringify({ learnerId, rating, comments })
+    })
   },
 
   // Get user progress
   async getUserProgress(learnerId) {
-    await delay(200)
-    const data = await mockResponses.userProgress()
-    return {
-      success: true,
-      data: data
-    }
+    return await apiRequest(`/api/user/${learnerId}/progress`)
+  },
+
+  // Get user achievements
+  async getUserAchievements(learnerId) {
+    return await apiRequest(`/api/user/${learnerId}/achievements`)
   },
 
   // Update lesson progress
@@ -195,12 +186,7 @@ export const userAPI = {
 export const learningPathsAPI = {
   // Get all learning paths
   async getLearningPaths() {
-    await delay(300)
-    const data = await mockResponses.learningPaths()
-    return {
-      success: true,
-      data: data.learningPaths
-    }
+    return await apiRequest('/api/learning-paths')
   },
 
   // Get learning path by ID
