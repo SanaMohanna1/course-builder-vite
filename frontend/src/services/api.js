@@ -2,7 +2,7 @@
 // Connects to Railway backend API
 
 // Backend API base URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://course-builder-backend-production.up.railway.app'
+export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
 // Helper function to make API requests
 const apiRequest = async (endpoint, options = {}) => {
