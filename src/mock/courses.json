@@ -1,0 +1,653 @@
+{
+  "courses": [
+    {
+      "id": "course_001",
+      "title": "React Development Fundamentals",
+      "description": "Master React from the ground up! Learn modern React development with hooks, state management, and best practices. Build real-world applications and understand the React ecosystem.",
+      "trainer": {
+        "id": "trainer_001",
+        "name": "Sarah Chen",
+        "email": "sarah.chen@techacademy.com",
+        "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+        "bio": "Senior Frontend Engineer at Meta, React expert with 8+ years experience",
+        "rating": 4.9,
+        "students": 12500
+      },
+      "skills": ["React", "JavaScript", "JSX", "Hooks", "State Management", "Component Design", "React Router", "Context API"],
+      "status": "published",
+      "version": "2.1.0",
+      "createdAt": "2024-01-15T10:00:00Z",
+      "publishedAt": "2024-01-20T14:30:00Z",
+      "updatedAt": "2024-02-10T09:15:00Z",
+      "courseType": "marketplace",
+      "metadata": {
+        "difficulty": "intermediate",
+        "duration": "6 weeks",
+        "effort": "8-10 hours/week",
+        "prerequisites": ["JavaScript", "HTML", "CSS", "ES6"],
+        "tags": ["frontend", "react", "javascript", "web-development"],
+        "language": "English",
+        "certificate": true,
+        "lifetimeAccess": true
+      },
+      "feedback": {
+        "averageRating": 4.8,
+        "totalRatings": 2847,
+        "reviews": [
+          {
+            "id": "review_001",
+            "learnerName": "Alex Johnson",
+            "rating": 5,
+            "comment": "Amazing course! Sarah explains complex concepts in a simple way. The projects are practical and build real skills.",
+            "date": "2024-02-05T10:30:00Z"
+          }
+        ]
+      },
+      "enrollment": {
+        "totalEnrolled": 12500,
+        "activeLearners": 3200,
+        "completionRate": 78
+      },
+      "pricing": {
+        "currency": "USD",
+        "amount": 89.99,
+        "originalPrice": 149.99,
+        "discount": 40
+      },
+      "structure": {
+        "topics": [
+          {
+            "id": "topic_001",
+            "title": "React Fundamentals",
+            "order": 1,
+            "modules": ["module_001", "module_002"],
+            "duration": "2 weeks"
+          },
+          {
+            "id": "topic_002",
+            "title": "Advanced React Patterns",
+            "order": 2,
+            "modules": ["module_003", "module_004"],
+            "duration": "2 weeks"
+          },
+          {
+            "id": "topic_003",
+            "title": "State Management & Data Flow",
+            "order": 3,
+            "modules": ["module_005", "module_006"],
+            "duration": "2 weeks"
+          }
+        ],
+        "modules": [
+          {
+            "id": "module_001",
+            "title": "Getting Started with React",
+            "order": 1,
+            "topicId": "topic_001",
+            "lessons": ["lesson_001", "lesson_002", "lesson_003"],
+            "duration": "4 hours"
+          },
+          {
+            "id": "module_002",
+            "title": "Components and JSX",
+            "order": 2,
+            "topicId": "topic_001",
+            "lessons": ["lesson_004", "lesson_005", "lesson_006"],
+            "duration": "5 hours"
+          },
+          {
+            "id": "module_003",
+            "title": "React Hooks Deep Dive",
+            "order": 1,
+            "topicId": "topic_002",
+            "lessons": ["lesson_007", "lesson_008", "lesson_009"],
+            "duration": "6 hours"
+          },
+          {
+            "id": "module_004",
+            "title": "Advanced Component Patterns",
+            "order": 2,
+            "topicId": "topic_002",
+            "lessons": ["lesson_010", "lesson_011"],
+            "duration": "4 hours"
+          },
+          {
+            "id": "module_005",
+            "title": "Context API and State Management",
+            "order": 1,
+            "topicId": "topic_003",
+            "lessons": ["lesson_012", "lesson_013"],
+            "duration": "5 hours"
+          },
+          {
+            "id": "module_006",
+            "title": "Redux Fundamentals",
+            "order": 2,
+            "topicId": "topic_003",
+            "lessons": ["lesson_014", "lesson_015", "lesson_016"],
+            "duration": "7 hours"
+          }
+        ],
+        "lessons": [
+          {
+            "id": "lesson_001",
+            "title": "What is React and Why Use It?",
+            "order": 1,
+            "moduleId": "module_001",
+            "duration": "45 minutes",
+            "type": "video",
+            "resources": ["slides", "code-examples", "cheat-sheet"]
+          },
+          {
+            "id": "lesson_002",
+            "title": "Setting Up Your Development Environment",
+            "order": 2,
+            "moduleId": "module_001",
+            "duration": "60 minutes",
+            "type": "hands-on",
+            "resources": ["setup-guide", "troubleshooting"]
+          },
+          {
+            "id": "lesson_003",
+            "title": "Your First React Component",
+            "order": 3,
+            "moduleId": "module_001",
+            "duration": "75 minutes",
+            "type": "coding",
+            "resources": ["starter-code", "solution", "exercises"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "course_002",
+      "title": "JavaScript Mastery: From Zero to Hero",
+      "description": "Complete JavaScript course covering ES6+, async programming, modern development patterns, and advanced concepts. Perfect for beginners and intermediate developers.",
+      "trainer": {
+        "id": "trainer_002",
+        "name": "Marcus Rodriguez",
+        "email": "marcus.rodriguez@codeacademy.com",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+        "bio": "JavaScript Architect at Google, 10+ years building scalable web applications",
+        "rating": 4.9,
+        "students": 18750
+      },
+      "skills": ["JavaScript", "ES6+", "Async Programming", "DOM Manipulation", "Promises", "Async/Await", "Modules", "Closures"],
+      "status": "published",
+      "version": "3.0.0",
+      "createdAt": "2024-01-10T09:00:00Z",
+      "publishedAt": "2024-01-15T11:00:00Z",
+      "updatedAt": "2024-02-08T14:20:00Z",
+      "courseType": "marketplace",
+      "metadata": {
+        "difficulty": "beginner",
+        "duration": "8 weeks",
+        "effort": "6-8 hours/week",
+        "prerequisites": ["HTML", "CSS"],
+        "tags": ["javascript", "programming", "web-development", "fundamentals"],
+        "language": "English",
+        "certificate": true,
+        "lifetimeAccess": true
+      },
+      "feedback": {
+        "averageRating": 4.9,
+        "totalRatings": 3421,
+        "reviews": [
+          {
+            "id": "review_002",
+            "learnerName": "Emma Wilson",
+            "rating": 5,
+            "comment": "Best JavaScript course I've taken! Marcus makes complex topics easy to understand. Highly recommended!",
+            "date": "2024-02-03T16:45:00Z"
+          }
+        ]
+      },
+      "enrollment": {
+        "totalEnrolled": 18750,
+        "activeLearners": 4200,
+        "completionRate": 82
+      },
+      "pricing": {
+        "currency": "USD",
+        "amount": 79.99,
+        "originalPrice": 129.99,
+        "discount": 38
+      },
+      "structure": {
+        "topics": [
+          {
+            "id": "topic_004",
+            "title": "JavaScript Fundamentals",
+            "order": 1,
+            "modules": ["module_007", "module_008"],
+            "duration": "3 weeks"
+          },
+          {
+            "id": "topic_005",
+            "title": "Modern JavaScript (ES6+)",
+            "order": 2,
+            "modules": ["module_009", "module_010"],
+            "duration": "3 weeks"
+          },
+          {
+            "id": "topic_006",
+            "title": "Advanced Concepts",
+            "order": 3,
+            "modules": ["module_011", "module_012"],
+            "duration": "2 weeks"
+          }
+        ],
+        "modules": [
+          {
+            "id": "module_007",
+            "title": "Variables, Functions, and Scope",
+            "order": 1,
+            "topicId": "topic_004",
+            "lessons": ["lesson_017", "lesson_018", "lesson_019"],
+            "duration": "5 hours"
+          },
+          {
+            "id": "module_008",
+            "title": "Objects, Arrays, and Iteration",
+            "order": 2,
+            "topicId": "topic_004",
+            "lessons": ["lesson_020", "lesson_021", "lesson_022"],
+            "duration": "6 hours"
+          }
+        ],
+        "lessons": [
+          {
+            "id": "lesson_017",
+            "title": "JavaScript Basics and Syntax",
+            "order": 1,
+            "moduleId": "module_007",
+            "duration": "50 minutes",
+            "type": "video",
+            "resources": ["interactive-exercises", "quizzes"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "course_003",
+      "title": "Full-Stack Web Development with Node.js",
+      "description": "Build complete web applications from frontend to backend. Learn Node.js, Express, MongoDB, and modern deployment strategies.",
+      "trainer": {
+        "id": "trainer_003",
+        "name": "Dr. Priya Patel",
+        "email": "priya.patel@fullstackacademy.com",
+        "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+        "bio": "Full-Stack Architect, PhD in Computer Science, 12+ years building enterprise applications",
+        "rating": 4.8,
+        "students": 9800
+      },
+      "skills": ["Node.js", "Express", "MongoDB", "REST APIs", "Authentication", "Deployment", "Docker", "AWS"],
+      "status": "published",
+      "version": "1.5.0",
+      "createdAt": "2024-01-20T08:00:00Z",
+      "publishedAt": "2024-01-25T12:00:00Z",
+      "updatedAt": "2024-02-12T10:30:00Z",
+      "courseType": "marketplace",
+      "metadata": {
+        "difficulty": "advanced",
+        "duration": "10 weeks",
+        "effort": "12-15 hours/week",
+        "prerequisites": ["JavaScript", "HTML", "CSS", "Basic Git"],
+        "tags": ["fullstack", "nodejs", "backend", "database", "deployment"],
+        "language": "English",
+        "certificate": true,
+        "lifetimeAccess": true
+      },
+      "feedback": {
+        "averageRating": 4.7,
+        "totalRatings": 1256,
+        "reviews": [
+          {
+            "id": "review_003",
+            "learnerName": "David Kim",
+            "rating": 5,
+            "comment": "Comprehensive course that covers everything you need to become a full-stack developer. Dr. Patel is an excellent instructor!",
+            "date": "2024-02-01T09:15:00Z"
+          }
+        ]
+      },
+      "enrollment": {
+        "totalEnrolled": 9800,
+        "activeLearners": 2100,
+        "completionRate": 65
+      },
+      "pricing": {
+        "currency": "USD",
+        "amount": 149.99,
+        "originalPrice": 199.99,
+        "discount": 25
+      },
+      "structure": {
+        "topics": [
+          {
+            "id": "topic_007",
+            "title": "Backend Fundamentals",
+            "order": 1,
+            "modules": ["module_013", "module_014"],
+            "duration": "3 weeks"
+          },
+          {
+            "id": "topic_008",
+            "title": "Database Integration",
+            "order": 2,
+            "modules": ["module_015", "module_016"],
+            "duration": "3 weeks"
+          },
+          {
+            "id": "topic_009",
+            "title": "Deployment & DevOps",
+            "order": 3,
+            "modules": ["module_017", "module_018"],
+            "duration": "4 weeks"
+          }
+        ],
+        "modules": [
+          {
+            "id": "module_013",
+            "title": "Node.js and Express Basics",
+            "order": 1,
+            "topicId": "topic_007",
+            "lessons": ["lesson_023", "lesson_024", "lesson_025"],
+            "duration": "8 hours"
+          }
+        ],
+        "lessons": [
+          {
+            "id": "lesson_023",
+            "title": "Introduction to Node.js",
+            "order": 1,
+            "moduleId": "module_013",
+            "duration": "90 minutes",
+            "type": "video",
+            "resources": ["setup-guide", "examples", "documentation"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "course_004",
+      "title": "Python for Data Science and Machine Learning",
+      "description": "Master Python for data analysis, visualization, and machine learning. Learn pandas, numpy, scikit-learn, and build real ML models.",
+      "trainer": {
+        "id": "trainer_004",
+        "name": "Dr. James Liu",
+        "email": "james.liu@datascienceacademy.com",
+        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+        "bio": "Data Science Lead at Microsoft, PhD in Machine Learning, 15+ years in AI/ML",
+        "rating": 4.9,
+        "students": 15600
+      },
+      "skills": ["Python", "Pandas", "NumPy", "Matplotlib", "Scikit-learn", "Machine Learning", "Data Analysis", "Jupyter"],
+      "status": "published",
+      "version": "2.3.0",
+      "createdAt": "2024-01-05T07:00:00Z",
+      "publishedAt": "2024-01-10T09:00:00Z",
+      "updatedAt": "2024-02-15T11:45:00Z",
+      "courseType": "marketplace",
+      "metadata": {
+        "difficulty": "intermediate",
+        "duration": "12 weeks",
+        "effort": "10-12 hours/week",
+        "prerequisites": ["Basic Python", "Statistics", "Linear Algebra"],
+        "tags": ["python", "data-science", "machine-learning", "ai", "analytics"],
+        "language": "English",
+        "certificate": true,
+        "lifetimeAccess": true
+      },
+      "feedback": {
+        "averageRating": 4.8,
+        "totalRatings": 2156,
+        "reviews": [
+          {
+            "id": "review_004",
+            "learnerName": "Maria Garcia",
+            "rating": 5,
+            "comment": "Excellent course! Dr. Liu explains complex ML concepts clearly. The projects are challenging but very rewarding.",
+            "date": "2024-02-10T14:20:00Z"
+          }
+        ]
+      },
+      "enrollment": {
+        "totalEnrolled": 15600,
+        "activeLearners": 3800,
+        "completionRate": 72
+      },
+      "pricing": {
+        "currency": "USD",
+        "amount": 119.99,
+        "originalPrice": 179.99,
+        "discount": 33
+      },
+      "structure": {
+        "topics": [
+          {
+            "id": "topic_010",
+            "title": "Python for Data Analysis",
+            "order": 1,
+            "modules": ["module_019", "module_020"],
+            "duration": "4 weeks"
+          },
+          {
+            "id": "topic_011",
+            "title": "Machine Learning Fundamentals",
+            "order": 2,
+            "modules": ["module_021", "module_022"],
+            "duration": "4 weeks"
+          },
+          {
+            "id": "topic_012",
+            "title": "Advanced ML Techniques",
+            "order": 3,
+            "modules": ["module_023", "module_024"],
+            "duration": "4 weeks"
+          }
+        ],
+        "modules": [
+          {
+            "id": "module_019",
+            "title": "Data Manipulation with Pandas",
+            "order": 1,
+            "topicId": "topic_010",
+            "lessons": ["lesson_026", "lesson_027", "lesson_028"],
+            "duration": "10 hours"
+          }
+        ],
+        "lessons": [
+          {
+            "id": "lesson_026",
+            "title": "Introduction to Pandas",
+            "order": 1,
+            "moduleId": "module_019",
+            "duration": "120 minutes",
+            "type": "hands-on",
+            "resources": ["datasets", "notebooks", "exercises"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "course_005",
+      "title": "UI/UX Design Mastery",
+      "description": "Learn modern UI/UX design principles, user research, prototyping, and design systems. Create beautiful, user-centered digital experiences.",
+      "trainer": {
+        "id": "trainer_005",
+        "name": "Sophie Anderson",
+        "email": "sophie.anderson@designacademy.com",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+        "bio": "Senior UX Designer at Apple, 8+ years creating award-winning digital experiences",
+        "rating": 4.9,
+        "students": 11200
+      },
+      "skills": ["UI Design", "UX Research", "Figma", "Prototyping", "User Testing", "Design Systems", "Accessibility", "Wireframing"],
+      "status": "published",
+      "version": "1.8.0",
+      "createdAt": "2024-01-12T06:00:00Z",
+      "publishedAt": "2024-01-18T10:00:00Z",
+      "updatedAt": "2024-02-14T16:30:00Z",
+      "courseType": "marketplace",
+      "metadata": {
+        "difficulty": "beginner",
+        "duration": "8 weeks",
+        "effort": "8-10 hours/week",
+        "prerequisites": ["Basic Computer Skills"],
+        "tags": ["design", "ui", "ux", "figma", "prototyping", "user-research"],
+        "language": "English",
+        "certificate": true,
+        "lifetimeAccess": true
+      },
+      "feedback": {
+        "averageRating": 4.8,
+        "totalRatings": 1876,
+        "reviews": [
+          {
+            "id": "review_005",
+            "learnerName": "Alex Thompson",
+            "rating": 5,
+            "comment": "Sophie is an amazing instructor! This course transformed my understanding of design. Highly recommended!",
+            "date": "2024-02-08T12:10:00Z"
+          }
+        ]
+      },
+      "enrollment": {
+        "totalEnrolled": 11200,
+        "activeLearners": 2800,
+        "completionRate": 85
+      },
+      "pricing": {
+        "currency": "USD",
+        "amount": 99.99,
+        "originalPrice": 149.99,
+        "discount": 33
+      },
+      "structure": {
+        "topics": [
+          {
+            "id": "topic_013",
+            "title": "Design Fundamentals",
+            "order": 1,
+            "modules": ["module_025", "module_026"],
+            "duration": "2 weeks"
+          },
+          {
+            "id": "topic_014",
+            "title": "User Research & Testing",
+            "order": 2,
+            "modules": ["module_027", "module_028"],
+            "duration": "2 weeks"
+          },
+          {
+            "id": "topic_015",
+            "title": "Advanced Design Systems",
+            "order": 3,
+            "modules": ["module_029", "module_030"],
+            "duration": "4 weeks"
+          }
+        ],
+        "modules": [
+          {
+            "id": "module_025",
+            "title": "Principles of Good Design",
+            "order": 1,
+            "topicId": "topic_013",
+            "lessons": ["lesson_029", "lesson_030", "lesson_031"],
+            "duration": "6 hours"
+          }
+        ],
+        "lessons": [
+          {
+            "id": "lesson_029",
+            "title": "Introduction to UI/UX Design",
+            "order": 1,
+            "moduleId": "module_025",
+            "duration": "90 minutes",
+            "type": "video",
+            "resources": ["design-examples", "inspiration-gallery", "tools-guide"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "course_006",
+      "title": "Personalized React Learning Path",
+      "description": "Your personalized React learning journey based on your current skills and learning goals. This course adapts to your progress and provides targeted content.",
+      "trainer": {
+        "id": "ai_trainer_001",
+        "name": "AI Learning Assistant",
+        "email": "ai@coursebuilder.com",
+        "avatar": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=150&h=150&fit=crop&crop=face",
+        "bio": "AI-powered personalized learning system",
+        "rating": 4.8,
+        "students": 0
+      },
+      "skills": ["React", "JavaScript", "Personalized Learning", "Adaptive Content"],
+      "status": "published",
+      "version": "1.0.0",
+      "createdAt": "2024-02-01T00:00:00Z",
+      "publishedAt": "2024-02-01T00:00:00Z",
+      "updatedAt": "2024-02-15T12:00:00Z",
+      "courseType": "personalized",
+      "metadata": {
+        "difficulty": "adaptive",
+        "duration": "4-8 weeks",
+        "effort": "6-10 hours/week",
+        "prerequisites": ["JavaScript"],
+        "tags": ["personalized", "adaptive", "react", "ai-powered"],
+        "language": "English",
+        "certificate": true,
+        "lifetimeAccess": true
+      },
+      "feedback": {
+        "averageRating": 4.8,
+        "totalRatings": 0
+      },
+      "enrollment": {
+        "totalEnrolled": 1,
+        "activeLearners": 1,
+        "completionRate": 0
+      },
+      "pricing": {
+        "currency": "USD",
+        "amount": 0,
+        "originalPrice": 0,
+        "discount": 0
+      },
+      "structure": {
+        "topics": [
+          {
+            "id": "topic_personalized_001",
+            "title": "Adaptive React Fundamentals",
+            "order": 1,
+            "modules": ["module_personalized_001"],
+            "duration": "2-4 weeks"
+          }
+        ],
+        "modules": [
+          {
+            "id": "module_personalized_001",
+            "title": "Personalized Learning Module",
+            "order": 1,
+            "topicId": "topic_personalized_001",
+            "lessons": ["lesson_personalized_001", "lesson_personalized_002"],
+            "duration": "4-8 hours"
+          }
+        ],
+        "lessons": [
+          {
+            "id": "lesson_personalized_001",
+            "title": "Your React Learning Journey",
+            "order": 1,
+            "moduleId": "module_personalized_001",
+            "duration": "30 minutes",
+            "type": "adaptive",
+            "resources": ["personalized-content", "skill-assessment"]
+          }
+        ]
+      }
+    }
+  ]
+}

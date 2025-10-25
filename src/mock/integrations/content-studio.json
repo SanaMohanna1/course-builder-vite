@@ -1,0 +1,217 @@
+{
+  "generatedContent": {
+    "courseId": "course_001",
+    "requestId": "req_001",
+    "generatedAt": "2024-01-20T10:00:00Z",
+    "status": "completed",
+    "totalLessons": 16,
+    "estimatedDuration": "32 hours",
+    "lessons": [
+      {
+        "id": "generated_lesson_001",
+        "title": "Introduction to React Components",
+        "content": "In this comprehensive lesson, you'll learn the fundamentals of React components and how to create your first component. We'll cover the component lifecycle, props, and state management.",
+        "learningObjectives": [
+          "Understand what React components are",
+          "Create functional and class components",
+          "Pass data between components using props",
+          "Manage component state effectively"
+        ],
+        "exercises": [
+          {
+            "id": "exercise_001",
+            "type": "coding",
+            "title": "Create Your First Component",
+            "description": "Create a simple React component that displays a welcome message",
+            "difficulty": "beginner",
+            "estimatedTime": "15 minutes",
+            "starterCode": "// Create a Welcome component here\nfunction Welcome() {\n  // Your code here\n}",
+            "solution": "function Welcome({ name }) {\n  return <h1>Hello, {name}!</h1>;\n}",
+            "hints": [
+              "Use JSX syntax to return HTML-like elements",
+              "Remember to export your component",
+              "Use props to make your component reusable"
+            ],
+            "testCases": [
+              {
+                "input": "Welcome({ name: 'Sarah' })",
+                "expectedOutput": "<h1>Hello, Sarah!</h1>"
+              }
+            ]
+          },
+          {
+            "id": "exercise_002",
+            "type": "quiz",
+            "title": "Component Knowledge Check",
+            "description": "Test your understanding of React components",
+            "difficulty": "beginner",
+            "estimatedTime": "10 minutes",
+            "questions": [
+              {
+                "id": "q1",
+                "question": "What is the main purpose of React components?",
+                "options": [
+                  "To style web pages",
+                  "To create reusable UI pieces",
+                  "To handle server requests",
+                  "To manage databases"
+                ],
+                "correctAnswer": 1,
+                "explanation": "React components are reusable UI pieces that help organize your application into manageable parts."
+              }
+            ]
+          }
+        ],
+        "resources": [
+          {
+            "type": "video",
+            "title": "React Components Explained",
+            "duration": "12 minutes",
+            "url": "/videos/react-components-intro.mp4",
+            "thumbnail": "/thumbnails/react-components.jpg"
+          },
+          {
+            "type": "documentation",
+            "title": "React Component API Reference",
+            "url": "https://reactjs.org/docs/components-and-props.html"
+          },
+          {
+            "type": "cheat-sheet",
+            "title": "React Components Cheat Sheet",
+            "url": "/resources/react-components-cheatsheet.pdf"
+          }
+        ],
+        "duration": "45 minutes",
+        "difficulty": "beginner",
+        "prerequisites": ["JavaScript", "HTML", "CSS"]
+      },
+      {
+        "id": "generated_lesson_002",
+        "title": "Understanding React Hooks",
+        "content": "Dive deep into React Hooks, the modern way to use state and other React features in functional components. Learn useState, useEffect, and custom hooks.",
+        "learningObjectives": [
+          "Understand the purpose and benefits of React Hooks",
+          "Master the useState hook for state management",
+          "Use useEffect for side effects and lifecycle events",
+          "Create custom hooks for reusable logic"
+        ],
+        "exercises": [
+          {
+            "id": "exercise_003",
+            "type": "coding",
+            "title": "Counter with useState",
+            "description": "Create a counter component using the useState hook",
+            "difficulty": "intermediate",
+            "estimatedTime": "20 minutes",
+            "starterCode": "import { useState } from 'react';\n\nfunction Counter() {\n  // Your code here\n}",
+            "solution": "import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  \n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>Increment</button>\n      <button onClick={() => setCount(count - 1)}>Decrement</button>\n    </div>\n  );\n}",
+            "hints": [
+              "Use useState to create state variables",
+              "Remember to destructure the returned array",
+              "Use the setter function to update state"
+            ]
+          }
+        ],
+        "resources": [
+          {
+            "type": "video",
+            "title": "React Hooks Deep Dive",
+            "duration": "18 minutes",
+            "url": "/videos/react-hooks-deep-dive.mp4"
+          },
+          {
+            "type": "interactive",
+            "title": "Hooks Playground",
+            "url": "/interactive/hooks-playground"
+          }
+        ],
+        "duration": "60 minutes",
+        "difficulty": "intermediate",
+        "prerequisites": ["React Components", "JavaScript ES6+"]
+      }
+    ],
+    "assessments": [
+      {
+        "id": "assessment_001",
+        "title": "React Fundamentals Quiz",
+        "type": "quiz",
+        "duration": "30 minutes",
+        "questions": 15,
+        "passingScore": 70,
+        "topics": ["Components", "Props", "State", "Hooks"]
+      },
+      {
+        "id": "assessment_002",
+        "title": "Build a Todo App",
+        "type": "project",
+        "duration": "2 hours",
+        "description": "Create a complete todo application using React",
+        "requirements": [
+          "Add new todos",
+          "Mark todos as complete",
+          "Delete todos",
+          "Filter todos by status"
+        ],
+        "evaluationCriteria": [
+          "Code quality and organization",
+          "Component structure",
+          "State management",
+          "User experience"
+        ]
+      }
+    ],
+    "metadata": {
+      "generatedBy": "AI Content Studio v2.1",
+      "qualityScore": 94,
+      "accessibilityCompliant": true,
+      "mobileOptimized": true,
+      "estimatedCompletionTime": "32 hours",
+      "difficultyProgression": "beginner-to-intermediate",
+      "learningStyle": "hands-on",
+      "interactivityLevel": "high"
+    }
+  },
+  "contentTemplates": [
+    {
+      "id": "template_001",
+      "name": "Interactive Coding Lesson",
+      "description": "Template for hands-on coding lessons with live editor",
+      "components": [
+        "video-intro",
+        "theory-explanation",
+        "interactive-editor",
+        "step-by-step-guide",
+        "quiz-checkpoint",
+        "project-exercise"
+      ],
+      "estimatedDuration": "45-60 minutes"
+    },
+    {
+      "id": "template_002",
+      "name": "Concept Deep Dive",
+      "description": "Template for theoretical concepts with examples",
+      "components": [
+        "concept-introduction",
+        "real-world-examples",
+        "visual-diagrams",
+        "practice-exercises",
+        "knowledge-check"
+      ],
+      "estimatedDuration": "30-45 minutes"
+    }
+  ],
+  "contentAnalytics": {
+    "totalContentGenerated": 1247,
+    "averageQualityScore": 91,
+    "learnerEngagement": {
+      "averageCompletionRate": 78,
+      "averageRating": 4.6,
+      "mostPopularContentType": "interactive-coding"
+    },
+    "performanceMetrics": {
+      "averageGenerationTime": "2.3 minutes",
+      "successRate": 96,
+      "learnerSatisfaction": 4.7
+    }
+  }
+}
