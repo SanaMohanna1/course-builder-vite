@@ -1,0 +1,294 @@
+{
+  "achievements": [
+    {
+      "id": "achievement_001",
+      "title": "First Steps",
+      "description": "Completed your first lesson",
+      "icon": "🎯",
+      "category": "milestone",
+      "rarity": "common",
+      "xpReward": 10,
+      "requirements": {
+        "lessonsCompleted": 1
+      },
+      "unlockedBy": 12500,
+      "description": "Welcome to your learning journey! You've taken the first step."
+    },
+    {
+      "id": "achievement_002",
+      "title": "JavaScript Master",
+      "description": "Completed JavaScript Mastery course with 90%+ grade",
+      "icon": "🏆",
+      "category": "course-completion",
+      "rarity": "rare",
+      "xpReward": 500,
+      "requirements": {
+        "courseId": "course_002",
+        "minGrade": 90
+      },
+      "unlockedBy": 2847,
+      "description": "You've mastered JavaScript fundamentals with excellence!"
+    },
+    {
+      "id": "achievement_003",
+      "title": "Learning Streak",
+      "description": "Maintained a 7-day learning streak",
+      "icon": "🔥",
+      "category": "consistency",
+      "rarity": "uncommon",
+      "xpReward": 200,
+      "requirements": {
+        "consecutiveDays": 7
+      },
+      "unlockedBy": 8900,
+      "description": "Consistency is key to learning success!"
+    },
+    {
+      "id": "achievement_004",
+      "title": "React Enthusiast",
+      "description": "Completed 5 React lessons",
+      "icon": "⚛️",
+      "category": "skill-progress",
+      "rarity": "uncommon",
+      "xpReward": 100,
+      "requirements": {
+        "skill": "React",
+        "lessonsCompleted": 5
+      },
+      "unlockedBy": 4200,
+      "description": "You're becoming a React expert!"
+    },
+    {
+      "id": "achievement_005",
+      "title": "Code Warrior",
+      "description": "Completed 50 coding exercises",
+      "icon": "⚔️",
+      "category": "practice",
+      "rarity": "rare",
+      "xpReward": 300,
+      "requirements": {
+        "codingExercisesCompleted": 50
+      },
+      "unlockedBy": 2100,
+      "description": "Your coding skills are sharpening with every exercise!"
+    },
+    {
+      "id": "achievement_006",
+      "title": "Knowledge Seeker",
+      "description": "Completed 10 courses",
+      "icon": "📚",
+      "category": "course-completion",
+      "rarity": "epic",
+      "xpReward": 1000,
+      "requirements": {
+        "coursesCompleted": 10
+      },
+      "unlockedBy": 450,
+      "description": "You're a true lifelong learner!"
+    },
+    {
+      "id": "achievement_007",
+      "title": "Perfect Score",
+      "description": "Achieved 100% on an assessment",
+      "icon": "💯",
+      "category": "excellence",
+      "rarity": "rare",
+      "xpReward": 250,
+      "requirements": {
+        "assessmentScore": 100
+      },
+      "unlockedBy": 1200,
+      "description": "Perfect understanding demonstrated!"
+    },
+    {
+      "id": "achievement_008",
+      "title": "Early Bird",
+      "description": "Completed a lesson before 7 AM",
+      "icon": "🌅",
+      "category": "special",
+      "rarity": "uncommon",
+      "xpReward": 50,
+      "requirements": {
+        "lessonCompletedBefore": "07:00"
+      },
+      "unlockedBy": 3200,
+      "description": "Early to rise, early to learn!"
+    },
+    {
+      "id": "achievement_009",
+      "title": "Night Owl",
+      "description": "Completed a lesson after 11 PM",
+      "icon": "🦉",
+      "category": "special",
+      "rarity": "uncommon",
+      "xpReward": 50,
+      "requirements": {
+        "lessonCompletedAfter": "23:00"
+      },
+      "unlockedBy": 2800,
+      "description": "Learning never sleeps!"
+    },
+    {
+      "id": "achievement_010",
+      "title": "Helping Hand",
+      "description": "Helped 5 other learners in the community",
+      "icon": "🤝",
+      "category": "community",
+      "rarity": "rare",
+      "xpReward": 400,
+      "requirements": {
+        "communityHelps": 5
+      },
+      "unlockedBy": 800,
+      "description": "You're making the learning community stronger!"
+    }
+  ],
+  "badges": [
+    {
+      "id": "badge_001",
+      "name": "React Fundamentals",
+      "description": "Mastered React component basics",
+      "icon": "⚛️",
+      "color": "#61DAFB",
+      "requirements": {
+        "skill": "React Components",
+        "level": "intermediate"
+      },
+      "unlockedBy": 3200
+    },
+    {
+      "id": "badge_002",
+      "name": "JavaScript Expert",
+      "description": "Advanced JavaScript knowledge",
+      "icon": "🟨",
+      "color": "#F7DF1E",
+      "requirements": {
+        "skill": "JavaScript",
+        "level": "advanced"
+      },
+      "unlockedBy": 1500
+    },
+    {
+      "id": "badge_003",
+      "name": "Data Analyst",
+      "description": "Proficient in data analysis",
+      "icon": "📊",
+      "color": "#FF6B6B",
+      "requirements": {
+        "skill": "Data Analysis",
+        "level": "intermediate"
+      },
+      "unlockedBy": 2100
+    },
+    {
+      "id": "badge_004",
+      "name": "UI Designer",
+      "description": "Skilled in user interface design",
+      "icon": "🎨",
+      "color": "#4ECDC4",
+      "requirements": {
+        "skill": "UI Design",
+        "level": "intermediate"
+      },
+      "unlockedBy": 1800
+    }
+  ],
+  "leaderboards": [
+    {
+      "id": "leaderboard_001",
+      "title": "Weekly Learning Streak",
+      "type": "streak",
+      "period": "weekly",
+      "topLearners": [
+        {
+          "rank": 1,
+          "learnerId": "learner_001",
+          "name": "Sarah Wilson",
+          "score": 7,
+          "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+        },
+        {
+          "rank": 2,
+          "learnerId": "learner_002",
+          "name": "Alex Johnson",
+          "score": 6,
+          "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
+        },
+        {
+          "rank": 3,
+          "learnerId": "learner_003",
+          "name": "Emma Davis",
+          "score": 5,
+          "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
+        }
+      ]
+    },
+    {
+      "id": "leaderboard_002",
+      "title": "Monthly XP Earned",
+      "type": "xp",
+      "period": "monthly",
+      "topLearners": [
+        {
+          "rank": 1,
+          "learnerId": "learner_004",
+          "name": "David Kim",
+          "score": 2840,
+          "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+        },
+        {
+          "rank": 2,
+          "learnerId": "learner_001",
+          "name": "Sarah Wilson",
+          "score": 2640,
+          "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+        },
+        {
+          "rank": 3,
+          "learnerId": "learner_005",
+          "name": "Maria Garcia",
+          "score": 2520,
+          "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face"
+        }
+      ]
+    }
+  ],
+  "achievementCategories": [
+    {
+      "id": "milestone",
+      "name": "Milestones",
+      "description": "Learning journey milestones",
+      "icon": "🎯",
+      "color": "#FF6B6B"
+    },
+    {
+      "id": "course-completion",
+      "name": "Course Completion",
+      "description": "Course and certification achievements",
+      "icon": "🏆",
+      "color": "#4ECDC4"
+    },
+    {
+      "id": "consistency",
+      "name": "Consistency",
+      "description": "Regular learning habits",
+      "icon": "🔥",
+      "color": "#45B7D1"
+    },
+    {
+      "id": "skill-progress",
+      "name": "Skill Progress",
+      "description": "Skill development achievements",
+      "icon": "⚛️",
+      "color": "#96CEB4"
+    },
+    {
+      "id": "community",
+      "name": "Community",
+      "description": "Community participation",
+      "icon": "🤝",
+      "color": "#FFEAA7"
+    }
+  ]
+}
+

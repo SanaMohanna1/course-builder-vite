@@ -3,7 +3,42 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const compression = require('compression');
+const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
+
+// Load mock data
+const loadMockData = () => {
+  try {
+    const courses = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'courses.json'), 'utf8'));
+    const lessons = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'lessons.json'), 'utf8'));
+    const users = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'users.json'), 'utf8'));
+    const achievements = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'achievements.json'), 'utf8'));
+    const userProgress = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'user-progress.json'), 'utf8'));
+    const learningPaths = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'learning-paths.json'), 'utf8'));
+    
+    return {
+      courses: courses.courses,
+      lessons: lessons.lessons,
+      users: users.users,
+      achievements: achievements.achievements,
+      userProgress: userProgress,
+      learningPaths: learningPaths.learningPaths
+    };
+  } catch (error) {
+    console.error('Error loading mock data:', error);
+    return {
+      courses: [],
+      lessons: [],
+      users: [],
+      achievements: [],
+      userProgress: {},
+      learningPaths: []
+    };
+  }
+};
+
+const mockData = loadMockData();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,68 +66,44 @@ app.get('/health', (req, res) => {
 
 // API Routes
 app.get('/api/courses', (req, res) => {
-  res.json({
-    success: true,
-    data: {
-      courses: [
-        {
-          id: 'course_001',
-          title: 'React Development Fundamentals',
-          description: 'Master the core concepts of React, including hooks, state management, routing, and building interactive user interfaces.',
-          trainer: {
-            name: 'John Doe',
-            email: 'john@example.com'
-          },
-          skills: ['React', 'JavaScript', 'JSX', 'Hooks'],
-          status: 'published',
-          courseType: 'marketplace',
-          metadata: {
-            difficulty: 'intermediate',
-            duration: '6 weeks'
-          },
-          feedback: {
-            averageRating: 4.7,
-            totalRatings: 156
-          }
-        },
-        {
-          id: 'course_006',
-          title: 'Personalized React Learning Path',
-          description: 'Your personalized React learning journey based on your current skills and learning goals.',
-          trainer: {
-            name: 'AI Learning Assistant',
-            email: 'ai@coursebuilder.com'
-          },
-          skills: ['React', 'JavaScript', 'Personalized Learning'],
-          status: 'published',
-          courseType: 'personalized',
-          metadata: {
-            difficulty: 'adaptive',
-            duration: '4-8 weeks'
-          },
-          feedback: {
-            averageRating: 4.8,
-            totalRatings: 0
-          }
-        }
-      ]
-    }
-  });
+  try {
+    res.json({
+      success: true,
+      data: mockData.courses
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch courses',
+      message: error.message
+    });
+  }
 });
 
 app.get('/api/courses/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({
-    success: true,
-    data: {
-      id,
-      title: id === 'course_006' ? 'Personalized React Learning Path' : 'React Development Fundamentals',
-      description: id === 'course_006' 
-        ? 'Your personalized React learning journey based on your current skills and learning goals.'
-        : 'Master the core concepts of React, including hooks, state management, routing, and building interactive user interfaces.',
-      courseType: id === 'course_006' ? 'personalized' : 'marketplace'
+  try {
+    const { id } = req.params;
+    const course = mockData.courses.find(c => c.id === id);
+    
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        error: 'Course not found',
+        message: `Course with ID ${id} does not exist`
+      });
     }
-  });
+    
+    res.json({
+      success: true,
+      data: course
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch course',
+      message: error.message
+    });
+  }
 });
 
 app.post('/api/courses/:id/enroll', (req, res) => {
@@ -129,27 +140,106 @@ app.post('/api/courses/:id/feedback', (req, res) => {
   });
 });
 
-app.get('/api/user/:id/progress', (req, res) => {
-  const { id } = req.params;
-  
-  res.json({
-    success: true,
-    data: {
-      learnerId: id,
-      totalCourses: 12,
-      completedCourses: 8,
-      inProgressCourses: 4,
-      learningStreak: 7,
-      achievements: [
-        {
-          id: 'achievement_001',
-          title: 'React Basics Badge',
-          description: 'Completed React Fundamentals course',
-          earnedAt: '2024-02-15T10:00:00Z'
-        }
-      ]
+// Get lessons for a course
+app.get('/api/courses/:id/lessons', (req, res) => {
+  try {
+    const { id } = req.params;
+    const course = mockData.courses.find(c => c.id === id);
+    
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        error: 'Course not found',
+        message: `Course with ID ${id} does not exist`
+      });
     }
-  });
+    
+    // Filter lessons for this course
+    const courseLessons = mockData.lessons.filter(lesson => lesson.courseId === id);
+    
+    res.json({
+      success: true,
+      data: courseLessons
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch lessons',
+      message: error.message
+    });
+  }
+});
+
+// Get user progress
+app.get('/api/user/:id/progress', (req, res) => {
+  try {
+    const { id } = req.params;
+    const userProgress = mockData.userProgress[id] || mockData.userProgress.default;
+    
+    res.json({
+      success: true,
+      data: userProgress
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch user progress',
+      message: error.message
+    });
+  }
+});
+
+// Get user achievements
+app.get('/api/user/:id/achievements', (req, res) => {
+  try {
+    const { id } = req.params;
+    const userAchievements = mockData.achievements.filter(achievement => 
+      achievement.earnedBy === id || achievement.earnedBy === 'default'
+    );
+    
+    res.json({
+      success: true,
+      data: userAchievements
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch achievements',
+      message: error.message
+    });
+  }
+});
+
+// Get learning paths
+app.get('/api/learning-paths', (req, res) => {
+  try {
+    res.json({
+      success: true,
+      data: mockData.learningPaths
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch learning paths',
+      message: error.message
+    });
+  }
+});
+
+// Get all users (for admin purposes)
+app.get('/api/users', (req, res) => {
+  try {
+    res.json({
+      success: true,
+      data: mockData.users
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch users',
+      message: error.message
+    });
+  }
 });
 
 // Error handling middleware
