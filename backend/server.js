@@ -42,13 +42,21 @@ const mockData = loadMockData();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const allowedOrigins = [
+  'https://course-builder-vite-gf1xqi19d-sana-mohannas-projects.vercel.app', // your Vercel frontend
+  'http://localhost:5173', // local dev
+];
 // Middleware
 app.use(helmet());
 app.use(compression());
 app.use(morgan('combined'));
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://course-builder-vite-gf1xqi19d-sana-mohannas-projects.vercel.app',
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
 app.use(express.json());
