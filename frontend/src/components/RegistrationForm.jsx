@@ -81,3 +81,4 @@ function RegistrationForm({ onSubmit, isLoading }) {
 
 export default RegistrationForm
 
+

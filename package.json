@@ -1,29 +1,37 @@
 {
   "name": "course-builder",
+  "version": "1.0.0",
+  "description": "Course Builder - AI-driven educational platform with personalized and marketplace courses",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.0",
-    "zustand": "^4.4.0",
-    "msw": "^2.0.0"
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "npm run build:frontend",
+    "build:frontend": "cd frontend && npm run build",
+    "start": "cd backend && npm start",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
   },
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@vitejs/plugin-react": "^4.0.0",
-    "tailwindcss": "^3.4.0",
-    "postcss": "^8.4.0",
-    "autoprefixer": "^10.4.0",
-    "@headlessui/react": "^1.7.0",
-    "vite": "^4.3.0"
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "course-builder",
+    "education",
+    "ai",
+    "learning",
+    "react",
+    "nodejs",
+    "api"
+  ],
+  "author": "Sana Mohanna",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SanaMohanna1/course-builder-vite.git"
   }
 }
-
