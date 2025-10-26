@@ -4,6 +4,9 @@
 // Backend API base URL
 export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
+// Helper function for delays (for mock operations)
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 // Helper function to make API requests
 const apiRequest = async (endpoint, options = {}) => {
   const url = `${API_BASE}${endpoint}`
@@ -82,15 +85,10 @@ export const courseAPI = {
 export const skillsAPI = {
   // Expand skills using Skills Engine
   async expandSkills(description, generalSkills = []) {
-    await delay(800) // Skills Engine takes longer
-    const skillsData = await mockResponses.skillsEngine()
-    
-    return {
-      success: true,
-      data: {
-        expandedSkills: skillsData.expandedSkills
-      }
-    }
+    return await apiRequest('/api/skills/expand', {
+      method: 'POST',
+      body: JSON.stringify({ description, generalSkills })
+    })
   }
 }
 
@@ -98,13 +96,10 @@ export const skillsAPI = {
 export const contentAPI = {
   // Generate lessons from Content Studio
   async generateLessons(courseId, structure, skills) {
-    await delay(1000) // Content Studio takes longest
-    const contentData = await mockResponses.contentStudio()
-    
-    return {
-      success: true,
-      data: contentData.generatedContent
-    }
+    return await apiRequest('/api/content/generate', {
+      method: 'POST',
+      body: JSON.stringify({ courseId, structure, skills })
+    })
   }
 }
 
@@ -129,12 +124,7 @@ export const assessmentAPI = {
 
   // Get assessment report
   async getAssessmentReport(assessmentId) {
-    await delay(300)
-    const data = await mockResponses.assessmentReport()
-    return {
-      success: true,
-      data: data.assessmentReport
-    }
+    return await apiRequest(`/api/assessment/${assessmentId}/report`)
   }
 }
 
@@ -191,13 +181,7 @@ export const learningPathsAPI = {
 
   // Get learning path by ID
   async getLearningPath(pathId) {
-    await delay(200)
-    const data = await mockResponses.learningPaths()
-    const path = data.learningPaths.find(p => p.id === pathId)
-    return {
-      success: !!path,
-      data: path || null
-    }
+    return await apiRequest(`/api/learning-paths/${pathId}`)
   },
 
   // Enroll in learning path
@@ -220,22 +204,12 @@ export const learningPathsAPI = {
 export const achievementsAPI = {
   // Get user achievements
   async getUserAchievements(learnerId) {
-    await delay(200)
-    const data = await mockResponses.achievements()
-    return {
-      success: true,
-      data: data.achievements
-    }
+    return await apiRequest(`/api/user/${learnerId}/achievements`)
   },
 
   // Get leaderboards
   async getLeaderboards() {
-    await delay(300)
-    const data = await mockResponses.achievements()
-    return {
-      success: true,
-      data: data.leaderboards
-    }
+    return await apiRequest('/api/achievements/leaderboards')
   },
 
   // Award achievement
