@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { courseAPI } from '../services/api'
-import { useUserStore } from '../store/useUserStore'
+import useUserStore from '../store/useUserStore'
 import CourseStructure from '../components/CourseStructure'
 import { 
   Play, 
