@@ -52,7 +52,7 @@ function Assessment() {
     const baseQuestions = [
       {
         id: 'q1',
-        question: `What is the main purpose of ${course.skills[0] || 'this technology'}?`,
+        question: `What is the main purpose of ${course.metadata?.skills?.[0] || 'this technology'}?`,
         options: [
           'To simplify development',
           'To increase complexity',
@@ -64,7 +64,7 @@ function Assessment() {
       },
       {
         id: 'q2',
-        question: `Which of the following is a key feature of ${course.skills[1] || 'this framework'}?`,
+        question: `Which of the following is a key feature of ${course.metadata?.skills?.[1] || 'this framework'}?`,
         options: [
           'Component-based architecture',
           'Server-side rendering only',
@@ -76,7 +76,7 @@ function Assessment() {
       },
       {
         id: 'q3',
-        question: `What is the recommended approach for ${course.skills[2] || 'state management'}?`,
+        question: `What is the recommended approach for ${course.metadata?.skills?.[2] || 'state management'}?`,
         options: [
           'Use built-in state management',
           'Avoid state management',
@@ -88,7 +88,7 @@ function Assessment() {
       },
       {
         id: 'q4',
-        question: `How should you handle ${course.skills[3] || 'asynchronous operations'}?`,
+        question: `How should you handle ${course.metadata?.skills?.[3] || 'asynchronous operations'}?`,
         options: [
           'Use async/await or Promises',
           'Use only callbacks',
@@ -100,7 +100,7 @@ function Assessment() {
       },
       {
         id: 'q5',
-        question: `What is the best practice for ${course.skills[4] || 'component design'}?`,
+        question: `What is the best practice for ${course.metadata?.skills?.[4] || 'component design'}?`,
         options: [
           'Keep components small and focused',
           'Make components as large as possible',

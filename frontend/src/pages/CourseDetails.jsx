@@ -273,7 +273,7 @@ function CourseDetails() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Students</span>
-                  <span className="font-medium">{course.enrollment.totalEnrolled}</span>
+                  <span className="font-medium">{course.students || 0}</span>
                 </div>
               </div>
             </div>
