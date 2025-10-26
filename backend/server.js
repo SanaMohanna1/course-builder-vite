@@ -279,6 +279,30 @@ app.put('/api/user/:id/progress', (req, res) => {
   }
 });
 
+// Update lesson progress endpoint (specific for lessons)
+app.put('/api/lessons/:lessonId/progress', (req, res) => {
+  try {
+    const { lessonId } = req.params;
+    const { learnerId, courseId, completed } = req.body;
+    
+    res.json({
+      success: true,
+      data: {
+        learnerId,
+        courseId,
+        lessonId,
+        completed,
+        updatedAt: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to update lesson progress'
+    });
+  }
+});
+
 // 404 handler
 app.use('*', (req, res) => {
   res.status(404).json({

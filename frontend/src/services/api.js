@@ -220,6 +220,19 @@ export const userAPI = {
       console.error("Failed to update lesson progress:", error)
       return { success: false, data: null }
     }
+  },
+
+  // Update lesson progress (specific endpoint)
+  async updateLessonProgressById(lessonId, learnerId, courseId, completed) {
+    try {
+      return await apiRequest(`/lessons/${lessonId}/progress`, {
+        method: 'PUT',
+        body: JSON.stringify({ learnerId, courseId, completed })
+      })
+    } catch (error) {
+      console.error("Failed to update lesson progress:", error)
+      return { success: false, data: null }
+    }
   }
 }
 

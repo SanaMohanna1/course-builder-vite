@@ -214,13 +214,12 @@ function StudyCourse() {
                         {lesson.resources?.length || 0} resources available
                       </div>
                       <div className="flex space-x-2">
-                        <button 
-                          onClick={() => handleLessonComplete(lesson.id)}
+                        <Link
+                          to={`/course/${id}/lesson/${lesson.id}`}
                           className="btn btn-primary text-sm"
-                          disabled={lesson.completed}
                         >
-                          {lesson.completed ? 'Completed' : 'Start Lesson'}
-                        </button>
+                          {lesson.completed ? 'Review Lesson' : 'Start Lesson'}
+                        </Link>
                         <button className="btn btn-secondary text-sm">
                           View Resources
                         </button>

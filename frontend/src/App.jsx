@@ -11,6 +11,7 @@ const Marketplace = lazy(() => import('./pages/Marketplace'))
 const Personalized = lazy(() => import('./pages/Personalized'))
 const CourseDetails = lazy(() => import('./pages/CourseDetails'))
 const StudyCourse = lazy(() => import('./pages/StudyCourse'))
+const LessonPage = lazy(() => import('./pages/LessonPage'))
 const Assessment = lazy(() => import('./pages/Assessment'))
 const Feedback = lazy(() => import('./pages/Feedback'))
 const MyLibrary = lazy(() => import('./pages/MyLibrary'))
@@ -167,6 +168,7 @@ function App() {
                   <Route path="/personalized" element={<Personalized />} />
                   <Route path="/course/:id" element={<CourseDetails />} />
                   <Route path="/study/:id" element={<StudyCourse />} />
+                  <Route path="/course/:courseId/lesson/:lessonId" element={<LessonPage />} />
                   <Route path="/assessment/:id" element={<Assessment />} />
                   <Route path="/feedback/:id" element={<Feedback />} />
                   <Route path="/library" element={<MyLibrary />} />
