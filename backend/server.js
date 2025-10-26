@@ -157,6 +157,128 @@ app.get('/api/users', (req, res) => {
   }
 });
 
+// Feedback endpoint
+app.post('/api/courses/:id/feedback', (req, res) => {
+  try {
+    const { id } = req.params;
+    const { learnerId, rating, comments } = req.body;
+    
+    // Validate input
+    if (!learnerId || !rating) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields: learnerId and rating are required'
+      });
+    }
+    
+    if (rating < 1 || rating > 5) {
+      return res.status(400).json({
+        success: false,
+        error: 'Rating must be between 1 and 5'
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: {
+        feedbackId: `feedback_${Date.now()}`,
+        courseId: id,
+        learnerId,
+        rating,
+        comments: comments || '',
+        submittedAt: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to submit feedback'
+    });
+  }
+});
+
+// User progress endpoint
+app.get('/api/user/:id/progress', (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    res.json({
+      success: true,
+      data: {
+        learnerId: id,
+        totalCourses: 0,
+        completedCourses: 0,
+        inProgressCourses: 0,
+        totalLessons: 0,
+        completedLessons: 0,
+        progressPercentage: 0,
+        lastAccessed: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to load user progress'
+    });
+  }
+});
+
+// User achievements endpoint
+app.get('/api/user/:id/achievements', (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    res.json({
+      success: true,
+      data: []
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to load user achievements'
+    });
+  }
+});
+
+// Learning paths endpoint
+app.get('/api/learning-paths', (req, res) => {
+  try {
+    res.json({
+      success: true,
+      data: []
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to load learning paths'
+    });
+  }
+});
+
+// Update lesson progress endpoint
+app.put('/api/user/:id/progress', (req, res) => {
+  try {
+    const { id } = req.params;
+    const { courseId, lessonId, completed } = req.body;
+    
+    res.json({
+      success: true,
+      data: {
+        learnerId: id,
+        courseId,
+        lessonId,
+        completed,
+        updatedAt: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to update lesson progress'
+    });
+  }
+});
+
 // 404 handler
 app.use('*', (req, res) => {
   res.status(404).json({
