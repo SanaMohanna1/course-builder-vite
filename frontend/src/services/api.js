@@ -1,16 +1,13 @@
 // API service for Course Builder
-// Supports both local development (localhost) and production (mock data)
+// Connects to Railway backend API
 
-// Check if we're in development mode
-const isLocal = import.meta.env.DEV;
-
-// Backend API base URL for local development
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
+// Backend API base URL from environment variable
+const API_BASE = import.meta.env.VITE_API_URL;
 
 // Helper function for delays (for mock operations)
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Helper function to make API requests (local development only)
+// Helper function to make API requests
 const apiRequest = async (endpoint, options = {}) => {
   const url = `${API_BASE}${endpoint}`
   const config = {
@@ -36,35 +33,12 @@ const apiRequest = async (endpoint, options = {}) => {
   }
 }
 
-// Helper function to load mock data
-const loadMockData = async (mockPath) => {
-  try {
-    const response = await import(mockPath)
-    return response.default
-  } catch (error) {
-    console.error(`Failed to load mock data from ${mockPath}:`, error)
-    return null
-  }
-}
-
 // Course API functions
 export const courseAPI = {
   // Get all courses
   async getCourses() {
     try {
-      if (isLocal) {
-        return await apiRequest('/api/courses')
-      } else {
-        const marketplaceData = await loadMockData('../mock/marketplace.json')
-        const personalizedData = await loadMockData('../mock/personalized.json')
-        
-        if (!marketplaceData || !personalizedData) {
-          return { success: false, data: [] }
-        }
-        
-        const allCourses = [...marketplaceData.courses, ...personalizedData.courses]
-        return { success: true, data: allCourses }
-      }
+      return await apiRequest('/courses')
     } catch (error) {
       console.error("Failed to load courses:", error)
       return { success: false, data: [] }
@@ -74,21 +48,7 @@ export const courseAPI = {
   // Get single course by ID
   async getCourse(id) {
     try {
-      if (isLocal) {
-        return await apiRequest(`/api/courses/${id}`)
-      } else {
-        const marketplaceData = await loadMockData('../mock/marketplace.json')
-        const personalizedData = await loadMockData('../mock/personalized.json')
-        
-        if (!marketplaceData || !personalizedData) {
-          return { success: false, data: null }
-        }
-        
-        const allCourses = [...marketplaceData.courses, ...personalizedData.courses]
-        const course = allCourses.find(c => c.id === id)
-        
-        return { success: !!course, data: course || null }
-      }
+      return await apiRequest(`/courses/${id}`)
     } catch (error) {
       console.error(`Failed to load course ${id}:`, error)
       return { success: false, data: null }
@@ -98,52 +58,36 @@ export const courseAPI = {
   // Get lessons for a course
   async getCourseLessons(id) {
     try {
-      if (isLocal) {
-        return await apiRequest(`/api/courses/${id}/lessons`)
-      } else {
-        const lessonsData = await loadMockData('../mock/lessons.json')
-        
-        if (!lessonsData) {
-          return { success: false, data: [] }
-        }
-        
-        // Filter lessons by course ID
-        const courseLessons = lessonsData.lessons.filter(lesson => lesson.courseId === id)
-        return { success: true, data: courseLessons }
-      }
+      return await apiRequest(`/courses/${id}/lessons`)
     } catch (error) {
       console.error(`Failed to load lessons for course ${id}:`, error)
       return { success: false, data: [] }
     }
   },
 
-  // Create new course (mock operation)
+  // Create new course
   async createCourse(courseData) {
-    await delay(500)
-    const newCourse = {
-      id: `course_${Date.now()}`,
-      ...courseData,
-      status: 'draft',
-      version: '1.0.0',
-      createdAt: new Date().toISOString(),
-    }
-    return {
-      success: true,
-      data: newCourse
+    try {
+      return await apiRequest('/courses', {
+        method: 'POST',
+        body: JSON.stringify(courseData)
+      })
+    } catch (error) {
+      console.error("Failed to create course:", error)
+      return { success: false, data: null }
     }
   },
 
-  // Publish course (mock operation)
+  // Publish course
   async publishCourse(id, publishMode = 'immediate') {
-    await delay(600)
-    return {
-      success: true,
-      data: {
-        courseId: id,
-        status: 'published',
-        publishedAt: new Date().toISOString(),
-        publishMode
-      }
+    try {
+      return await apiRequest(`/courses/${id}/publish`, {
+        method: 'POST',
+        body: JSON.stringify({ publishMode })
+      })
+    } catch (error) {
+      console.error(`Failed to publish course ${id}:`, error)
+      return { success: false, data: null }
     }
   }
 }
@@ -153,23 +97,10 @@ export const skillsAPI = {
   // Expand skills using Skills Engine
   async expandSkills(description, generalSkills = []) {
     try {
-      if (isLocal) {
-        return await apiRequest('/api/skills/expand', {
-          method: 'POST',
-          body: JSON.stringify({ description, generalSkills })
-        })
-      } else {
-        await delay(800) // Simulate processing time
-        return {
-          success: true,
-          data: {
-            expandedSkills: [
-              "React", "JavaScript", "JSX", "Hooks", "State Management", 
-              "Component Design", "React Router", "Context API"
-            ]
-          }
-        }
-      }
+      return await apiRequest('/skills/expand', {
+        method: 'POST',
+        body: JSON.stringify({ description, generalSkills })
+      })
     } catch (error) {
       console.error("Failed to expand skills:", error)
       return { success: false, data: { expandedSkills: [] } }
@@ -182,30 +113,10 @@ export const contentAPI = {
   // Generate lessons from Content Studio
   async generateLessons(courseId, structure, skills) {
     try {
-      if (isLocal) {
-        return await apiRequest('/api/content/generate', {
-          method: 'POST',
-          body: JSON.stringify({ courseId, structure, skills })
-        })
-      } else {
-        await delay(1000) // Simulate processing time
-        return {
-          success: true,
-          data: {
-            generatedContent: {
-              lessons: [
-                {
-                  id: `lesson_${Date.now()}`,
-                  title: "Generated Lesson 1",
-                  description: "AI-generated lesson content",
-                  duration: "45 minutes",
-                  type: "video"
-                }
-              ]
-            }
-          }
-        }
-      }
+      return await apiRequest('/content/generate', {
+        method: 'POST',
+        body: JSON.stringify({ courseId, structure, skills })
+      })
     } catch (error) {
       console.error("Failed to generate lessons:", error)
       return { success: false, data: { generatedContent: { lessons: [] } } }
@@ -217,40 +128,21 @@ export const contentAPI = {
 export const assessmentAPI = {
   // Start assessment
   async startAssessment(learnerId, courseId, coverageMap) {
-    await delay(500)
-    return {
-      success: true,
-      data: {
-        assessmentId: `assessment_${Date.now()}`,
-        learnerId,
-        courseId,
-        status: 'started',
-        startedAt: new Date().toISOString(),
-        estimatedDuration: '60 minutes',
-        questions: 25
-      }
+    try {
+      return await apiRequest('/assessment/start', {
+        method: 'POST',
+        body: JSON.stringify({ learnerId, courseId, coverageMap })
+      })
+    } catch (error) {
+      console.error("Failed to start assessment:", error)
+      return { success: false, data: null }
     }
   },
 
   // Get assessment report
   async getAssessmentReport(assessmentId) {
     try {
-      if (isLocal) {
-        return await apiRequest(`/api/assessment/${assessmentId}/report`)
-      } else {
-        await delay(300)
-        return {
-          success: true,
-          data: {
-            assessmentId,
-            score: 85,
-            totalQuestions: 25,
-            correctAnswers: 21,
-            completedAt: new Date().toISOString(),
-            feedback: "Great job! You have a solid understanding of the concepts."
-          }
-        }
-      }
+      return await apiRequest(`/assessment/${assessmentId}/report`)
     } catch (error) {
       console.error(`Failed to load assessment report ${assessmentId}:`, error)
       return { success: false, data: null }
@@ -263,24 +155,10 @@ export const userAPI = {
   // Register learner for course
   async registerLearner(courseId, learnerId) {
     try {
-      if (isLocal) {
-        return await apiRequest(`/api/courses/${courseId}/enroll`, {
-          method: 'POST',
-          body: JSON.stringify({ learnerId })
-        })
-      } else {
-        await delay(200)
-        return {
-          success: true,
-          data: {
-            enrollmentId: `enrollment_${Date.now()}`,
-            courseId,
-            learnerId,
-            enrolledAt: new Date().toISOString(),
-            status: 'active'
-          }
-        }
-      }
+      return await apiRequest(`/courses/${courseId}/enroll`, {
+        method: 'POST',
+        body: JSON.stringify({ learnerId })
+      })
     } catch (error) {
       console.error(`Failed to register learner for course ${courseId}:`, error)
       return { success: false, data: null }
@@ -290,25 +168,10 @@ export const userAPI = {
   // Submit feedback
   async submitFeedback(courseId, learnerId, rating, comments) {
     try {
-      if (isLocal) {
-        return await apiRequest(`/api/courses/${courseId}/feedback`, {
-          method: 'POST',
-          body: JSON.stringify({ learnerId, rating, comments })
-        })
-      } else {
-        await delay(300)
-        return {
-          success: true,
-          data: {
-            feedbackId: `feedback_${Date.now()}`,
-            courseId,
-            learnerId,
-            rating,
-            comments,
-            submittedAt: new Date().toISOString()
-          }
-        }
-      }
+      return await apiRequest(`/courses/${courseId}/feedback`, {
+        method: 'POST',
+        body: JSON.stringify({ learnerId, rating, comments })
+      })
     } catch (error) {
       console.error(`Failed to submit feedback for course ${courseId}:`, error)
       return { success: false, data: null }
@@ -318,18 +181,7 @@ export const userAPI = {
   // Get user progress
   async getUserProgress(learnerId) {
     try {
-      if (isLocal) {
-        return await apiRequest(`/api/user/${learnerId}/progress`)
-      } else {
-        const progressData = await loadMockData('../mock/user-progress.json')
-        
-        if (!progressData) {
-          return { success: false, data: null }
-        }
-        
-        const userProgress = progressData.progress[learnerId] || null
-        return { success: true, data: userProgress }
-      }
+      return await apiRequest(`/user/${learnerId}/progress`)
     } catch (error) {
       console.error(`Failed to load user progress for ${learnerId}:`, error)
       return { success: false, data: null }
@@ -339,17 +191,7 @@ export const userAPI = {
   // Get user achievements
   async getUserAchievements(learnerId) {
     try {
-      if (isLocal) {
-        return await apiRequest(`/api/user/${learnerId}/achievements`)
-      } else {
-        const achievementsData = await loadMockData('../mock/achievements.json')
-        
-        if (!achievementsData) {
-          return { success: false, data: [] }
-        }
-        
-        return { success: true, data: achievementsData.achievements }
-      }
+      return await apiRequest(`/user/${learnerId}/achievements`)
     } catch (error) {
       console.error(`Failed to load user achievements for ${learnerId}:`, error)
       return { success: false, data: [] }
@@ -358,16 +200,14 @@ export const userAPI = {
 
   // Update lesson progress
   async updateLessonProgress(learnerId, courseId, lessonId, completed) {
-    await delay(150)
-    return {
-      success: true,
-      data: {
-        learnerId,
-        courseId,
-        lessonId,
-        completed,
-        updatedAt: new Date().toISOString()
-      }
+    try {
+      return await apiRequest(`/user/${learnerId}/progress`, {
+        method: 'PUT',
+        body: JSON.stringify({ courseId, lessonId, completed })
+      })
+    } catch (error) {
+      console.error("Failed to update lesson progress:", error)
+      return { success: false, data: null }
     }
   }
 }
@@ -377,17 +217,7 @@ export const learningPathsAPI = {
   // Get all learning paths
   async getLearningPaths() {
     try {
-      if (isLocal) {
-        return await apiRequest('/api/learning-paths')
-      } else {
-        const pathsData = await loadMockData('../mock/learning-paths.json')
-        
-        if (!pathsData) {
-          return { success: false, data: [] }
-        }
-        
-        return { success: true, data: pathsData.learningPaths }
-      }
+      return await apiRequest('/learning-paths')
     } catch (error) {
       console.error("Failed to load learning paths:", error)
       return { success: false, data: [] }
@@ -397,18 +227,7 @@ export const learningPathsAPI = {
   // Get learning path by ID
   async getLearningPath(pathId) {
     try {
-      if (isLocal) {
-        return await apiRequest(`/api/learning-paths/${pathId}`)
-      } else {
-        const pathsData = await loadMockData('../mock/learning-paths.json')
-        
-        if (!pathsData) {
-          return { success: false, data: null }
-        }
-        
-        const path = pathsData.learningPaths.find(p => p.id === pathId)
-        return { success: !!path, data: path || null }
-      }
+      return await apiRequest(`/learning-paths/${pathId}`)
     } catch (error) {
       console.error(`Failed to load learning path ${pathId}:`, error)
       return { success: false, data: null }
@@ -417,16 +236,14 @@ export const learningPathsAPI = {
 
   // Enroll in learning path
   async enrollInPath(pathId, learnerId) {
-    await delay(400)
-    return {
-      success: true,
-      data: {
-        enrollmentId: `path_enrollment_${Date.now()}`,
-        pathId,
-        learnerId,
-        enrolledAt: new Date().toISOString(),
-        status: 'active'
-      }
+    try {
+      return await apiRequest(`/learning-paths/${pathId}/enroll`, {
+        method: 'POST',
+        body: JSON.stringify({ learnerId })
+      })
+    } catch (error) {
+      console.error(`Failed to enroll in learning path ${pathId}:`, error)
+      return { success: false, data: null }
     }
   }
 }
@@ -436,17 +253,7 @@ export const achievementsAPI = {
   // Get user achievements
   async getUserAchievements(learnerId) {
     try {
-      if (isLocal) {
-        return await apiRequest(`/api/user/${learnerId}/achievements`)
-      } else {
-        const achievementsData = await loadMockData('../mock/achievements.json')
-        
-        if (!achievementsData) {
-          return { success: false, data: [] }
-        }
-        
-        return { success: true, data: achievementsData.achievements }
-      }
+      return await apiRequest(`/user/${learnerId}/achievements`)
     } catch (error) {
       console.error(`Failed to load user achievements for ${learnerId}:`, error)
       return { success: false, data: [] }
@@ -456,17 +263,7 @@ export const achievementsAPI = {
   // Get leaderboards
   async getLeaderboards() {
     try {
-      if (isLocal) {
-        return await apiRequest('/api/achievements/leaderboards')
-      } else {
-        const achievementsData = await loadMockData('../mock/achievements.json')
-        
-        if (!achievementsData) {
-          return { success: false, data: [] }
-        }
-        
-        return { success: true, data: achievementsData.leaderboards }
-      }
+      return await apiRequest('/achievements/leaderboards')
     } catch (error) {
       console.error("Failed to load leaderboards:", error)
       return { success: false, data: [] }
@@ -475,14 +272,14 @@ export const achievementsAPI = {
 
   // Award achievement
   async awardAchievement(learnerId, achievementId) {
-    await delay(150)
-    return {
-      success: true,
-      data: {
-        learnerId,
-        achievementId,
-        awardedAt: new Date().toISOString()
-      }
+    try {
+      return await apiRequest('/achievements/award', {
+        method: 'POST',
+        body: JSON.stringify({ learnerId, achievementId })
+      })
+    } catch (error) {
+      console.error("Failed to award achievement:", error)
+      return { success: false, data: null }
     }
   }
 }
