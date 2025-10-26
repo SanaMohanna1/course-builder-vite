@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { courseAPI } from '../services/api'
+import api from '../services/api'
 import useUserStore from '../store/useUserStore'
 import CourseStructure from '../components/CourseStructure'
 import { 
@@ -70,8 +70,8 @@ function LessonPage() {
     try {
       setLoading(true)
       const [courseResponse, lessonsResponse] = await Promise.all([
-        courseAPI.getCourse(courseId),
-        courseAPI.getCourseLessons(courseId)
+        api.course.getCourse(courseId),
+        api.course.getCourseLessons(courseId)
       ])
       
       if (courseResponse.success) {
@@ -116,7 +116,7 @@ function LessonPage() {
     try {
       setIsCompleted(true)
       // Update progress in backend
-      await courseAPI.updateLessonProgressById(lessonId, 'learner_001', courseId, true)
+      await api.course.updateLessonProgressById(lessonId, 'learner_001', courseId, true)
       // Update local progress
       updateCourseProgress(courseId, progress, new Date().toISOString())
       

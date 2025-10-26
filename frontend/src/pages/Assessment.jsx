@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
 import useUserStore from '../store/useUserStore'
-import { courseAPI } from '../services/api'
+import api from '../services/api'
 
 function Assessment() {
   const { id } = useParams()
@@ -21,7 +21,7 @@ function Assessment() {
       setIsLoading(true)
       try {
         // Load course data from backend API
-        const courseResponse = await courseAPI.getCourse(id)
+        const courseResponse = await api.course.getCourse(id)
         if (!courseResponse.success) {
           throw new Error('Course not found')
         }

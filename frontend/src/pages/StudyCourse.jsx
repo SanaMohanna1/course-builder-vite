@@ -4,7 +4,7 @@ import useUserStore from '../store/useUserStore'
 import LoadingSpinner from '../components/LoadingSpinner'
 import Container from '../components/Container'
 import CourseStructure from '../components/CourseStructure'
-import { courseAPI } from '../services/api'
+import api from '../services/api'
 
 function StudyCourse() {
   const { id } = useParams()
@@ -19,12 +19,12 @@ function StudyCourse() {
       setIsLoading(true)
       try {
         // Load course data from backend API
-        const courseResponse = await courseAPI.getCourse(id)
+        const courseResponse = await api.course.getCourse(id)
         if (courseResponse.success) {
           setCourse(courseResponse.data)
           
           // Load lessons from backend API
-          const lessonsResponse = await courseAPI.getCourseLessons(id)
+          const lessonsResponse = await api.course.getCourseLessons(id)
           if (lessonsResponse.success) {
             setLessons(lessonsResponse.data)
           }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { courseAPI } from '../services/api'
+import api from '../services/api'
 import { 
   ChevronDown, 
   ChevronRight, 
@@ -25,7 +25,7 @@ function CourseStructure({ courseId, currentLessonId }) {
   const loadCourseStructure = async () => {
     try {
       setLoading(true)
-      const response = await courseAPI.getCourseTopics(courseId)
+      const response = await api.course.getCourseTopics(courseId)
       if (response.success) {
         setTopics(response.data)
         // Auto-expand first topic

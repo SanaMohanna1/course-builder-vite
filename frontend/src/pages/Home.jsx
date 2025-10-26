@@ -4,7 +4,7 @@ import useUserStore from '../store/useUserStore'
 import CourseCard from '../components/CourseCard'
 import LoadingSpinner from '../components/LoadingSpinner'
 import Container from '../components/Container'
-import { courseAPI } from '../services/api'
+import api from '../services/api'
 
 function Home() {
   const { currentUser, enrolledCourses, getCourseProgress } = useUserStore()
@@ -17,7 +17,7 @@ function Home() {
       setIsLoading(true)
       try {
         // Load courses from backend API
-        const response = await courseAPI.getCourses()
+        const response = await api.course.getCourses()
         if (response.success) {
           const allCourses = response.data
           // Filter marketplace courses (non-personalized)

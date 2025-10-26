@@ -79,8 +79,8 @@ const useCourseStore = create((set, get) => ({
   fetchCourses: async () => {
     set({ isLoading: true, error: null })
     try {
-      const { courseAPI } = await import('../services/api')
-      const response = await courseAPI.getCourses()
+      const api = await import('../services/api')
+      const response = await api.default.course.getCourses()
       if (response.success) {
         set({ courses: response.data, isLoading: false })
       } else {
@@ -94,8 +94,8 @@ const useCourseStore = create((set, get) => ({
   fetchCourse: async (id) => {
     set({ isLoading: true, error: null })
     try {
-      const { courseAPI } = await import('../services/api')
-      const response = await courseAPI.getCourse(id)
+      const api = await import('../services/api')
+      const response = await api.default.course.getCourse(id)
       if (response.success) {
         set({ currentCourse: response.data, isLoading: false })
       } else {
@@ -109,8 +109,8 @@ const useCourseStore = create((set, get) => ({
   createCourse: async (courseData) => {
     set({ isLoading: true, error: null })
     try {
-      const { courseAPI } = await import('../services/api')
-      const response = await courseAPI.createCourse(courseData)
+      const api = await import('../services/api')
+      const response = await api.default.course.createCourse(courseData)
       if (response.success) {
         set((state) => ({
           courses: [...state.courses, response.data],
@@ -131,8 +131,8 @@ const useCourseStore = create((set, get) => ({
   publishCourse: async (id, publishMode = 'immediate') => {
     set({ isLoading: true, error: null })
     try {
-      const { courseAPI } = await import('../services/api')
-      const response = await courseAPI.publishCourse(id, publishMode)
+      const api = await import('../services/api')
+      const response = await api.default.course.publishCourse(id, publishMode)
       if (response.success) {
         set((state) => ({
           courses: state.courses.map(course => 

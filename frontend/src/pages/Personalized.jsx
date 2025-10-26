@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import CourseCard from '../components/CourseCard'
 import LoadingSpinner from '../components/LoadingSpinner'
 import Container from '../components/Container'
-import { courseAPI } from '../services/api'
+import api from '../services/api'
 
 function Personalized() {
   const [courses, setCourses] = useState([])
@@ -14,7 +14,7 @@ function Personalized() {
       setIsLoading(true)
       try {
         // Load courses from backend API
-        const response = await courseAPI.getCourses()
+        const response = await api.course.getCourses()
         if (response.success) {
           // Filter only personalized courses
           const personalizedCourses = response.data.filter(course => course.courseType === 'personalized')

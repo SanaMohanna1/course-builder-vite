@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import useUserStore from '../store/useUserStore'
 import LoadingSpinner from '../components/LoadingSpinner'
 import Container from '../components/Container'
-import { courseAPI } from '../services/api'
+import api from '../services/api'
 
 function MyLibrary() {
   const { enrolledCourses, getCourseProgress } = useUserStore()
@@ -15,7 +15,7 @@ function MyLibrary() {
       setIsLoading(true)
       try {
         // Load all courses from backend API
-        const response = await courseAPI.getCourses()
+        const response = await api.course.getCourses()
         if (response.success) {
           // Filter to only enrolled courses
           const enrolled = response.data.filter(course => enrolledCourses.includes(course.id))
