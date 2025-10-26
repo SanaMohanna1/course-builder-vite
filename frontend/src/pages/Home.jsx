@@ -1,357 +1,294 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import useCourseStore from '../store/useCourseStore'
 import useUserStore from '../store/useUserStore'
 import CourseCard from '../components/CourseCard'
+import LoadingSpinner from '../components/LoadingSpinner'
+import Container from '../components/Container'
+import { courseAPI } from '../services/api'
 
 function Home() {
-  const { courses, fetchCourses, isLoading } = useCourseStore()
-  const { currentUser } = useUserStore()
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filterDifficulty, setFilterDifficulty] = useState('all')
-  const [sortBy, setSortBy] = useState('title')
-  const [activeTab, setActiveTab] = useState('learning') // 'learning', 'recommended', 'trending'
+  const { currentUser, enrolledCourses, getCourseProgress } = useUserStore()
+  const [marketplaceCourses, setMarketplaceCourses] = useState([])
+  const [personalizedCourses, setPersonalizedCourses] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetchCourses()
-  }, [fetchCourses])
-
-  // Filter and sort courses
-  const filteredCourses = useMemo(() => {
-    let filtered = courses.filter(course => {
-      const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           course.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
-      
-      const matchesDifficulty = filterDifficulty === 'all' || course.metadata.difficulty === filterDifficulty
-      
-      return matchesSearch && matchesDifficulty
-    })
-
-    // Sort courses
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'title':
-          return a.title.localeCompare(b.title)
-        case 'rating':
-          return b.feedback.averageRating - a.feedback.averageRating
-        case 'difficulty':
-          const difficultyOrder = { 'beginner': 1, 'intermediate': 2, 'advanced': 3 }
-          return difficultyOrder[a.metadata.difficulty] - difficultyOrder[b.metadata.difficulty]
-        case 'duration':
-          return a.metadata.duration.localeCompare(b.metadata.duration)
-        default:
-          return 0
+    const loadCourses = async () => {
+      setIsLoading(true)
+      try {
+        // Load courses from backend API
+        const response = await courseAPI.getCourses()
+        if (response.success) {
+          const allCourses = response.data
+          // Filter marketplace courses (non-personalized)
+          const marketplace = allCourses.filter(course => course.courseType !== 'personalized').slice(0, 3)
+          // Filter personalized courses
+          const personalized = allCourses.filter(course => course.courseType === 'personalized')
+          
+          setMarketplaceCourses(marketplace)
+          setPersonalizedCourses(personalized)
+        }
+      } catch (error) {
+        console.error('Failed to load courses:', error)
+        // Fallback to empty arrays if API fails
+        setMarketplaceCourses([])
+        setPersonalizedCourses([])
+      } finally {
+        setIsLoading(false)
       }
-    })
+    }
 
-    return filtered
-  }, [courses, searchTerm, filterDifficulty, sortBy])
+    loadCourses()
+  }, [])
 
   if (isLoading) {
-    return (
-      <div className="loading">
-        <div className="loading-spinner"></div>
-        <p style={{ marginTop: 'var(--spacing-md)', color: 'var(--text-secondary)' }}>Loading...</p>
-      </div>
-    )
+    return <LoadingSpinner message="Loading your dashboard..." />
   }
 
-  // LEARNER-FOCUSED HOME PAGE
-  return (
-    <div className="personalized-dashboard">
-      <div className="dashboard-container">
-        {/* Welcome Section */}
-        <div style={{ marginBottom: 'var(--spacing-2xl)' }}>
-          <h1 className="section-title" style={{ textAlign: 'left', marginBottom: 'var(--spacing-md)' }}>
-            Welcome back, {currentUser?.name || 'Learner'}! 👋
-          </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
-            Continue your learning journey and discover new skills
-          </p>
-        </div>
+  const enrolledCount = enrolledCourses.length
+  const completedCount = enrolledCourses.filter(courseId => {
+    const progress = getCourseProgress(courseId)
+    return progress.progressPercentage === 100
+  }).length
 
-        {/* Learning Stats */}
-        <div className="dashboard-grid" style={{ marginBottom: 'var(--spacing-2xl)' }}>
-          <div className="dashboard-card">
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <div className="bg-white">
+        <Container className="py-16">
+          <div className="text-center">
+            <h1 className="heading-1 mb-4">
+              Welcome back, {currentUser?.name || 'Learner'}!
+            </h1>
+            <p className="body-text-lg max-w-3xl mx-auto">
+              Continue your learning journey and discover new skills to advance your career
+            </p>
+          </div>
+        </Container>
+      </div>
+
+      {/* Stats Section */}
+      <Container className="py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="card p-6">
             <div className="flex items-center">
-              <div className="dashboard-icon" style={{ background: 'var(--gradient-primary)' }}>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <div style={{ marginLeft: 'var(--spacing-md)' }}>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: '500' }}>Courses Enrolled</p>
-                <p style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--primary-cyan)' }}>12</p>
+              <div>
+                <p className="text-sm font-medium text-gray-600">Enrolled Courses</p>
+                <p className="text-2xl font-bold text-gray-900">{enrolledCount}</p>
               </div>
             </div>
           </div>
 
-          <div className="dashboard-card">
+          <div className="card p-6">
             <div className="flex items-center">
-              <div className="dashboard-icon" style={{ background: 'var(--gradient-secondary)' }}>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <div style={{ marginLeft: 'var(--spacing-md)' }}>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: '500' }}>Completed</p>
-                <p style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--primary-cyan)' }}>8</p>
+              <div>
+                <p className="text-sm font-medium text-gray-600">Completed</p>
+                <p className="text-2xl font-bold text-gray-900">{completedCount}</p>
               </div>
             </div>
           </div>
 
-          <div className="dashboard-card">
+          <div className="card p-6">
             <div className="flex items-center">
-              <div className="dashboard-icon" style={{ background: 'var(--gradient-accent)' }}>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <div style={{ marginLeft: 'var(--spacing-md)' }}>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: '500' }}>In Progress</p>
-                <p style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--primary-cyan)' }}>4</p>
+              <div>
+                <p className="text-sm font-medium text-gray-600">Learning Streak</p>
+                <p className="text-2xl font-bold text-gray-900">7 days</p>
               </div>
             </div>
           </div>
 
-          <div className="dashboard-card">
+          <div className="card p-6">
             <div className="flex items-center">
-              <div className="dashboard-icon" style={{ background: 'var(--gradient-accent)' }}>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                 </svg>
               </div>
-              <div style={{ marginLeft: 'var(--spacing-md)' }}>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: '500' }}>Learning Streak</p>
-                <p style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--primary-cyan)' }}>7 days</p>
+              <div>
+                <p className="text-sm font-medium text-gray-600">Achievements</p>
+                <p className="text-2xl font-bold text-gray-900">12</p>
               </div>
             </div>
           </div>
         </div>
+      </Container>
 
-        {/* Tab Navigation */}
-        <div className="dashboard-card" style={{ marginBottom: 'var(--spacing-xl)' }}>
-          <div style={{ 
-            padding: 'var(--spacing-lg)', 
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-            marginBottom: 'var(--spacing-lg)'
-          }}>
-            <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-md)' }}>
-              {[
-                { id: 'learning', label: 'My Learning', icon: '📚' },
-                { id: 'recommended', label: 'Recommended', icon: '⭐' },
-                { id: 'trending', label: 'Trending', icon: '🔥' }
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  style={{
-                    padding: 'var(--spacing-sm) var(--spacing-md)',
-                    borderRadius: '8px',
-                    background: activeTab === tab.id ? 'var(--primary-cyan)' : 'transparent',
-                    color: activeTab === tab.id ? 'white' : 'var(--text-secondary)',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontSize: '0.9rem',
-                    fontWeight: '500',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 'var(--spacing-xs)'
-                  }}
+      {/* Main Content */}
+      <Container className="py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Personalized Learning */}
+          <div className="card p-8">
+            <div className="flex items-center mb-6">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <div>
+                <h2 className="heading-3">Personalized Learning</h2>
+                <p className="body-text">AI-powered courses tailored just for you</p>
+              </div>
+            </div>
+            
+            {personalizedCourses.length > 0 ? (
+              <div className="space-y-4">
+                {personalizedCourses.map(course => (
+                  <div key={course.id} className="bg-gray-50 rounded-lg p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900 mb-1">{course.title}</h3>
+                        <p className="text-sm text-gray-600">{course.description}</p>
+                      </div>
+                      <span className="badge badge-purple">Personalized</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center text-sm text-gray-500">
+                        <span className="mr-4">{course.metadata.duration}</span>
+                        <span>AI-Powered</span>
+                      </div>
+                      <Link
+                        to={`/study/${course.id}`}
+                        className="btn btn-primary text-sm"
+                      >
+                        Start Learning
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <div className="text-gray-400 text-4xl mb-4">
+                  <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+                <p className="body-text mb-4">No personalized courses yet</p>
+                <Link 
+                  to="/personalized"
+                  className="btn btn-primary"
                 >
-                  <span>{tab.icon}</span>
-                  <span>{tab.label}</span>
-                </button>
+                  Get Personalized Courses
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Marketplace */}
+          <div className="card p-8">
+            <div className="flex items-center mb-6">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <div>
+                <h2 className="heading-3">Marketplace</h2>
+                <p className="body-text">Discover courses from expert instructors</p>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              {marketplaceCourses.map(course => (
+                <div key={course.id} className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-900 mb-1">{course.title}</h3>
+                      <p className="text-sm text-gray-600">{course.description}</p>
+                    </div>
+                    <span className="badge badge-blue">Marketplace</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center text-sm text-gray-500">
+                      <span className="mr-4">{course.trainer.name}</span>
+                      <span className="mr-4">{course.metadata.duration}</span>
+                      <span className="flex items-center">
+                        <svg className="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        {course.feedback.averageRating}
+                      </span>
+                    </div>
+                    <Link
+                      to={`/course/${course.id}`}
+                      className="btn btn-primary text-sm"
+                    >
+                      View Details
+                    </Link>
+                  </div>
+                </div>
               ))}
             </div>
-
-            {/* Search and Filter */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--spacing-md)' }}>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Search courses..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: 'var(--spacing-sm)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
-                    background: 'var(--bg-secondary)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.9rem'
-                  }}
-                />
-              </div>
-              <div>
-                <select
-                  value={filterDifficulty}
-                  onChange={(e) => setFilterDifficulty(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: 'var(--spacing-sm)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
-                    background: 'var(--bg-secondary)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  <option value="all">All Difficulties</option>
-                  <option value="beginner">Beginner</option>
-                  <option value="intermediate">Intermediate</option>
-                  <option value="advanced">Advanced</option>
-                </select>
-              </div>
-              <div>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: 'var(--spacing-sm)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
-                    background: 'var(--bg-secondary)',
-                    color: 'var(--text-primary)',
-                    fontSize: '0.9rem'
-                  }}
-                >
-                  <option value="title">Title</option>
-                  <option value="rating">Rating</option>
-                  <option value="difficulty">Difficulty</option>
-                  <option value="duration">Duration</option>
-                </select>
-              </div>
+            
+            <div className="mt-6 text-center">
+              <Link 
+                to="/marketplace"
+                className="btn btn-primary"
+              >
+                Browse All Courses
+              </Link>
             </div>
           </div>
+        </div>
 
-          {/* Content based on active tab */}
-          <div style={{ padding: 'var(--spacing-lg)' }}>
-            {activeTab === 'learning' && (
-              <div>
-                <h2 style={{ color: 'var(--text-primary)', fontSize: '1.2rem', fontWeight: '600', marginBottom: 'var(--spacing-lg)' }}>
-                  Continue Learning
-                </h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--spacing-lg)' }}>
-                  {filteredCourses.slice(0, 6).map(course => (
-                    <div key={course.id} style={{
-                      background: 'var(--gradient-card)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      borderRadius: '12px',
-                      padding: 'var(--spacing-lg)',
-                      transition: 'all 0.3s ease',
-                      cursor: 'pointer'
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--spacing-md)' }}>
-                        <h3 style={{ color: 'var(--text-primary)', fontSize: '1.1rem', fontWeight: '600', flex: 1 }}>
-                          {course.title}
-                        </h3>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xs)', alignItems: 'flex-end' }}>
-                          <span style={{
-                            padding: '4px 8px',
-                            borderRadius: '12px',
-                            fontSize: '0.75rem',
-                            fontWeight: '500',
-                            background: course.courseType === 'personalized' ? 'var(--accent-gold)' : 'var(--accent-green)',
-                            color: 'white'
-                          }}>
-                            {course.courseType === 'personalized' ? '🎯 Personalized' : '🏪 Marketplace'}
-                          </span>
-                          <span style={{
-                            padding: '4px 8px',
-                            borderRadius: '12px',
-                            fontSize: '0.75rem',
-                            fontWeight: '500',
-                            background: 'var(--accent-gold)',
-                            color: 'white'
-                          }}>
-                            In Progress
-                          </span>
-                        </div>
-                      </div>
-                      <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-md)', fontSize: '0.9rem' }}>
-                        {course.description}
-                      </p>
-                      <div style={{ marginBottom: 'var(--spacing-md)' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--spacing-xs)' }}>
-                          <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>Progress</span>
-                          <span style={{ color: 'var(--text-primary)', fontSize: '0.8rem', fontWeight: '500' }}>65%</span>
-                        </div>
-                        <div style={{ width: '100%', height: '8px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '4px', overflow: 'hidden' }}>
-                          <div style={{ width: '65%', height: '100%', background: 'var(--gradient-primary)', borderRadius: '4px' }}></div>
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
-                          <span>⏱️ {course.metadata.duration}</span>
-                          <span>•</span>
-                          <span>⭐ {course.feedback.averageRating}</span>
-                        </div>
-                            <Link to={`/course/${course.id}`} className="btn btn-primary" style={{ fontSize: '0.9rem', padding: 'var(--spacing-xs) var(--spacing-md)' }}>
-                              {course.courseType === 'personalized' ? 'Start Learning' : 'Continue'}
-                            </Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+        {/* Continue Learning */}
+        {enrolledCount > 0 && (
+          <div className="card p-8 mt-8">
+            <h2 className="heading-3 mb-6">Continue Learning</h2>
+            <div className="text-center py-8">
+              <div className="text-gray-400 text-4xl mb-4">
+                <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
               </div>
-            )}
+              <p className="body-text mb-4">You have {enrolledCount} enrolled course{enrolledCount !== 1 ? 's' : ''}</p>
+              <Link 
+                to="/library"
+                className="btn btn-success"
+              >
+                View My Library
+              </Link>
+            </div>
+          </div>
+        )}
 
-            {activeTab === 'recommended' && (
-              <div>
-                <h2 style={{ color: 'var(--text-primary)', fontSize: '1.2rem', fontWeight: '600', marginBottom: 'var(--spacing-lg)' }}>
-                  Recommended for You
-                </h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--spacing-lg)' }}>
-                  {filteredCourses.map(course => (
-                    <CourseCard 
-                      key={course.id}
-                      id={course.id}
-                      title={course.title}
-                      description={course.description}
-                      trainer={course.trainer.name}
-                      difficulty={course.metadata.difficulty}
-                      duration={course.metadata.duration}
-                      rating={course.feedback.averageRating}
-                      skills={course.skills}
-                      status="published"
-                      courseType={course.courseType}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'trending' && (
-              <div>
-                <h2 style={{ color: 'var(--text-primary)', fontSize: '1.2rem', fontWeight: '600', marginBottom: 'var(--spacing-lg)' }}>
-                  Trending Courses
-                </h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--spacing-lg)' }}>
-                  {filteredCourses.map(course => (
-                    <CourseCard 
-                      key={course.id}
-                      id={course.id}
-                      title={course.title}
-                      description={course.description}
-                      trainer={course.trainer.name}
-                      difficulty={course.metadata.difficulty}
-                      duration={course.metadata.duration}
-                      rating={course.feedback.averageRating}
-                      skills={course.skills}
-                      status="published"
-                      courseType={course.courseType}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+        {/* Call to Action */}
+        <div className="bg-blue-600 rounded-2xl p-12 text-center text-white mt-8">
+          <h2 className="heading-2 text-white mb-4">Ready to Start Learning?</h2>
+          <p className="body-text-lg text-blue-100 mb-8">
+            Choose your learning path and begin your journey to mastery
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              to="/marketplace"
+              className="btn bg-white text-blue-600 hover:bg-gray-100"
+            >
+              Browse Marketplace
+            </Link>
+            <Link 
+              to="/personalized"
+              className="btn bg-blue-500 hover:bg-blue-400 text-white"
+            >
+              Get Personalized
+            </Link>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   )
 }

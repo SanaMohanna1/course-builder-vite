@@ -93,8 +93,25 @@ const useUserStore = create((set, get) => ({
       completedLessons: [],
       currentModule: null,
       progressPercentage: 0,
-      startedAt: null
+      startedAt: null,
+      lastAccessed: null
     }
+  },
+
+  updateCourseProgress: (courseId, progressPercentage, lastAccessed) => set((state) => ({
+    progress: {
+      ...state.progress,
+      [courseId]: {
+        ...state.progress[courseId],
+        progressPercentage,
+        lastAccessed
+      }
+    }
+  })),
+
+  isEnrolled: (courseId) => {
+    const state = get()
+    return state.enrolledCourses.includes(courseId)
   },
 
   // Async actions

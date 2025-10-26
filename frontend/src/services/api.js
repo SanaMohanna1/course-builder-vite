@@ -2,11 +2,11 @@
 // Connects to Railway backend API
 
 // Backend API base URL
-export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+export const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 // Helper function to make API requests
 const apiRequest = async (endpoint, options = {}) => {
-  const url = `${API_BASE_URL}${endpoint}`
+  const url = `${API_BASE}${endpoint}`
   const config = {
     headers: {
       'Content-Type': 'application/json',
