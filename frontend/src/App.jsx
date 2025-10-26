@@ -4,7 +4,7 @@ import useUserStore from './store/useUserStore'
 import ErrorBoundary from './components/ErrorBoundary'
 import { ToastProvider } from './contexts/ToastContext'
 import Container from './components/Container'
-import { Sun, Moon, Menu, X, User, BookOpen, Home, ShoppingBag, Sparkles, Library } from 'lucide-react'
+import { Sun, Moon, Menu, X, User, BookOpen, Home as HomeIcon, ShoppingBag, Sparkles, Library } from 'lucide-react'
 
 // Lazy load learner-focused pages
 const Home = lazy(() => import('./pages/Home'))
@@ -41,7 +41,7 @@ function App() {
 
   const getNavigationItems = () => {
     return [
-      { href: '/', label: 'Home', icon: Home },
+      { href: '/', label: 'Home', icon: HomeIcon },
       { href: '/marketplace', label: 'Marketplace', icon: ShoppingBag },
       { href: '/personalized', label: 'For You', icon: Sparkles },
       { href: '/library', label: 'My Library', icon: Library }
