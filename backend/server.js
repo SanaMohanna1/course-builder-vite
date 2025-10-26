@@ -1,11 +1,42 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const compression = require('compression');
-const path = require('path');
-const fs = require('fs');
-require('dotenv').config();
+import express from "express";
+import cors from "cors";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// ✅ Root health route
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Course Builder Backend is live ✅",
+    healthCheck: "/health",
+    version: "1.0.0",
+    timestamp: new Date().toISOString()
+  });
+});
+
+// ✅ Healthcheck endpoint
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    service: "Course Builder API",
+    version: "1.0.0"
+  });
+});
+
+// ✅ Simple ping endpoint for Railway
+app.get("/ping", (req, res) => {
+  res.status(200).send("pong");
+});
 
 // Load mock data
 const loadMockData = () => {
@@ -40,58 +71,8 @@ const loadMockData = () => {
 
 const mockData = loadMockData();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-const allowedOrigins = [
-  'https://course-builder-vite-gf1xqi19d-sana-mohannas-projects.vercel.app', // your Vercel frontend
-  'http://localhost:5173', // local dev
-];
-// Health check endpoints (before CORS middleware to avoid blocking)
-app.get('/health', (req, res) => {
-  try {
-    console.log('Health check requested from:', req.ip, req.headers['user-agent']);
-    res.status(200).json({ 
-      status: 'OK', 
-      timestamp: new Date().toISOString(),
-      service: 'Course Builder API',
-      version: '1.0.0',
-      uptime: process.uptime(),
-      memory: process.memoryUsage()
-    });
-  } catch (error) {
-    console.error('Health check error:', error);
-    res.status(500).json({ 
-      status: 'ERROR', 
-      timestamp: new Date().toISOString(),
-      error: error.message
-    });
-  }
-});
-
-// Simple health check for Railway (no CORS, no middleware)
-app.get('/ping', (req, res) => {
-  res.status(200).send('pong');
-});
-
-// Middleware
-app.use(helmet());
-app.use(compression());
-app.use(morgan('combined'));
-app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    callback(new Error('Not allowed by CORS'));
-  },
-  credentials: true
-}));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-
 // API Routes
-app.get('/api/courses', (req, res) => {
+app.get("/api/courses", (req, res) => {
   try {
     res.json({
       success: true,
@@ -100,13 +81,13 @@ app.get('/api/courses', (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: 'Failed to fetch courses',
+      error: "Failed to load courses",
       message: error.message
     });
   }
 });
 
-app.get('/api/courses/:id', (req, res) => {
+app.get("/api/courses/:id", (req, res) => {
   try {
     const { id } = req.params;
     const course = mockData.courses.find(c => c.id === id);
@@ -114,8 +95,7 @@ app.get('/api/courses/:id', (req, res) => {
     if (!course) {
       return res.status(404).json({
         success: false,
-        error: 'Course not found',
-        message: `Course with ID ${id} does not exist`
+        error: "Course not found"
       });
     }
     
@@ -126,81 +106,83 @@ app.get('/api/courses/:id', (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: 'Failed to fetch course',
+      error: "Failed to load course",
       message: error.message
     });
   }
 });
 
-app.post('/api/courses/:id/enroll', (req, res) => {
-  const { id } = req.params;
-  const { learnerId } = req.body;
-  
-  res.json({
-    success: true,
-    data: {
-      enrollmentId: `enrollment_${Date.now()}`,
-      learnerId,
-      courseId: id,
-      enrolledAt: new Date().toISOString(),
-      status: 'active'
-    }
-  });
-});
-
-app.post('/api/courses/:id/feedback', (req, res) => {
-  const { id } = req.params;
-  const { rating, comments, learnerId } = req.body;
-  
-  res.json({
-    success: true,
-    data: {
-      feedbackId: `feedback_${Date.now()}`,
-      learnerId,
-      courseId: id,
-      rating,
-      comments,
-      submittedAt: new Date().toISOString(),
-      status: 'submitted'
-    }
-  });
-});
-
-// Get lessons for a course
-app.get('/api/courses/:id/lessons', (req, res) => {
+app.get("/api/courses/:id/lessons", (req, res) => {
   try {
     const { id } = req.params;
-    const course = mockData.courses.find(c => c.id === id);
-    
-    if (!course) {
-      return res.status(404).json({
-        success: false,
-        error: 'Course not found',
-        message: `Course with ID ${id} does not exist`
-      });
-    }
-    
-    // Filter lessons for this course
-    const courseLessons = mockData.lessons.filter(lesson => lesson.courseId === id);
+    const lessons = mockData.lessons.filter(lesson => lesson.courseId === id);
     
     res.json({
       success: true,
-      data: courseLessons
+      data: lessons
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: 'Failed to fetch lessons',
+      error: "Failed to load lessons",
       message: error.message
     });
   }
 });
 
-// Get user progress
-app.get('/api/user/:id/progress', (req, res) => {
+app.post("/api/courses/:id/enroll", (req, res) => {
   try {
     const { id } = req.params;
-    const userProgress = mockData.userProgress[id] || mockData.userProgress.default;
+    const { learnerId } = req.body;
+    
+    res.json({
+      success: true,
+      data: {
+        enrollmentId: `enrollment_${Date.now()}`,
+        courseId: id,
+        learnerId,
+        enrolledAt: new Date().toISOString(),
+        status: 'active'
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: "Failed to enroll in course",
+      message: error.message
+    });
+  }
+});
+
+app.post("/api/courses/:id/feedback", (req, res) => {
+  try {
+    const { id } = req.params;
+    const { learnerId, rating, comments } = req.body;
+    
+    res.json({
+      success: true,
+      data: {
+        feedbackId: `feedback_${Date.now()}`,
+        courseId: id,
+        learnerId,
+        rating,
+        comments,
+        submittedAt: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: "Failed to submit feedback",
+      message: error.message
+    });
+  }
+});
+
+app.get("/api/user/:id/progress", (req, res) => {
+  try {
+    const { id } = req.params;
+    const userProgress = mockData.userProgress.progress[id] || null;
     
     res.json({
       success: true,
@@ -209,14 +191,13 @@ app.get('/api/user/:id/progress', (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: 'Failed to fetch user progress',
+      error: "Failed to load user progress",
       message: error.message
     });
   }
 });
 
-// Get user achievements
-app.get('/api/user/:id/achievements', (req, res) => {
+app.get("/api/user/:id/achievements", (req, res) => {
   try {
     const { id } = req.params;
     const userAchievements = mockData.achievements.filter(achievement => 
@@ -230,14 +211,13 @@ app.get('/api/user/:id/achievements', (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: 'Failed to fetch achievements',
+      error: "Failed to fetch achievements",
       message: error.message
     });
   }
 });
 
-// Get learning paths
-app.get('/api/learning-paths', (req, res) => {
+app.get("/api/learning-paths", (req, res) => {
   try {
     res.json({
       success: true,
@@ -246,14 +226,13 @@ app.get('/api/learning-paths', (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: 'Failed to fetch learning paths',
+      error: "Failed to fetch learning paths",
       message: error.message
     });
   }
 });
 
-// Get all users (for admin purposes)
-app.get('/api/users', (req, res) => {
+app.get("/api/users", (req, res) => {
   try {
     res.json({
       success: true,
@@ -262,20 +241,10 @@ app.get('/api/users', (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: 'Failed to fetch users',
+      error: "Failed to fetch users",
       message: error.message
     });
   }
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    error: 'Internal Server Error',
-    message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong!'
-  });
 });
 
 // 404 handler
@@ -287,32 +256,25 @@ app.use('*', (req, res) => {
   });
 });
 
+// Error handler
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({
+    success: false,
+    error: 'Internal Server Error',
+    message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong!'
+  });
+});
+
 // Start server
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Course Builder API running on port ${PORT}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`📊 Root endpoint: http://0.0.0.0:${PORT}/`);
   console.log(`📊 Health check: http://0.0.0.0:${PORT}/health`);
   console.log(`📊 Ping check: http://0.0.0.0:${PORT}/ping`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`📦 Mock data loaded: ${Object.keys(mockData).length} collections`);
-  
-  // Test health endpoints on startup
-  setTimeout(() => {
-    console.log('🔍 Testing health endpoints...');
-    const http = require('http');
-    const options = {
-      hostname: '0.0.0.0',
-      port: PORT,
-      path: '/ping',
-      method: 'GET'
-    };
-    const req = http.request(options, (res) => {
-      console.log(`✅ Ping endpoint working: ${res.statusCode}`);
-    });
-    req.on('error', (err) => {
-      console.error('❌ Ping endpoint test failed:', err.message);
-    });
-    req.end();
-  }, 1000);
 });
 
 // Handle server errors
@@ -326,4 +288,4 @@ process.on('unhandledRejection', (reason, promise) => {
   process.exit(1);
 });
 
-module.exports = app;
+export default app;
