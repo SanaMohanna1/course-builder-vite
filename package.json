@@ -1,40 +1,16 @@
 {
-  "name": "course-builder",
+  "name": "course-builder-monorepo",
   "version": "1.0.0",
-  "description": "Course Builder - AI-driven educational platform with personalized and marketplace courses",
   "private": true,
   "workspaces": [
     "frontend",
     "backend"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev:backend": "cd backend && npm run dev",
-    "build": "npm run build:frontend",
-    "build:frontend": "cd frontend && npm run build",
-    "start": "cd backend && npm start",
-    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
-  "keywords": [
-    "course-builder",
-    "education",
-    "ai",
-    "learning",
-    "react",
-    "nodejs",
-    "api"
-  ],
-  "author": "Sana Mohanna",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/SanaMohanna1/course-builder-vite.git"
+    "build": "cd frontend && npm run build",
+    "dev": "cd frontend && npm run dev",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install",
+    "install:all": "npm run install:frontend && npm run install:backend"
   }
 }
-
-
-
