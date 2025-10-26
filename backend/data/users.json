@@ -4,24 +4,31 @@
       "id": "user_001",
       "name": "John Doe",
       "email": "john@example.com",
-      "role": "trainer",
-      "courses": ["course_001"]
+      "role": "learner",
+      "courses": ["course_001"],
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=JD",
+      "joinedAt": "2024-01-15T10:00:00Z",
+      "lastActive": "2024-02-10T14:30:00Z"
     },
     {
-      "id": "user_002", 
+      "id": "user_002",
       "name": "Jane Smith",
       "email": "jane@example.com",
-      "role": "trainer",
-      "courses": ["course_002"]
+      "role": "learner",
+      "courses": ["course_002"],
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=JS",
+      "joinedAt": "2024-01-20T09:00:00Z",
+      "lastActive": "2024-02-08T16:45:00Z"
     },
     {
-      "id": "learner_001",
-      "name": "Alice Johnson",
-      "email": "alice@example.com",
-      "role": "learner",
-      "enrolledCourses": ["course_001"]
+      "id": "trainer_001",
+      "name": "Sarah Chen",
+      "email": "sarah.chen@techacademy.com",
+      "role": "trainer",
+      "courses": ["course_001"],
+      "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=SC",
+      "joinedAt": "2024-01-01T00:00:00Z",
+      "lastActive": "2024-02-10T10:00:00Z"
     }
   ]
 }
-
-

@@ -1,70 +1,63 @@
-import express from "express";
-import cors from "cors";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import express from 'express';
+import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// ✅ Root health route
-app.get("/", (req, res) => {
+// Health check endpoints (CRITICAL for Railway)
+app.get('/', (req, res) => {
   res.status(200).json({
-    message: "Course Builder Backend is live ✅",
-    healthCheck: "/health",
-    version: "1.0.0",
-    timestamp: new Date().toISOString()
-  });
-});
-
-// ✅ Healthcheck endpoint
-app.get("/health", (req, res) => {
-  res.status(200).json({
-    status: "OK",
+    message: 'Course Builder Backend is running ✅',
+    status: 'OK',
     timestamp: new Date().toISOString(),
-    service: "Course Builder API",
-    version: "1.0.0"
+    version: '1.0.0'
   });
 });
 
-// ✅ Simple ping endpoint for Railway
-app.get("/ping", (req, res) => {
-  res.status(200).send("pong");
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    service: 'Course Builder API'
+  });
+});
+
+app.get('/ping', (req, res) => {
+  res.status(200).send('pong');
 });
 
 // Load mock data
 const loadMockData = () => {
   try {
-    const courses = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'courses.json'), 'utf8'));
-    const lessons = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'lessons.json'), 'utf8'));
-    const users = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'users.json'), 'utf8'));
-    const achievements = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'achievements.json'), 'utf8'));
-    const userProgress = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'user-progress.json'), 'utf8'));
-    const learningPaths = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'learning-paths.json'), 'utf8'));
+    const coursesPath = path.join(__dirname, 'data', 'courses.json');
+    const lessonsPath = path.join(__dirname, 'data', 'lessons.json');
+    const usersPath = path.join(__dirname, 'data', 'users.json');
+    
+    const courses = JSON.parse(fs.readFileSync(coursesPath, 'utf8'));
+    const lessons = JSON.parse(fs.readFileSync(lessonsPath, 'utf8'));
+    const users = JSON.parse(fs.readFileSync(usersPath, 'utf8'));
     
     return {
-      courses: courses.courses,
-      lessons: lessons.lessons,
-      users: users.users,
-      achievements: achievements.achievements,
-      userProgress: userProgress,
-      learningPaths: learningPaths.learningPaths
+      courses: courses.courses || courses,
+      lessons: lessons.lessons || lessons,
+      users: users.users || users
     };
   } catch (error) {
     console.error('Error loading mock data:', error);
     return {
       courses: [],
       lessons: [],
-      users: [],
-      achievements: [],
-      userProgress: {},
-      learningPaths: []
+      users: []
     };
   }
 };
@@ -72,7 +65,7 @@ const loadMockData = () => {
 const mockData = loadMockData();
 
 // API Routes
-app.get("/api/courses", (req, res) => {
+app.get('/api/courses', (req, res) => {
   try {
     res.json({
       success: true,
@@ -81,13 +74,12 @@ app.get("/api/courses", (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: "Failed to load courses",
-      message: error.message
+      error: 'Failed to load courses'
     });
   }
 });
 
-app.get("/api/courses/:id", (req, res) => {
+app.get('/api/courses/:id', (req, res) => {
   try {
     const { id } = req.params;
     const course = mockData.courses.find(c => c.id === id);
@@ -95,7 +87,7 @@ app.get("/api/courses/:id", (req, res) => {
     if (!course) {
       return res.status(404).json({
         success: false,
-        error: "Course not found"
+        error: 'Course not found'
       });
     }
     
@@ -106,13 +98,12 @@ app.get("/api/courses/:id", (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: "Failed to load course",
-      message: error.message
+      error: 'Failed to load course'
     });
   }
 });
 
-app.get("/api/courses/:id/lessons", (req, res) => {
+app.get('/api/courses/:id/lessons', (req, res) => {
   try {
     const { id } = req.params;
     const lessons = mockData.lessons.filter(lesson => lesson.courseId === id);
@@ -124,13 +115,12 @@ app.get("/api/courses/:id/lessons", (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: "Failed to load lessons",
-      message: error.message
+      error: 'Failed to load lessons'
     });
   }
 });
 
-app.post("/api/courses/:id/enroll", (req, res) => {
+app.post('/api/courses/:id/enroll', (req, res) => {
   try {
     const { id } = req.params;
     const { learnerId } = req.body;
@@ -148,91 +138,12 @@ app.post("/api/courses/:id/enroll", (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: "Failed to enroll in course",
-      message: error.message
+      error: 'Failed to enroll in course'
     });
   }
 });
 
-app.post("/api/courses/:id/feedback", (req, res) => {
-  try {
-    const { id } = req.params;
-    const { learnerId, rating, comments } = req.body;
-    
-    res.json({
-      success: true,
-      data: {
-        feedbackId: `feedback_${Date.now()}`,
-        courseId: id,
-        learnerId,
-        rating,
-        comments,
-        submittedAt: new Date().toISOString()
-      }
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: "Failed to submit feedback",
-      message: error.message
-    });
-  }
-});
-
-app.get("/api/user/:id/progress", (req, res) => {
-  try {
-    const { id } = req.params;
-    const userProgress = mockData.userProgress.progress[id] || null;
-    
-    res.json({
-      success: true,
-      data: userProgress
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: "Failed to load user progress",
-      message: error.message
-    });
-  }
-});
-
-app.get("/api/user/:id/achievements", (req, res) => {
-  try {
-    const { id } = req.params;
-    const userAchievements = mockData.achievements.filter(achievement => 
-      achievement.earnedBy === id || achievement.earnedBy === 'default'
-    );
-    
-    res.json({
-      success: true,
-      data: userAchievements
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: "Failed to fetch achievements",
-      message: error.message
-    });
-  }
-});
-
-app.get("/api/learning-paths", (req, res) => {
-  try {
-    res.json({
-      success: true,
-      data: mockData.learningPaths
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: "Failed to fetch learning paths",
-      message: error.message
-    });
-  }
-});
-
-app.get("/api/users", (req, res) => {
+app.get('/api/users', (req, res) => {
   try {
     res.json({
       success: true,
@@ -241,8 +152,7 @@ app.get("/api/users", (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: "Failed to fetch users",
-      message: error.message
+      error: 'Failed to load users'
     });
   }
 });
@@ -262,12 +172,11 @@ app.use((err, req, res, next) => {
   res.status(500).json({
     success: false,
     error: 'Internal Server Error',
-    message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong!'
+    message: 'Something went wrong!'
   });
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ Server running on port ${PORT}`);
   console.log(`📊 Root endpoint: http://0.0.0.0:${PORT}/`);
