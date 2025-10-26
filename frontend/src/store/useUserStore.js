@@ -22,24 +22,24 @@ const useUserStore = create((set, get) => ({
     userRole: role 
   }),
 
-      // Mock user data (in production, this would come from auth microservice)
-      loginAsTrainer: () => set({
-        currentUser: {
-          id: 'trainer_001',
-          name: 'John Doe',
-          email: 'john@example.com'
-        },
-        userRole: 'trainer'
-      }),
+  // Mock user data (in production, this would come from auth microservice)
+  loginAsTrainer: () => set({
+    currentUser: {
+      id: 'trainer_001',
+      name: 'John Doe',
+      email: 'john@example.com'
+    },
+    userRole: 'trainer'
+  }),
 
-      loginAsLearner: () => set({
-        currentUser: {
-          id: 'learner_001',
-          name: 'Sarah Wilson',
-          email: 'sarah@example.com'
-        },
-        userRole: 'learner'
-      }),
+  loginAsLearner: () => set({
+    currentUser: {
+      id: 'learner_001',
+      name: 'Sarah Wilson',
+      email: 'sarah@example.com'
+    },
+    userRole: 'learner'
+  }),
   
   logout: () => set({ 
     currentUser: null, 
