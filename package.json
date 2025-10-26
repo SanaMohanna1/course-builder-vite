@@ -2,10 +2,6 @@
   "name": "course-builder-monorepo",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend"
-  ],
   "scripts": {
     "build": "cd frontend && npm run build",
     "dev": "cd frontend && npm run dev",
