@@ -250,7 +250,7 @@ export const userAPI = {
       console.error("Failed to update lesson progress:", error)
       return { success: false, data: null }
     }
-  },,
+  },
 
   // Update lesson progress (specific endpoint)
   async updateLessonProgressById(lessonId, learnerId, courseId, completed) {
