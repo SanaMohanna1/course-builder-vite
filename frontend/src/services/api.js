@@ -76,6 +76,36 @@ export const courseAPI = {
     }
   },
 
+  // Get course topics
+  async getCourseTopics(courseId) {
+    try {
+      return await apiRequest(`/courses/${courseId}/topics`)
+    } catch (error) {
+      console.error(`Failed to load topics for course ${courseId}:`, error)
+      return { success: false, data: [] }
+    }
+  },
+
+  // Get topic modules
+  async getTopicModules(courseId, topicId) {
+    try {
+      return await apiRequest(`/courses/${courseId}/topics/${topicId}/modules`)
+    } catch (error) {
+      console.error(`Failed to load modules for topic ${topicId}:`, error)
+      return { success: false, data: [] }
+    }
+  },
+
+  // Get module lessons
+  async getModuleLessons(courseId, topicId, moduleId) {
+    try {
+      return await apiRequest(`/courses/${courseId}/topics/${topicId}/modules/${moduleId}/lessons`)
+    } catch (error) {
+      console.error(`Failed to load lessons for module ${moduleId}:`, error)
+      return { success: false, data: [] }
+    }
+  },
+
   // Create new course
   async createCourse(courseData) {
     try {

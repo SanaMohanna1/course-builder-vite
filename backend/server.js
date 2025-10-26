@@ -79,6 +79,105 @@ app.get('/api/courses', (req, res) => {
   }
 });
 
+// Get course topics
+app.get('/api/courses/:id/topics', (req, res) => {
+  try {
+    const { id } = req.params;
+    const course = mockData.courses.find(c => c.id === id);
+    
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        error: 'Course not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: course.topics || []
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to load topics'
+    });
+  }
+});
+
+// Get topic modules
+app.get('/api/courses/:courseId/topics/:topicId/modules', (req, res) => {
+  try {
+    const { courseId, topicId } = req.params;
+    const course = mockData.courses.find(c => c.id === courseId);
+    
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        error: 'Course not found'
+      });
+    }
+    
+    const topic = course.topics?.find(t => t.id === topicId);
+    if (!topic) {
+      return res.status(404).json({
+        success: false,
+        error: 'Topic not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: topic.modules || []
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to load modules'
+    });
+  }
+});
+
+// Get module lessons
+app.get('/api/courses/:courseId/topics/:topicId/modules/:moduleId/lessons', (req, res) => {
+  try {
+    const { courseId, topicId, moduleId } = req.params;
+    const course = mockData.courses.find(c => c.id === courseId);
+    
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        error: 'Course not found'
+      });
+    }
+    
+    const topic = course.topics?.find(t => t.id === topicId);
+    if (!topic) {
+      return res.status(404).json({
+        success: false,
+        error: 'Topic not found'
+      });
+    }
+    
+    const module = topic.modules?.find(m => m.id === moduleId);
+    if (!module) {
+      return res.status(404).json({
+        success: false,
+        error: 'Module not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: module.lessons || []
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to load lessons'
+    });
+  }
+});
+
 app.get('/api/courses/:id', (req, res) => {
   try {
     const { id } = req.params;
@@ -106,11 +205,28 @@ app.get('/api/courses/:id', (req, res) => {
 app.get('/api/courses/:id/lessons', (req, res) => {
   try {
     const { id } = req.params;
-    const lessons = mockData.lessons.filter(lesson => lesson.courseId === id);
+    const course = mockData.courses.find(c => c.id === id);
+    
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        error: 'Course not found'
+      });
+    }
+    
+    // Flatten all lessons from all topics and modules
+    const allLessons = [];
+    course.topics?.forEach(topic => {
+      topic.modules?.forEach(module => {
+        if (module.lessons) {
+          allLessons.push(...module.lessons);
+        }
+      });
+    });
     
     res.json({
       success: true,
-      data: lessons
+      data: allLessons
     });
   } catch (error) {
     res.status(500).json({

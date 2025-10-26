@@ -3,10 +3,12 @@
     {
       "id": "lesson_001",
       "courseId": "course_001",
+      "topicId": "topic_001",
+      "moduleId": "module_001",
       "title": "What is React and Why Use It?",
-      "content": "React is a JavaScript library for building user interfaces, particularly web applications. It was created by Facebook and is now maintained by Facebook and the community. React allows you to create reusable UI components and manage the state of your application efficiently.",
+      "content": "React is a JavaScript library for building user interfaces, particularly web applications. It was created by Facebook and is now maintained by Facebook and the community. React allows you to create reusable UI components and manage the state of your application efficiently.\n\n## Key Features of React:\n\n1. **Component-Based Architecture**: Build encapsulated components that manage their own state\n2. **Virtual DOM**: React uses a virtual DOM for better performance\n3. **Declarative**: Describe what the UI should look like for any given state\n4. **Learn Once, Write Anywhere**: Use React for web, mobile, and desktop applications\n\n## Why Use React?\n\n- **Popular and In-Demand**: One of the most popular frontend frameworks\n- **Great Developer Experience**: Excellent tooling and ecosystem\n- **Performance**: Virtual DOM and efficient rendering\n- **Community**: Large community and extensive resources",
       "type": "video",
-      "duration": "45 minutes",
+      "duration": "15 minutes",
       "order": 1,
       "completed": false,
       "resources": [
@@ -20,97 +22,134 @@
           "id": "resource_002",
           "title": "Component Examples",
           "type": "Code",
-          "content": "// Example React component\nfunction Welcome(props) {\n  return <h1>Hello, {props.name}</h1>;\n}"
+          "content": "// Example React component\nfunction Welcome(props) {\n  return <h1>Hello, {props.name}</h1>;\n}\n\n// Using the component\nfunction App() {\n  return (\n    <div>\n      <Welcome name=\"Sara\" />\n      <Welcome name=\"Cahal\" />\n      <Welcome name=\"Edite\" />\n    </div>\n  );\n}"
         }
       ]
     },
     {
       "id": "lesson_002",
       "courseId": "course_001",
-      "title": "State and Props",
-      "content": "Deep dive into React state management and prop passing between components. Learn how to manage component state and pass data between parent and child components.",
-      "type": "interactive",
-      "duration": "60 minutes",
+      "topicId": "topic_001",
+      "moduleId": "module_001",
+      "title": "Setting Up Your Development Environment",
+      "content": "Before we start building React applications, we need to set up our development environment. This includes installing Node.js, setting up a code editor, and creating our first React project.\n\n## Prerequisites:\n\n1. **Node.js**: Download and install from nodejs.org\n2. **Code Editor**: VS Code is recommended\n3. **Git**: For version control\n\n## Step-by-Step Setup:\n\n1. Install Node.js (version 16 or higher)\n2. Install VS Code with React extensions\n3. Install create-react-app globally\n4. Create your first React project\n5. Start the development server",
+      "type": "tutorial",
+      "duration": "20 minutes",
       "order": 2,
       "completed": false,
       "resources": [
         {
           "id": "resource_003",
-          "title": "State Management Guide",
-          "type": "PDF",
-          "url": "/resources/state-management.pdf"
+          "title": "Node.js Download",
+          "type": "Link",
+          "url": "https://nodejs.org"
+        },
+        {
+          "id": "resource_004",
+          "title": "VS Code Extensions",
+          "type": "List",
+          "content": "Essential VS Code extensions for React development:\n- ES7+ React/Redux/React-Native snippets\n- Prettier - Code formatter\n- Auto Rename Tag\n- Bracket Pair Colorizer"
         }
       ]
     },
     {
       "id": "lesson_003",
       "courseId": "course_001",
-      "title": "React Hooks",
-      "content": "Learn about modern React hooks including useState, useEffect, and custom hooks. Hooks allow you to use state and other React features in functional components.",
+      "topicId": "topic_001",
+      "moduleId": "module_002",
+      "title": "Creating a New React App",
+      "content": "Now that we have our development environment set up, let's create our first React application using create-react-app.\n\n## Using create-react-app:\n\nCreate React App is the official way to create single-page React applications. It offers a modern build setup with no configuration.\n\n```bash\nnpx create-react-app my-app\ncd my-app\nnpm start\n```\n\n## What create-react-app provides:\n\n- **Modern JavaScript**: Latest JavaScript features\n- **React Scripts**: Pre-configured build tools\n- **Hot Reloading**: See changes instantly\n- **Production Build**: Optimized for deployment",
       "type": "video",
-      "duration": "50 minutes",
-      "order": 3,
-      "completed": false,
-      "resources": [
-        {
-          "id": "resource_004",
-          "title": "Hooks Reference",
-          "type": "Link",
-          "url": "https://react.dev/reference/react"
-        }
-      ]
-    },
-    {
-      "id": "lesson_004",
-      "courseId": "course_002",
-      "title": "JavaScript Fundamentals",
-      "content": "Master the core concepts of JavaScript including variables, functions, and objects. This lesson covers the essential building blocks of JavaScript programming.",
-      "type": "video",
-      "duration": "40 minutes",
+      "duration": "10 minutes",
       "order": 1,
       "completed": false,
       "resources": [
         {
           "id": "resource_005",
-          "title": "JavaScript MDN Docs",
+          "title": "Create React App Documentation",
           "type": "Link",
-          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+          "url": "https://create-react-app.dev"
         }
       ]
     },
     {
-      "id": "lesson_005",
-      "courseId": "course_002",
-      "title": "ES6+ Features",
-      "content": "Explore modern JavaScript features including arrow functions, destructuring, and modules. Learn the latest JavaScript syntax and features.",
-      "type": "interactive",
-      "duration": "55 minutes",
+      "id": "lesson_004",
+      "courseId": "course_001",
+      "topicId": "topic_001",
+      "moduleId": "module_002",
+      "title": "Understanding the Project Structure",
+      "content": "Let's explore the files and folders that create-react-app generates for us.\n\n## Project Structure:\n\n```\nmy-app/\n├── public/\n│   ├── index.html\n│   └── favicon.ico\n├── src/\n│   ├── App.js\n│   ├── App.css\n│   ├── index.js\n│   └── index.css\n├── package.json\n└── README.md\n```\n\n## Key Files:\n\n- **public/index.html**: The HTML template\n- **src/index.js**: The entry point of your application\n- **src/App.js**: The main App component\n- **package.json**: Project dependencies and scripts",
+      "type": "tutorial",
+      "duration": "15 minutes",
       "order": 2,
       "completed": false,
       "resources": [
         {
           "id": "resource_006",
-          "title": "ES6 Cheat Sheet",
+          "title": "Project Structure Guide",
           "type": "PDF",
-          "url": "/resources/es6-cheatsheet.pdf"
+          "url": "/resources/project-structure.pdf"
+        }
+      ]
+    },
+    {
+      "id": "lesson_005",
+      "courseId": "course_001",
+      "topicId": "topic_002",
+      "moduleId": "module_003",
+      "title": "What are React Components?",
+      "content": "Components are the building blocks of React applications. They let you split the UI into independent, reusable pieces.\n\n## Component Characteristics:\n\n1. **Reusable**: Use the same component in multiple places\n2. **Independent**: Each component manages its own state\n3. **Composable**: Combine components to build complex UIs\n4. **Testable**: Easy to test in isolation\n\n## Types of Components:\n\n- **Functional Components**: Modern way using functions\n- **Class Components**: Traditional way using classes\n\n## Example Component:\n\n```jsx\nfunction Welcome(props) {\n  return <h1>Hello, {props.name}!</h1>;\n}\n```",
+      "type": "video",
+      "duration": "20 minutes",
+      "order": 1,
+      "completed": false,
+      "resources": [
+        {
+          "id": "resource_007",
+          "title": "Components and Props",
+          "type": "Link",
+          "url": "https://react.dev/learn/your-first-component"
         }
       ]
     },
     {
       "id": "lesson_personalized_001",
       "courseId": "course_personalized_001",
-      "title": "Initial Skills Assessment",
-      "content": "Take a comprehensive assessment to determine your current React knowledge level. This helps the AI create a personalized learning path for you.",
+      "topicId": "topic_personalized_001",
+      "moduleId": "module_personalized_001",
+      "title": "Skills Assessment Quiz",
+      "content": "Welcome to your personalized React learning journey! This assessment will help us understand your current knowledge level and create a customized learning path just for you.\n\n## Assessment Overview:\n\nThis quiz covers:\n- JavaScript fundamentals\n- HTML/CSS basics\n- Previous React experience (if any)\n- Learning preferences\n- Project goals\n\n## How it works:\n\n1. Answer questions honestly\n2. Don't worry about getting everything right\n3. The AI will analyze your responses\n4. A personalized curriculum will be generated\n\n## Time: 30 minutes\n\nTake your time and answer each question thoughtfully. This assessment is crucial for creating the best learning experience for you.",
       "type": "assessment",
       "duration": "30 minutes",
       "order": 1,
       "completed": false,
       "resources": [
         {
-          "id": "resource_007",
+          "id": "resource_008",
           "title": "Skills Quiz",
           "type": "Interactive",
           "url": "/assessment/skills-quiz"
+        }
+      ]
+    },
+    {
+      "id": "lesson_personalized_002",
+      "courseId": "course_personalized_001",
+      "topicId": "topic_personalized_001",
+      "moduleId": "module_personalized_001",
+      "title": "Learning Goals Setup",
+      "description": "Define your specific learning objectives and timeline",
+      "content": "Now that we've assessed your current skills, let's set up your learning goals and preferences.\n\n## Learning Goals:\n\n- What do you want to achieve with React?\n- What type of projects interest you?\n- How much time can you dedicate weekly?\n- What's your preferred learning style?\n\n## Timeline Options:\n\n- **Intensive**: 2-3 hours daily (4-6 weeks)\n- **Moderate**: 1-2 hours daily (6-8 weeks)\n- **Flexible**: 30-60 minutes daily (8-10 weeks)\n\n## Project Preferences:\n\n- Web applications\n- Mobile apps (React Native)\n- Desktop applications\n- Full-stack development",
+      "type": "interactive",
+      "duration": "15 minutes",
+      "order": 2,
+      "completed": false,
+      "resources": [
+        {
+          "id": "resource_009",
+          "title": "Goal Setting Worksheet",
+          "type": "PDF",
+          "url": "/resources/goal-setting.pdf"
         }
       ]
     }

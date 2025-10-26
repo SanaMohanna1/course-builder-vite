@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { courseAPI } from '../services/api'
 import { useUserStore } from '../store/useUserStore'
+import CourseStructure from '../components/CourseStructure'
 import { 
   Play, 
   Pause, 
@@ -52,6 +53,7 @@ function LessonPage() {
   const [timeSpent, setTimeSpent] = useState(0)
 
   useEffect(() => {
+    console.log('LessonPage mounted with courseId:', courseId, 'lessonId:', lessonId)
     loadCourseData()
   }, [courseId, lessonId])
 
@@ -433,42 +435,9 @@ function LessonPage() {
           </div>
         </div>
 
-        {/* Sidebar - Lesson List */}
-        <div className="w-80 bg-white border-l border-gray-200 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Course Lessons</h3>
-          <div className="space-y-2">
-            {lessons.map((lessonItem, index) => (
-              <div
-                key={lessonItem.id}
-                className={`p-3 rounded-lg cursor-pointer transition-colors ${
-                  lessonItem.id === lessonId
-                    ? 'bg-blue-50 border border-blue-200'
-                    : 'hover:bg-gray-50'
-                }`}
-                onClick={() => navigate(`/course/${courseId}/lesson/${lessonItem.id}`)}
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <span className="text-sm font-medium text-gray-500">
-                        {index + 1}
-                      </span>
-                      <h4 className="text-sm font-medium text-gray-900 line-clamp-2">
-                        {lessonItem.title}
-                      </h4>
-                    </div>
-                    <div className="flex items-center space-x-2 text-xs text-gray-500">
-                      <Clock className="w-3 h-3" />
-                      <span>{lessonItem.duration}</span>
-                    </div>
-                  </div>
-                  {lessonItem.completed && (
-                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Sidebar - Course Structure */}
+        <div className="w-80 bg-white border-l border-gray-200">
+          <CourseStructure courseId={courseId} currentLessonId={lessonId} />
         </div>
       </div>
     </div>

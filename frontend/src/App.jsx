@@ -166,9 +166,9 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/marketplace" element={<Marketplace />} />
                   <Route path="/personalized" element={<Personalized />} />
+                  <Route path="/course/:courseId/lesson/:lessonId" element={<LessonPage />} />
                   <Route path="/course/:id" element={<CourseDetails />} />
                   <Route path="/study/:id" element={<StudyCourse />} />
-                  <Route path="/course/:courseId/lesson/:lessonId" element={<LessonPage />} />
                   <Route path="/assessment/:id" element={<Assessment />} />
                   <Route path="/feedback/:id" element={<Feedback />} />
                   <Route path="/library" element={<MyLibrary />} />

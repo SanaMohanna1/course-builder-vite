@@ -4,149 +4,346 @@
       "id": "course_001",
       "title": "React Development Fundamentals",
       "description": "Master React from the ground up! Learn modern React development with hooks, state management, and best practices.",
-      "trainer": {
-        "id": "trainer_001",
-        "name": "Sarah Chen",
-        "email": "sarah.chen@techacademy.com",
-        "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=SC",
-        "bio": "Senior Frontend Engineer at Meta, React expert with 8+ years experience",
-        "rating": 4.9,
-        "students": 12500
-      },
-      "skills": ["React", "JavaScript", "JSX", "Hooks", "State Management", "Component Design"],
-      "status": "published",
-      "version": "2.1.0",
-      "createdAt": "2024-01-15T10:00:00Z",
-      "publishedAt": "2024-01-20T14:30:00Z",
-      "updatedAt": "2024-02-10T09:15:00Z",
-      "courseType": "general",
+      "instructor": "Sarah Johnson",
+      "rating": 4.8,
+      "students": 1250,
+      "price": 99,
+      "courseType": "marketplace",
+      "level": "Beginner",
+      "duration": "8 weeks",
+      "language": "English",
+      "thumbnail": "/images/react-course.jpg",
+      "topics": [
+        {
+          "id": "topic_001",
+          "title": "Getting Started with React",
+          "description": "Learn the basics of React and set up your development environment",
+          "order": 1,
+          "modules": [
+            {
+              "id": "module_001",
+              "title": "Introduction to React",
+              "description": "Understanding what React is and why it's popular",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_001",
+                  "title": "What is React and Why Use It?",
+                  "description": "Introduction to React concepts and benefits",
+                  "duration": "15 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_002",
+                  "title": "Setting Up Your Development Environment",
+                  "description": "Install Node.js, create-react-app, and VS Code setup",
+                  "duration": "20 minutes",
+                  "type": "tutorial",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            },
+            {
+              "id": "module_002",
+              "title": "Your First React App",
+              "description": "Create and understand your first React application",
+              "order": 2,
+              "lessons": [
+                {
+                  "id": "lesson_003",
+                  "title": "Creating a New React App",
+                  "description": "Use create-react-app to bootstrap your project",
+                  "duration": "10 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_004",
+                  "title": "Understanding the Project Structure",
+                  "description": "Explore the files and folders in a React project",
+                  "duration": "15 minutes",
+                  "type": "tutorial",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "topic_002",
+          "title": "Components and JSX",
+          "description": "Learn how to create and use React components",
+          "order": 2,
+          "modules": [
+            {
+              "id": "module_003",
+              "title": "Understanding Components",
+              "description": "What are components and how to create them",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_005",
+                  "title": "What are React Components?",
+                  "description": "Understanding the component-based architecture",
+                  "duration": "20 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_006",
+                  "title": "Creating Your First Component",
+                  "description": "Write and render your first functional component",
+                  "duration": "25 minutes",
+                  "type": "interactive",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            },
+            {
+              "id": "module_004",
+              "title": "JSX Deep Dive",
+              "description": "Master JSX syntax and best practices",
+              "order": 2,
+              "lessons": [
+                {
+                  "id": "lesson_007",
+                  "title": "Understanding JSX",
+                  "description": "Learn JSX syntax and how it differs from HTML",
+                  "duration": "30 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_008",
+                  "title": "JSX Expressions and Variables",
+                  "description": "Use JavaScript expressions in JSX",
+                  "duration": "25 minutes",
+                  "type": "interactive",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "topic_003",
+          "title": "State and Props",
+          "description": "Master React state management and prop passing",
+          "order": 3,
+          "modules": [
+            {
+              "id": "module_005",
+              "title": "Understanding Props",
+              "description": "How to pass data between components",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_009",
+                  "title": "What are Props?",
+                  "description": "Understanding component props and data flow",
+                  "duration": "20 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_010",
+                  "title": "Passing Props to Components",
+                  "description": "Learn how to pass and receive props",
+                  "duration": "30 minutes",
+                  "type": "interactive",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            },
+            {
+              "id": "module_006",
+              "title": "State Management",
+              "description": "Managing component state with useState",
+              "order": 2,
+              "lessons": [
+                {
+                  "id": "lesson_011",
+                  "title": "Introduction to State",
+                  "description": "Understanding component state and re-rendering",
+                  "duration": "25 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_012",
+                  "title": "Using useState Hook",
+                  "description": "Implement state in functional components",
+                  "duration": "35 minutes",
+                  "type": "interactive",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "metadata": {
-        "difficulty": "intermediate",
-        "duration": "6 weeks",
-        "effort": "8-10 hours/week",
-        "prerequisites": ["JavaScript", "HTML", "CSS", "ES6"],
-        "tags": ["frontend", "react", "javascript", "web-development"],
-        "language": "English",
-        "certificate": true,
-        "lifetimeAccess": true
-      },
-      "pricing": {
-        "amount": 99.99,
-        "currency": "USD",
-        "isFree": false,
-        "discountPercentage": 20,
-        "originalPrice": 124.99
-      },
-      "feedback": {
-        "averageRating": 4.7,
-        "totalRatings": 156,
-        "reviews": [
-          { "userId": "learner_001", "rating": 5, "comment": "Excellent course, very clear explanations!", "date": "2024-02-01T10:00:00Z" },
-          { "userId": "learner_002", "rating": 4, "comment": "Good content, but some parts were a bit fast-paced.", "date": "2024-02-05T11:30:00Z" }
-        ]
-      },
-      "enrollment": {
-        "totalEnrolled": 1200,
-        "activeLearners": 850,
-        "completionRate": 65
-      }
-    },
-    {
-      "id": "course_002",
-      "title": "JavaScript ES6+ Mastery",
-      "description": "Deep dive into modern JavaScript features including ES6+, async programming, modules, and advanced patterns.",
-      "trainer": {
-        "id": "trainer_002",
-        "name": "Mike Johnson",
-        "email": "mike.johnson@techacademy.com",
-        "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=MJ",
-        "bio": "JavaScript Architect at Google, 10+ years experience in modern web development",
-        "rating": 4.8,
-        "students": 8900
-      },
-      "skills": ["JavaScript", "ES6+", "Async/Await", "Promises", "Modules", "Destructuring"],
-      "status": "published",
-      "version": "1.5.0",
-      "createdAt": "2024-01-10T08:00:00Z",
-      "publishedAt": "2024-01-15T12:00:00Z",
-      "updatedAt": "2024-02-05T14:20:00Z",
-      "courseType": "general",
-      "metadata": {
-        "difficulty": "intermediate",
-        "duration": "4 weeks",
-        "effort": "6-8 hours/week",
-        "prerequisites": ["Basic JavaScript", "HTML", "CSS"],
-        "tags": ["javascript", "es6", "programming", "web-development"],
-        "language": "English",
-        "certificate": true,
-        "lifetimeAccess": true
-      },
-      "pricing": {
-        "amount": 79.99,
-        "currency": "USD",
-        "isFree": false,
-        "discountPercentage": 15,
-        "originalPrice": 94.99
-      },
-      "feedback": {
-        "averageRating": 4.6,
-        "totalRatings": 89,
-        "reviews": [
-          { "userId": "learner_003", "rating": 5, "comment": "Great course for understanding modern JavaScript!", "date": "2024-01-25T09:00:00Z" }
-        ]
-      },
-      "enrollment": {
-        "totalEnrolled": 750,
-        "activeLearners": 520,
-        "completionRate": 70
+        "duration": "8 weeks",
+        "difficulty": "Beginner",
+        "prerequisites": ["Basic JavaScript knowledge", "HTML/CSS fundamentals"],
+        "skills": ["React", "JavaScript", "JSX", "Components", "State Management"],
+        "certificate": true
       }
     },
     {
       "id": "course_personalized_001",
-      "title": "Your Personalized React Learning Path",
-      "description": "A custom learning journey tailored to your current skills and learning goals. This adaptive course adjusts to your pace and focuses on areas where you need the most improvement.",
-      "trainer": {
-        "id": "ai_trainer_001",
-        "name": "AI Learning Assistant",
-        "email": "ai@coursebuilder.com",
-        "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=AI",
-        "bio": "AI-powered learning companion that adapts to your learning style and progress",
-        "rating": 4.9,
-        "students": 0
-      },
-      "skills": ["React", "JavaScript", "Personalized Learning", "Adaptive Content", "AI-Guided"],
-      "status": "published",
-      "version": "1.0.0",
-      "createdAt": "2024-02-01T10:00:00Z",
-      "publishedAt": "2024-02-01T10:00:00Z",
-      "updatedAt": "2024-02-01T10:00:00Z",
+      "title": "Personalized React Learning Path",
+      "description": "AI-powered personalized React course tailored to your skill level and learning goals.",
+      "instructor": "AI Learning Assistant",
+      "rating": 4.9,
+      "students": 500,
+      "price": 0,
       "courseType": "personalized",
+      "level": "Adaptive",
+      "duration": "6-10 weeks",
+      "language": "English",
+      "thumbnail": "/images/personalized-react.jpg",
+      "topics": [
+        {
+          "id": "topic_personalized_001",
+          "title": "Skills Assessment & Foundation",
+          "description": "Assess your current skills and build a strong foundation",
+          "order": 1,
+          "modules": [
+            {
+              "id": "module_personalized_001",
+              "title": "Initial Assessment",
+              "description": "Comprehensive skills evaluation to personalize your learning",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_personalized_001",
+                  "title": "Skills Assessment Quiz",
+                  "description": "Take a comprehensive assessment to determine your current React knowledge level",
+                  "duration": "30 minutes",
+                  "type": "assessment",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_personalized_002",
+                  "title": "Learning Goals Setup",
+                  "description": "Define your specific learning objectives and timeline",
+                  "duration": "15 minutes",
+                  "type": "interactive",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            },
+            {
+              "id": "module_personalized_002",
+              "title": "Personalized Foundation",
+              "description": "Customized foundation based on your assessment results",
+              "order": 2,
+              "lessons": [
+                {
+                  "id": "lesson_personalized_003",
+                  "title": "JavaScript Fundamentals Review",
+                  "description": "Brush up on essential JavaScript concepts for React",
+                  "duration": "45 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_personalized_004",
+                  "title": "React Concepts Overview",
+                  "description": "High-level overview of React concepts tailored to your level",
+                  "duration": "25 minutes",
+                  "type": "video",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "topic_personalized_002",
+          "title": "Adaptive Learning Modules",
+          "description": "Dynamic modules that adjust based on your progress and understanding",
+          "order": 2,
+          "modules": [
+            {
+              "id": "module_personalized_003",
+              "title": "Core Concepts Mastery",
+              "description": "Master React fundamentals at your own pace",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_personalized_005",
+                  "title": "Components Deep Dive",
+                  "description": "Advanced component patterns and best practices",
+                  "duration": "40 minutes",
+                  "type": "interactive",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_personalized_006",
+                  "title": "State Management Patterns",
+                  "description": "Learn state management techniques based on your project needs",
+                  "duration": "50 minutes",
+                  "type": "tutorial",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            },
+            {
+              "id": "module_personalized_004",
+              "title": "Practical Projects",
+              "description": "Build real-world projects that match your skill level",
+              "order": 2,
+              "lessons": [
+                {
+                  "id": "lesson_personalized_007",
+                  "title": "Project 1: Todo App",
+                  "description": "Build a todo application with your current skill level",
+                  "duration": "90 minutes",
+                  "type": "project",
+                  "order": 1,
+                  "completed": false
+                },
+                {
+                  "id": "lesson_personalized_008",
+                  "title": "Project 2: Weather Dashboard",
+                  "description": "Create a weather dashboard with API integration",
+                  "duration": "120 minutes",
+                  "type": "project",
+                  "order": 2,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "metadata": {
-        "difficulty": "adaptive",
-        "duration": "4-8 weeks",
-        "effort": "5-10 hours/week",
-        "prerequisites": ["Basic JavaScript", "HTML", "CSS"],
-        "tags": ["personalized", "adaptive", "ai-guided", "react", "frontend"],
-        "language": "English",
-        "certificate": true,
-        "lifetimeAccess": true
-      },
-      "pricing": {
-        "amount": 0,
-        "currency": "USD",
-        "isFree": true,
-        "discountPercentage": 0,
-        "originalPrice": 0
-      },
-      "feedback": {
-        "averageRating": 4.8,
-        "totalRatings": 0,
-        "reviews": []
-      },
-      "enrollment": {
-        "totalEnrolled": 1,
-        "activeLearners": 1,
-        "completionRate": 0
+        "duration": "6-10 weeks",
+        "difficulty": "Adaptive",
+        "prerequisites": ["Basic programming knowledge"],
+        "skills": ["React", "JavaScript", "Personalized Learning", "AI-Powered"],
+        "certificate": true
       }
     }
   ]
