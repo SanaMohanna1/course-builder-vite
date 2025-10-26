@@ -46,25 +46,10 @@ const allowedOrigins = [
   'https://course-builder-vite-gf1xqi19d-sana-mohannas-projects.vercel.app', // your Vercel frontend
   'http://localhost:5173', // local dev
 ];
-// Middleware
-app.use(helmet());
-app.use(compression());
-app.use(morgan('combined'));
-app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    callback(new Error('Not allowed by CORS'));
-  },
-  credentials: true
-}));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Health check endpoint
+// Health check endpoints (before CORS middleware to avoid blocking)
 app.get('/health', (req, res) => {
   try {
+    console.log('Health check requested from:', req.ip, req.headers['user-agent']);
     res.status(200).json({ 
       status: 'OK', 
       timestamp: new Date().toISOString(),
@@ -82,6 +67,27 @@ app.get('/health', (req, res) => {
     });
   }
 });
+
+// Simple health check for Railway (no CORS, no middleware)
+app.get('/ping', (req, res) => {
+  res.status(200).send('pong');
+});
+
+// Middleware
+app.use(helmet());
+app.use(compression());
+app.use(morgan('combined'));
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // API Routes
@@ -282,11 +288,31 @@ app.use('*', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, '0.0.0.0', () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Course Builder API running on port ${PORT}`);
   console.log(`📊 Health check: http://0.0.0.0:${PORT}/health`);
+  console.log(`📊 Ping check: http://0.0.0.0:${PORT}/ping`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`📦 Mock data loaded: ${Object.keys(mockData).length} collections`);
+  
+  // Test health endpoints on startup
+  setTimeout(() => {
+    console.log('🔍 Testing health endpoints...');
+    const http = require('http');
+    const options = {
+      hostname: '0.0.0.0',
+      port: PORT,
+      path: '/ping',
+      method: 'GET'
+    };
+    const req = http.request(options, (res) => {
+      console.log(`✅ Ping endpoint working: ${res.statusCode}`);
+    });
+    req.on('error', (err) => {
+      console.error('❌ Ping endpoint test failed:', err.message);
+    });
+    req.end();
+  }, 1000);
 });
 
 // Handle server errors
