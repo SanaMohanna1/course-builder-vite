@@ -2,7 +2,7 @@
 // Connects to Railway backend API
 
 // Backend API base URL from environment variable
-const API_BASE = import.meta.env.VITE_API_URL;
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 // Helper function for delays (for mock operations)
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -10,6 +10,8 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // Helper function to make API requests
 const apiRequest = async (endpoint, options = {}) => {
   const url = `${API_BASE}${endpoint}`
+  console.log(`🌐 Making API request to: ${url}`)
+  
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -20,6 +22,15 @@ const apiRequest = async (endpoint, options = {}) => {
 
   try {
     const response = await fetch(url, config)
+    
+    // Check if response is HTML (error page) instead of JSON
+    const contentType = response.headers.get('content-type')
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text()
+      console.error(`❌ Received HTML instead of JSON from ${url}:`, text.substring(0, 200))
+      throw new Error(`Server returned HTML instead of JSON. Check if backend is running at ${API_BASE}`)
+    }
+    
     const data = await response.json()
     
     if (!response.ok) {
