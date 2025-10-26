@@ -1,0 +1,30 @@
+{
+  "progress": {
+    "learner_001": {
+      "courses": {
+        "course_001": {
+          "enrolledAt": "2024-01-20T10:00:00Z",
+          "progressPercentage": 65,
+          "lastAccessed": "2024-02-10T14:30:00Z",
+          "completedLessons": ["lesson_001", "lesson_002", "lesson_003", "lesson_004"],
+          "currentLesson": "lesson_005",
+          "timeSpent": 1800,
+          "status": "in_progress"
+        },
+        "course_personalized_001": {
+          "enrolledAt": "2024-02-01T10:00:00Z",
+          "progressPercentage": 30,
+          "lastAccessed": "2024-02-10T16:45:00Z",
+          "completedLessons": ["lesson_personalized_001", "lesson_personalized_002"],
+          "currentLesson": "lesson_personalized_003",
+          "timeSpent": 900,
+          "status": "in_progress"
+        }
+      },
+      "achievements": ["achievement_001", "achievement_002"],
+      "totalPoints": 150,
+      "learningStreak": 7,
+      "totalTimeSpent": 2700
+    }
+  }
+}
