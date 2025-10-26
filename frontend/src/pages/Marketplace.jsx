@@ -46,9 +46,9 @@ function Marketplace() {
     if (sortBy === 'title') {
       return a.title.localeCompare(b.title)
     } else if (sortBy === 'rating') {
-      return b.feedback.averageRating - a.feedback.averageRating
+      return b.rating - a.rating
     } else if (sortBy === 'price') {
-      return a.pricing.amount - b.pricing.amount
+      return a.price - b.price
     }
     return 0
   })

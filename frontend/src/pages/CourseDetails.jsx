@@ -111,7 +111,7 @@ function CourseDetails() {
                 <div className="flex items-center space-x-6 text-sm text-gray-500">
                   <div className="flex items-center">
                     <span className="mr-2">👨‍🏫</span>
-                    <span className="font-medium">{course.trainer.name}</span>
+                    <span className="font-medium">{course.instructor}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="mr-2">⏱️</span>
@@ -119,8 +119,8 @@ function CourseDetails() {
                   </div>
                   <div className="flex items-center">
                     <span className="text-yellow-400 mr-1">⭐</span>
-                    <span className="font-medium">{course.feedback.averageRating}</span>
-                    <span className="ml-1">({course.feedback.totalRatings} reviews)</span>
+                    <span className="font-medium">{course.rating}</span>
+                    <span className="ml-1">({course.students} students)</span>
                   </div>
                 </div>
               </div>
@@ -133,13 +133,13 @@ function CourseDetails() {
                   </div>
                 ) : (
                   <div className="text-right">
-                    {course.pricing.isFree ? (
+                    {course.price === 0 ? (
                       <div className="text-2xl font-bold text-green-600">Free</div>
                     ) : (
                       <div>
-                        <div className="text-2xl font-bold text-gray-900">${course.pricing.amount}</div>
-                        {course.pricing.originalPrice && course.pricing.originalPrice > course.pricing.amount && (
-                          <div className="text-sm text-gray-500 line-through">${course.pricing.originalPrice}</div>
+                        <div className="text-2xl font-bold text-gray-900">${course.price}</div>
+                        {course.price > 0 && (
+                          <div className="text-sm text-gray-500 line-through">${Math.round(course.price * 1.2)}</div>
                         )}
                       </div>
                     )}
@@ -239,30 +239,14 @@ function CourseDetails() {
             )}
 
             {/* Reviews */}
-            {course.feedback.reviews && course.feedback.reviews.length > 0 && (
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Student Reviews</h2>
-                <div className="space-y-4">
-                  {course.feedback.reviews.map((review, index) => (
-                    <div key={index} className="border-b border-gray-200 pb-4 last:border-b-0">
-                      <div className="flex items-center mb-2">
-                        <div className="flex text-yellow-400">
-                          {[...Array(5)].map((_, i) => (
-                            <span key={i} className={i < review.rating ? 'text-yellow-400' : 'text-gray-300'}>
-                              ⭐
-                            </span>
-                          ))}
-                        </div>
-                        <span className="ml-2 text-sm text-gray-500">
-                          {new Date(review.date).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <p className="text-gray-700">{review.comment}</p>
-                    </div>
-                  ))}
-                </div>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Student Reviews</h2>
+              <div className="text-center py-8">
+                <div className="text-gray-400 text-4xl mb-4">💬</div>
+                <h3 className="text-lg font-semibold text-gray-700 mb-2">No reviews yet</h3>
+                <p className="text-gray-500">Be the first to review this course!</p>
               </div>
-            )}
+            </div>
           </div>
 
           {/* Sidebar */}

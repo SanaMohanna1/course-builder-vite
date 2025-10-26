@@ -32,7 +32,7 @@ function BrowseCourses() {
         case 'title':
           return a.title.localeCompare(b.title)
         case 'rating':
-          return b.feedback.averageRating - a.feedback.averageRating
+          return b.rating - a.rating
         case 'difficulty':
           const difficultyOrder = { 'beginner': 1, 'intermediate': 2, 'advanced': 3, 'adaptive': 4 }
           return difficultyOrder[a.metadata.difficulty] - difficultyOrder[b.metadata.difficulty]
@@ -244,10 +244,10 @@ function BrowseCourses() {
                       id={course.id}
                       title={course.title}
                       description={course.description}
-                      trainer={course.trainer.name}
+                      trainer={course.instructor}
                       difficulty={course.metadata.difficulty}
                       duration={course.metadata.duration}
-                      rating={course.feedback.averageRating}
+                      rating={course.rating}
                       skills={course.skills}
                       status={course.status}
                       courseType={course.courseType}
