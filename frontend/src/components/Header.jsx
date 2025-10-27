@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Sun, Moon, Menu, X, User, BookOpen, Home as HomeIcon, ShoppingBag, Sparkles, Library } from 'lucide-react'
 import useUserStore from '../store/useUserStore'
-
+import darkLogo from '../../public/logo-dark.png';
+import lightLogo from '../../public/logo-light.png';
 function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -61,7 +62,7 @@ function Header() {
           {/* Logo */}
           <Link to="/" className="logo">
             <img 
-              src={isDarkMode ? "../../public/logo-dark.png" : "../../public/logo-light.png"} 
+              src={isDarkMode ? darkLogo : lightLogo} 
               alt="Course Builder" 
             />
             <div className="text-container">
