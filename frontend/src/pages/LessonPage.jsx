@@ -168,9 +168,9 @@ function LessonPage() {
   const progress = ((currentTime / duration) * 100) || 0
 
   return (
-    <div className="flex h-screen" style={{ background: 'var(--bg-primary)' }}>
+    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col">
         {/* Header */}
         <div className="p-4 border-b" style={{ background: 'var(--bg-card)', borderColor: 'var(--bg-tertiary)' }}>
           <div className="flex items-center justify-between">
@@ -277,9 +277,9 @@ function LessonPage() {
         </div>
 
         {/* Lesson Content */}
-        <div className="flex-1 overflow-y-auto p-6" style={{ minHeight: '60vh' }}>
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-start justify-between mb-6">
+        <div className="flex-1 p-8" style={{ minHeight: '70vh' }}>
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-start justify-between mb-8">
               <div>
                 <h2 className="hero-content h1 mb-2" style={{ color: 'var(--text-primary)' }}>{lesson.title}</h2>
                 <div className="flex items-center space-x-4 text-sm" style={{ color: 'var(--text-muted)' }}>
@@ -320,17 +320,17 @@ function LessonPage() {
             </div>
 
             {/* Lesson Content */}
-            <div className="microservice-card mb-6">
-              <h3 className="microservice-card h3 mb-4" style={{ color: 'var(--text-primary)' }}>Lesson Content</h3>
-              <div className="prose max-w-none" style={{ color: 'var(--text-secondary)' }}>
+            <div className="microservice-card mb-8">
+              <h3 className="microservice-card h3 mb-6" style={{ color: 'var(--text-primary)' }}>Lesson Content</h3>
+              <div className="prose max-w-none text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 {lesson.content || 'Lesson content will be displayed here. This could include text, images, code examples, and interactive elements.'}
               </div>
             </div>
 
             {/* Resources */}
             {lesson.resources && lesson.resources.length > 0 && (
-              <div className="microservice-card mb-6">
-                <h3 className="microservice-card h3 mb-4" style={{ color: 'var(--text-primary)' }}>Resources</h3>
+              <div className="microservice-card mb-8">
+                <h3 className="microservice-card h3 mb-6" style={{ color: 'var(--text-primary)' }}>Resources</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {lesson.resources.map((resource, index) => (
                     <div key={index} className="floating-card">
@@ -355,8 +355,8 @@ function LessonPage() {
             )}
 
             {/* Notes Section */}
-            <div className="microservice-card mb-6">
-              <div className="flex items-center justify-between mb-4">
+            <div className="microservice-card mb-8">
+              <div className="flex items-center justify-between mb-6">
                 <h3 className="microservice-card h3" style={{ color: 'var(--text-primary)' }}>Notes</h3>
                 <button
                   onClick={() => setShowNotes(!showNotes)}
@@ -410,6 +410,14 @@ function LessonPage() {
                 ) : (
                   'Mark as Complete'
                 )}
+              </button>
+              
+              <button
+                onClick={() => navigate(`/feedback/${courseId}`)}
+                className="btn btn-secondary flex items-center gap-2"
+              >
+                <MessageCircle size={16} />
+                <span>Give Feedback</span>
               </button>
               
               <button

@@ -125,9 +125,9 @@ function Personalized() {
         )}
 
         {/* Call to Action */}
-        <div className="microservice-card mt-12" style={{ background: 'var(--gradient-secondary)', color: 'white' }}>
+        <div className="microservice-card mt-12" style={{ background: 'var(--gradient-secondary)' }}>
           <div className="text-center">
-            <h2 className="microservice-card h3 text-white mb-4">Want More Personalization?</h2>
+            <h2 className="microservice-card h3 mb-4" style={{ color: 'white' }}>Want More Personalization?</h2>
             <p className="microservice-card p mb-6" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
               Complete your learning profile to unlock more AI-powered course recommendations
             </p>

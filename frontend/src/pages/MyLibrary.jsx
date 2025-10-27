@@ -205,12 +205,12 @@ function MyLibrary() {
 
         {/* Learning Insights */}
         {courses.length > 0 && (
-          <div className="microservice-card mt-12" style={{ background: 'var(--gradient-accent)', color: 'white' }}>
+          <div className="microservice-card mt-12" style={{ background: 'var(--gradient-accent)' }}>
             <div className="text-center">
               <div className="service-icon mx-auto mb-4" style={{ background: 'rgba(255, 255, 255, 0.2)' }}>
-                <TrendingUp size={32} />
+                <TrendingUp size={32} style={{ color: 'white' }} />
               </div>
-              <h2 className="microservice-card h3 text-white mb-4">Keep Up the Great Work!</h2>
+              <h2 className="microservice-card h3 mb-4" style={{ color: 'white' }}>Keep Up the Great Work!</h2>
               <p className="microservice-card p mb-6" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
                 You're making excellent progress on your learning journey. 
                 {stats.completed > 0 && ` You've completed ${stats.completed} course${stats.completed !== 1 ? 's' : ''}!`}
