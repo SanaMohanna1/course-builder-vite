@@ -287,11 +287,21 @@ function Assessment() {
           <div className="microservice-card">
             <div className="mb-8">
               <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>
-                {course.title} - Final Assessment
+                <Award className="inline mr-3" size={32} />
+                {course.title} - Final Exam
               </h1>
-              <p className="hero-content p" style={{ color: 'var(--text-secondary)' }}>
-                Test your knowledge and earn your certificate
+              <p className="hero-content p mb-4" style={{ color: 'var(--text-secondary)' }}>
+                Complete this final exam to test your knowledge and earn your certificate
               </p>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6" style={{ 
+                background: 'var(--bg-secondary)', 
+                borderColor: 'var(--accent-gold)',
+                borderWidth: '1px'
+              }}>
+                <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
+                  <strong>Note:</strong> This is the final exam. Make sure you have completed all lessons before taking this assessment.
+                </p>
+              </div>
             </div>
 
             {/* Question */}

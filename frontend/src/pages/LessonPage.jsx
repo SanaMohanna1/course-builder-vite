@@ -166,6 +166,10 @@ function LessonPage() {
 
   const currentIndex = lessons.findIndex(l => l.id === lessonId)
   const progress = ((currentTime / duration) * 100) || 0
+  
+  // Check if all lessons are completed
+  const completedLessons = lessons.filter(lesson => lesson.completed).length
+  const allLessonsCompleted = completedLessons === lessons.length
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
@@ -280,9 +284,9 @@ function LessonPage() {
         <div className="flex-1 p-8" style={{ minHeight: '70vh' }}>
           <div className="max-w-7xl mx-auto">
             <div className="flex items-start justify-between mb-8">
-              <div>
+              <div className="flex-1">
                 <h2 className="hero-content h1 mb-2" style={{ color: 'var(--text-primary)' }}>{lesson.title}</h2>
-                <div className="flex items-center space-x-4 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <div className="flex items-center space-x-4 text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
                   <div className="flex items-center">
                     <Clock size={16} className="mr-1" />
                     {lesson.duration}
@@ -290,6 +294,27 @@ function LessonPage() {
                   <div className="flex items-center">
                     <BookOpen size={16} className="mr-1" />
                     {lesson.type === 'video' ? 'Video Lesson' : 'Interactive Lesson'}
+                  </div>
+                </div>
+                
+                {/* Progress Indicator */}
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                      Course Progress
+                    </span>
+                    <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                      {completedLessons} of {lessons.length} lessons completed
+                    </span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2" style={{ background: 'var(--bg-tertiary)' }}>
+                    <div 
+                      className="h-2 rounded-full transition-all duration-300"
+                      style={{ 
+                        width: `${(completedLessons / lessons.length) * 100}%`,
+                        background: allLessonsCompleted ? 'var(--accent-green)' : 'var(--gradient-primary)'
+                      }}
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -326,6 +351,57 @@ function LessonPage() {
                 {lesson.content || 'Lesson content will be displayed here. This could include text, images, code examples, and interactive elements.'}
               </div>
             </div>
+
+            {/* Exercise Section */}
+            {lesson.exercise && (
+              <div className="microservice-card mb-8">
+                <h3 className="microservice-card h3 mb-6" style={{ color: 'var(--text-primary)' }}>
+                  <BookOpen className="inline mr-2" size={20} />
+                  Exercise
+                </h3>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6" style={{ 
+                  background: 'var(--bg-secondary)', 
+                  borderColor: 'var(--primary-cyan)',
+                  borderWidth: '1px'
+                }}>
+                  <h4 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
+                    {lesson.exercise.title || 'Practice Exercise'}
+                  </h4>
+                  <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
+                    {lesson.exercise.description || 'Complete this exercise to reinforce your learning.'}
+                  </p>
+                  <div className="space-y-3">
+                    {lesson.exercise.questions?.map((question, index) => (
+                      <div key={index} className="border rounded-lg p-4" style={{ 
+                        borderColor: 'var(--bg-tertiary)',
+                        background: 'var(--bg-card)'
+                      }}>
+                        <p className="font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
+                          {index + 1}. {question.question}
+                        </p>
+                        <div className="space-y-2">
+                          {question.options?.map((option, optIndex) => (
+                            <label key={optIndex} className="flex items-center space-x-2 cursor-pointer">
+                              <input 
+                                type="radio" 
+                                name={`question-${index}`}
+                                className="text-blue-600"
+                              />
+                              <span style={{ color: 'var(--text-secondary)' }}>{option}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 flex justify-end">
+                    <button className="btn btn-primary">
+                      Submit Exercise
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Resources */}
             {lesson.resources && lesson.resources.length > 0 && (
@@ -412,22 +488,37 @@ function LessonPage() {
                 )}
               </button>
               
+              {/* Show Exam button if all lessons completed, otherwise show Next button */}
+              {allLessonsCompleted ? (
+                <button
+                  onClick={() => navigate(`/assessment/${courseId}`)}
+                  className="btn btn-primary flex items-center gap-2"
+                  style={{ background: 'var(--accent-gold)', border: 'none' }}
+                >
+                  <BookOpen size={16} />
+                  <span>Take Final Exam</span>
+                </button>
+              ) : (
+                <button
+                  onClick={handleNextLesson}
+                  disabled={currentIndex === lessons.length - 1}
+                  className="btn btn-primary flex items-center gap-2"
+                  style={{ opacity: currentIndex === lessons.length - 1 ? 0.5 : 1 }}
+                >
+                  <span>Next</span>
+                  <ChevronRight size={16} />
+                </button>
+              )}
+              
+              {/* Show Feedback button only after exam completion */}
               <button
                 onClick={() => navigate(`/feedback/${courseId}`)}
                 className="btn btn-secondary flex items-center gap-2"
+                disabled={!allLessonsCompleted}
+                style={{ opacity: allLessonsCompleted ? 1 : 0.5 }}
               >
                 <MessageCircle size={16} />
-                <span>Give Feedback</span>
-              </button>
-              
-              <button
-                onClick={handleNextLesson}
-                disabled={currentIndex === lessons.length - 1}
-                className="btn btn-primary flex items-center gap-2"
-                style={{ opacity: currentIndex === lessons.length - 1 ? 0.5 : 1 }}
-              >
-                <span>Next</span>
-                <ChevronRight size={16} />
+                <span>Course Feedback</span>
               </button>
             </div>
           </div>

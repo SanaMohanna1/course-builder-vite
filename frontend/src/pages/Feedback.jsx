@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useUserStore from '../store/useUserStore'
-import { Star, CheckCircle, ArrowLeft, MessageSquare } from 'lucide-react'
+import { Star, CheckCircle, ArrowLeft, MessageSquare, Award } from 'lucide-react'
 
 function Feedback() {
   const { id } = useParams()
@@ -65,9 +65,12 @@ function Feedback() {
               <div className="service-icon mx-auto mb-4" style={{ background: 'var(--gradient-primary)' }}>
                 <MessageSquare size={32} />
               </div>
-              <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>Course Feedback</h1>
+              <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>
+                <Award className="inline mr-3" size={32} />
+                Course Completion Feedback
+              </h1>
               <p className="hero-content p" style={{ color: 'var(--text-secondary)' }}>
-                Help us improve by sharing your experience with this course.
+                Congratulations on completing the course! Please share your experience to help us improve.
               </p>
             </div>
 

@@ -42,14 +42,14 @@ function CourseCard({
   const TypeIcon = typeConfig.icon
 
   return (
-    <div className="microservice-card">
+    <div className="microservice-card h-full flex flex-col" style={{ minHeight: '400px' }}>
       {/* Course Header */}
-      <div className="flex justify-between items-start mb-4">
+      <div className="flex justify-between items-start mb-6">
         <div className="flex-1 mr-4">
-          <h3 className="microservice-card h3 mb-2" style={{ color: 'var(--text-primary)' }}>
+          <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--text-primary)', lineHeight: '1.3' }}>
             {title}
           </h3>
-          <p className="microservice-card p text-sm" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             {description}
           </p>
         </div>
@@ -65,23 +65,23 @@ function CourseCard({
       </div>
 
       {/* Course Stats */}
-      <div className="flex items-center gap-4 mb-4 text-sm" style={{ color: 'var(--text-muted)' }}>
+      <div className="flex items-center gap-6 mb-6 text-sm" style={{ color: 'var(--text-muted)' }}>
         <div className="flex items-center gap-1">
-          <Star size={14} style={{ color: 'var(--accent-gold)' }} />
+          <Star size={16} style={{ color: 'var(--accent-gold)' }} />
           <span className="font-medium">{courseRating}</span>
         </div>
         <div className="flex items-center gap-1">
-          <Clock size={14} />
+          <Clock size={16} />
           <span>{duration}</span>
         </div>
         <div className="flex items-center gap-1">
-          <Users size={14} />
+          <Users size={16} />
           <span>{course.students || 0} students</span>
         </div>
       </div>
 
       {/* Instructor */}
-      <div className="mb-4">
+      <div className="mb-6">
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           <span className="font-medium">Instructor:</span> {instructor || 'Unknown Instructor'}
         </p>
@@ -89,15 +89,15 @@ function CourseCard({
 
       {/* Skills */}
       {skills && skills.length > 0 && (
-        <div className="mb-4">
-          <div className="flex flex-wrap gap-1">
+        <div className="mb-6 flex-1">
+          <div className="flex flex-wrap gap-2">
             {skills.slice(0, 3).map((skill, index) => (
-              <span key={index} className="badge badge-blue text-xs">
+              <span key={index} className="badge badge-blue text-xs px-2 py-1">
                 {skill}
               </span>
             ))}
             {skills.length > 3 && (
-              <span className="badge badge-blue text-xs">
+              <span className="badge badge-blue text-xs px-2 py-1">
                 +{skills.length - 3} more
               </span>
             )}
@@ -106,13 +106,13 @@ function CourseCard({
       )}
 
       {/* Price and Action */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mt-auto pt-4">
         <div className="flex items-center gap-2">
           {isFree ? (
-            <span className="text-lg font-bold" style={{ color: 'var(--accent-green)' }}>Free</span>
+            <span className="text-xl font-bold" style={{ color: 'var(--accent-green)' }}>Free</span>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>${coursePrice}</span>
+              <span className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>${coursePrice}</span>
               {coursePrice > 0 && (
                 <span className="text-sm line-through" style={{ color: 'var(--text-muted)' }}>
                   ${Math.round(coursePrice * 1.2)}
@@ -125,7 +125,7 @@ function CourseCard({
         {showEnrollButton && (
           <Link
             to={`/course/${id}`}
-            className="btn btn-primary flex items-center gap-2"
+            className="btn btn-primary flex items-center gap-2 px-4 py-2"
           >
             <Play size={16} />
             {courseType === 'personalized' ? 'Start Learning' : 'Enroll Now'}
