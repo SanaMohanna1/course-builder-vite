@@ -552,17 +552,19 @@ body {
 }
 
 .logo:hover img {
-    transform: scale(1.05);
+    transform: scale(1.15);
 }
 
 .logo img {
-    height: 64px;
+    height: 80px;
     width: auto;
-    max-width: 300px;
+    max-width: 400px;
     transition: all 0.3s ease;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    transform: scale(1.1);
 }
 
 .logo .text-container {
