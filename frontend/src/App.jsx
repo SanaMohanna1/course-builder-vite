@@ -91,8 +91,15 @@ function App() {
                   <img 
                     src={isDarkMode ? "/logo-dark.svg" : "/logo-light.svg"} 
                     alt="EDUCORE AI" 
-                    className="h-8 w-auto"
                   />
+                  <div className="text-container">
+                    <span className="brand-name">
+                      EDUCORE AI
+                    </span>
+                    <span className="brand-subtitle">
+                      Course Builder
+                    </span>
+                  </div>
                 </Link>
 
                 {/* Desktop Navigation */}
