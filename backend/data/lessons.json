@@ -24,7 +24,53 @@
           "type": "Code",
           "content": "// Example React component\nfunction Welcome(props) {\n  return <h1>Hello, {props.name}</h1>;\n}\n\n// Using the component\nfunction App() {\n  return (\n    <div>\n      <Welcome name=\"Sara\" />\n      <Welcome name=\"Cahal\" />\n      <Welcome name=\"Edite\" />\n    </div>\n  );\n}"
         }
-      ]
+      ],
+      "exercise": {
+        "title": "React Fundamentals Quiz",
+        "description": "Test your understanding of React basics and its key features.",
+        "questions": [
+          {
+            "question": "What is React primarily used for?",
+            "options": [
+              "Building user interfaces",
+              "Database management",
+              "Server-side programming",
+              "Mobile app development only"
+            ],
+            "correctAnswer": 0
+          },
+          {
+            "question": "Which company created React?",
+            "options": [
+              "Google",
+              "Facebook",
+              "Microsoft",
+              "Apple"
+            ],
+            "correctAnswer": 1
+          },
+          {
+            "question": "What does the Virtual DOM help with?",
+            "options": [
+              "Better performance",
+              "Easier debugging",
+              "Smaller bundle size",
+              "Better SEO"
+            ],
+            "correctAnswer": 0
+          },
+          {
+            "question": "React follows which programming paradigm?",
+            "options": [
+              "Imperative",
+              "Declarative",
+              "Functional",
+              "Object-oriented"
+            ],
+            "correctAnswer": 1
+          }
+        ]
+      }
     },
     {
       "id": "lesson_002",
@@ -50,7 +96,53 @@
           "type": "List",
           "content": "Essential VS Code extensions for React development:\n- ES7+ React/Redux/React-Native snippets\n- Prettier - Code formatter\n- Auto Rename Tag\n- Bracket Pair Colorizer"
         }
-      ]
+      ],
+      "exercise": {
+        "title": "Development Environment Setup Quiz",
+        "description": "Test your knowledge about setting up a React development environment.",
+        "questions": [
+          {
+            "question": "What is the minimum Node.js version recommended for React development?",
+            "options": [
+              "Node.js 12",
+              "Node.js 14",
+              "Node.js 16",
+              "Node.js 18"
+            ],
+            "correctAnswer": 2
+          },
+          {
+            "question": "Which command is used to create a new React app?",
+            "options": [
+              "npm create-react-app",
+              "npx create-react-app",
+              "yarn create-react-app",
+              "create-react-app"
+            ],
+            "correctAnswer": 1
+          },
+          {
+            "question": "What does VS Code stand for?",
+            "options": [
+              "Visual Studio Code",
+              "Virtual Studio Code",
+              "Visual Script Code",
+              "Virtual Script Code"
+            ],
+            "correctAnswer": 0
+          },
+          {
+            "question": "Which VS Code extension is recommended for React development?",
+            "options": [
+              "ES7+ React/Redux/React-Native snippets",
+              "Python",
+              "Java",
+              "C++"
+            ],
+            "correctAnswer": 0
+          }
+        ]
+      }
     },
     {
       "id": "lesson_003",
@@ -70,7 +162,43 @@
           "type": "Link",
           "url": "https://create-react-app.dev"
         }
-      ]
+      ],
+      "exercise": {
+        "title": "Creating React Apps Quiz",
+        "description": "Test your understanding of creating and managing React applications.",
+        "questions": [
+          {
+            "question": "What command starts the development server?",
+            "options": [
+              "npm run dev",
+              "npm start",
+              "npm serve",
+              "npm run serve"
+            ],
+            "correctAnswer": 1
+          },
+          {
+            "question": "What does create-react-app provide?",
+            "options": [
+              "Modern JavaScript features",
+              "Pre-configured build tools",
+              "Hot reloading",
+              "All of the above"
+            ],
+            "correctAnswer": 3
+          },
+          {
+            "question": "Which port does the React dev server run on by default?",
+            "options": [
+              "3000",
+              "8080",
+              "5000",
+              "4000"
+            ],
+            "correctAnswer": 0
+          }
+        ]
+      }
     },
     {
       "id": "lesson_004",
@@ -90,7 +218,43 @@
           "type": "PDF",
           "url": "/resources/project-structure.pdf"
         }
-      ]
+      ],
+      "exercise": {
+        "title": "Project Structure Quiz",
+        "description": "Test your knowledge of React project structure and key files.",
+        "questions": [
+          {
+            "question": "Which file is the entry point of a React application?",
+            "options": [
+              "App.js",
+              "index.js",
+              "main.js",
+              "app.js"
+            ],
+            "correctAnswer": 1
+          },
+          {
+            "question": "Where are static assets like images typically stored?",
+            "options": [
+              "src/assets",
+              "public",
+              "static",
+              "resources"
+            ],
+            "correctAnswer": 1
+          },
+          {
+            "question": "What does package.json contain?",
+            "options": [
+              "Project dependencies",
+              "Scripts",
+              "Project metadata",
+              "All of the above"
+            ],
+            "correctAnswer": 3
+          }
+        ]
+      }
     },
     {
       "id": "lesson_005",
@@ -110,7 +274,43 @@
           "type": "Link",
           "url": "https://react.dev/learn/your-first-component"
         }
-      ]
+      ],
+      "exercise": {
+        "title": "React Components Quiz",
+        "description": "Test your understanding of React components and their characteristics.",
+        "questions": [
+          {
+            "question": "What are the building blocks of React applications?",
+            "options": [
+              "Functions",
+              "Components",
+              "Classes",
+              "Modules"
+            ],
+            "correctAnswer": 1
+          },
+          {
+            "question": "Which is NOT a characteristic of React components?",
+            "options": [
+              "Reusable",
+              "Independent",
+              "Composable",
+              "Mutable"
+            ],
+            "correctAnswer": 3
+          },
+          {
+            "question": "What are the two main types of React components?",
+            "options": [
+              "Functional and Class components",
+              "Static and Dynamic components",
+              "Simple and Complex components",
+              "Basic and Advanced components"
+            ],
+            "correctAnswer": 0
+          }
+        ]
+      }
     },
     {
       "id": "lesson_personalized_001",

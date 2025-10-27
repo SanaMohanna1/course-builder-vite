@@ -97,24 +97,7 @@ function LessonPage() {
         // Find current lesson
         const currentLesson = lessonsResponse.data.find(l => l.id === lessonId)
         if (currentLesson) {
-          // Add sample exercise data if not present
-          if (!currentLesson.exercise) {
-            currentLesson.exercise = {
-              title: "Practice Exercise",
-              description: "Test your understanding of this lesson with these questions.",
-              questions: [
-                {
-                  question: "What is the main topic covered in this lesson?",
-                  options: ["Option A", "Option B", "Option C", "Option D"]
-                },
-                {
-                  question: "Which concept is most important to remember?",
-                  options: ["Concept 1", "Concept 2", "Concept 3", "Concept 4"]
-                }
-              ]
-            }
-          }
-          console.log('Current lesson with exercise:', currentLesson)
+          console.log('Current lesson:', currentLesson)
           setLesson(currentLesson)
           
           // Find current topic and module
@@ -684,16 +667,7 @@ function LessonPage() {
 
               {/* Exercise Questions */}
               <div className="space-y-4 mb-6">
-                {(lesson.exercise?.questions || [
-                  {
-                    question: "What is the main topic covered in this lesson?",
-                    options: ["Option A", "Option B", "Option C", "Option D"]
-                  },
-                  {
-                    question: "Which concept is most important to remember?",
-                    options: ["Concept 1", "Concept 2", "Concept 3", "Concept 4"]
-                  }
-                ]).map((question, index) => (
+                {lesson.exercise?.questions?.map((question, index) => (
                   <div key={index} className="border rounded-lg p-4" style={{ 
                     borderColor: 'var(--bg-tertiary)',
                     background: 'var(--bg-secondary)'

@@ -345,6 +345,342 @@
         "skills": ["React", "JavaScript", "Personalized Learning", "AI-Powered"],
         "certificate": true
       }
+    },
+    {
+      "id": "course_002",
+      "title": "JavaScript Fundamentals",
+      "description": "Master JavaScript from basics to advanced concepts. Perfect for beginners who want to build a strong foundation.",
+      "instructor": "Mike Chen",
+      "rating": 4.7,
+      "students": 2100,
+      "price": 79,
+      "courseType": "marketplace",
+      "level": "Beginner",
+      "duration": "6 weeks",
+      "language": "English",
+      "thumbnail": "/images/javascript-course.jpg",
+      "topics": [
+        {
+          "id": "topic_js_001",
+          "title": "JavaScript Basics",
+          "description": "Learn the fundamentals of JavaScript programming",
+          "order": 1,
+          "modules": [
+            {
+              "id": "module_js_001",
+              "title": "Variables and Data Types",
+              "description": "Understanding variables, strings, numbers, and booleans",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_js_001",
+                  "title": "Introduction to Variables",
+                  "description": "Learn how to declare and use variables in JavaScript",
+                  "duration": "20 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "metadata": {
+        "duration": "6 weeks",
+        "difficulty": "Beginner",
+        "prerequisites": ["Basic HTML knowledge"],
+        "skills": ["JavaScript", "Programming", "Web Development"],
+        "certificate": true
+      }
+    },
+    {
+      "id": "course_003",
+      "title": "Advanced React Patterns",
+      "description": "Take your React skills to the next level with advanced patterns, performance optimization, and best practices.",
+      "instructor": "Alex Rodriguez",
+      "rating": 4.9,
+      "students": 850,
+      "price": 149,
+      "courseType": "marketplace",
+      "level": "Advanced",
+      "duration": "10 weeks",
+      "language": "English",
+      "thumbnail": "/images/advanced-react.jpg",
+      "topics": [
+        {
+          "id": "topic_ar_001",
+          "title": "Advanced Patterns",
+          "description": "Learn advanced React patterns and techniques",
+          "order": 1,
+          "modules": [
+            {
+              "id": "module_ar_001",
+              "title": "Render Props and HOCs",
+              "description": "Master render props and higher-order components",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_ar_001",
+                  "title": "Understanding Render Props",
+                  "description": "Learn the render props pattern for component composition",
+                  "duration": "35 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "metadata": {
+        "duration": "10 weeks",
+        "difficulty": "Advanced",
+        "prerequisites": ["React Fundamentals", "JavaScript ES6+"],
+        "skills": ["React", "Advanced Patterns", "Performance", "Architecture"],
+        "certificate": true
+      }
+    },
+    {
+      "id": "course_004",
+      "title": "Full-Stack Development with Node.js",
+      "description": "Build complete web applications with Node.js, Express, and MongoDB. From backend to frontend integration.",
+      "instructor": "Emma Wilson",
+      "rating": 4.6,
+      "students": 1650,
+      "price": 199,
+      "courseType": "marketplace",
+      "level": "Intermediate",
+      "duration": "12 weeks",
+      "language": "English",
+      "thumbnail": "/images/fullstack-course.jpg",
+      "topics": [
+        {
+          "id": "topic_fs_001",
+          "title": "Backend Development",
+          "description": "Learn server-side development with Node.js",
+          "order": 1,
+          "modules": [
+            {
+              "id": "module_fs_001",
+              "title": "Node.js Fundamentals",
+              "description": "Understanding Node.js and its ecosystem",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_fs_001",
+                  "title": "Introduction to Node.js",
+                  "description": "Learn what Node.js is and how it works",
+                  "duration": "25 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "metadata": {
+        "duration": "12 weeks",
+        "difficulty": "Intermediate",
+        "prerequisites": ["JavaScript", "HTML/CSS"],
+        "skills": ["Node.js", "Express", "MongoDB", "Full-Stack"],
+        "certificate": true
+      }
+    },
+    {
+      "id": "course_005",
+      "title": "Python for Data Science",
+      "description": "Learn Python programming for data analysis, visualization, and machine learning. Perfect for aspiring data scientists.",
+      "instructor": "Dr. Sarah Kim",
+      "rating": 4.8,
+      "students": 3200,
+      "price": 129,
+      "courseType": "marketplace",
+      "level": "Beginner",
+      "duration": "8 weeks",
+      "language": "English",
+      "thumbnail": "/images/python-datascience.jpg",
+      "topics": [
+        {
+          "id": "topic_py_001",
+          "title": "Python Basics",
+          "description": "Learn Python programming fundamentals",
+          "order": 1,
+          "modules": [
+            {
+              "id": "module_py_001",
+              "title": "Python Fundamentals",
+              "description": "Understanding Python syntax and basic concepts",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_py_001",
+                  "title": "Python Syntax and Variables",
+                  "description": "Learn Python syntax and how to work with variables",
+                  "duration": "30 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "metadata": {
+        "duration": "8 weeks",
+        "difficulty": "Beginner",
+        "prerequisites": ["Basic programming knowledge"],
+        "skills": ["Python", "Data Science", "Pandas", "NumPy", "Matplotlib"],
+        "certificate": true
+      }
+    },
+    {
+      "id": "course_006",
+      "title": "UI/UX Design Fundamentals",
+      "description": "Master the principles of user interface and user experience design. Create beautiful, functional designs.",
+      "instructor": "Lisa Thompson",
+      "rating": 4.5,
+      "students": 1800,
+      "price": 89,
+      "courseType": "marketplace",
+      "level": "Beginner",
+      "duration": "6 weeks",
+      "language": "English",
+      "thumbnail": "/images/uiux-course.jpg",
+      "topics": [
+        {
+          "id": "topic_ux_001",
+          "title": "Design Principles",
+          "description": "Learn fundamental design principles",
+          "order": 1,
+          "modules": [
+            {
+              "id": "module_ux_001",
+              "title": "Visual Design Basics",
+              "description": "Understanding color, typography, and layout",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_ux_001",
+                  "title": "Color Theory and Typography",
+                  "description": "Learn how to use color and typography effectively",
+                  "duration": "40 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "metadata": {
+        "duration": "6 weeks",
+        "difficulty": "Beginner",
+        "prerequisites": ["Basic computer skills"],
+        "skills": ["UI Design", "UX Design", "Figma", "Prototyping"],
+        "certificate": true
+      }
+    },
+    {
+      "id": "course_007",
+      "title": "Machine Learning with Python",
+      "description": "Dive deep into machine learning algorithms and implementations using Python and popular ML libraries.",
+      "instructor": "Dr. James Park",
+      "rating": 4.7,
+      "students": 950,
+      "price": 249,
+      "courseType": "marketplace",
+      "level": "Advanced",
+      "duration": "14 weeks",
+      "language": "English",
+      "thumbnail": "/images/ml-course.jpg",
+      "topics": [
+        {
+          "id": "topic_ml_001",
+          "title": "ML Algorithms",
+          "description": "Learn various machine learning algorithms",
+          "order": 1,
+          "modules": [
+            {
+              "id": "module_ml_001",
+              "title": "Supervised Learning",
+              "description": "Understanding supervised learning algorithms",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_ml_001",
+                  "title": "Linear Regression",
+                  "description": "Learn linear regression from theory to implementation",
+                  "duration": "45 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "metadata": {
+        "duration": "14 weeks",
+        "difficulty": "Advanced",
+        "prerequisites": ["Python", "Statistics", "Linear Algebra"],
+        "skills": ["Machine Learning", "Python", "Scikit-learn", "TensorFlow"],
+        "certificate": true
+      }
+    },
+    {
+      "id": "course_008",
+      "title": "Web Security Fundamentals",
+      "description": "Learn essential web security concepts, vulnerabilities, and how to protect your applications from attacks.",
+      "instructor": "David Martinez",
+      "rating": 4.4,
+      "students": 750,
+      "price": 119,
+      "courseType": "marketplace",
+      "level": "Intermediate",
+      "duration": "7 weeks",
+      "language": "English",
+      "thumbnail": "/images/security-course.jpg",
+      "topics": [
+        {
+          "id": "topic_sec_001",
+          "title": "Security Basics",
+          "description": "Learn fundamental web security concepts",
+          "order": 1,
+          "modules": [
+            {
+              "id": "module_sec_001",
+              "title": "Common Vulnerabilities",
+              "description": "Understanding OWASP Top 10 vulnerabilities",
+              "order": 1,
+              "lessons": [
+                {
+                  "id": "lesson_sec_001",
+                  "title": "SQL Injection",
+                  "description": "Learn about SQL injection attacks and prevention",
+                  "duration": "35 minutes",
+                  "type": "video",
+                  "order": 1,
+                  "completed": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "metadata": {
+        "duration": "7 weeks",
+        "difficulty": "Intermediate",
+        "prerequisites": ["Web Development", "Basic Security Knowledge"],
+        "skills": ["Web Security", "OWASP", "Penetration Testing", "Secure Coding"],
+        "certificate": true
+      }
     }
   ]
 }
