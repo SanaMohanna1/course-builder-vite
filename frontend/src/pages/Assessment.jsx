@@ -299,7 +299,7 @@ function Assessment() {
                 borderWidth: '1px'
               }}>
                 <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
-                  <strong>Note:</strong> This is the final exam. Make sure you have completed all lessons before taking this assessment.
+                  <strong>Note:</strong> This is the final exam. Complete this assessment to finish the course.
                 </p>
               </div>
             </div>

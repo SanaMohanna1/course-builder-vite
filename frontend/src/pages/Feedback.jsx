@@ -67,10 +67,10 @@ function Feedback() {
               </div>
               <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>
                 <Award className="inline mr-3" size={32} />
-                Course Completion Feedback
+                Course Feedback
               </h1>
               <p className="hero-content p" style={{ color: 'var(--text-secondary)' }}>
-                Congratulations on completing the course! Please share your experience to help us improve.
+                Please share your experience with this course to help us improve.
               </p>
             </div>
 

@@ -44,6 +44,7 @@ function LessonPage() {
   
   // Lesson state
   const [isCompleted, setIsCompleted] = useState(false)
+  const [exerciseCompleted, setExerciseCompleted] = useState(false)
   const [showNotes, setShowNotes] = useState(false)
   const [notes, setNotes] = useState('')
   const [bookmarked, setBookmarked] = useState(false)
@@ -53,6 +54,7 @@ function LessonPage() {
     console.log('LessonPage mounted with courseId:', courseId, 'lessonId:', lessonId)
     // Reset lesson state when navigating to a new lesson
     setIsCompleted(false)
+    setExerciseCompleted(false)
     setRating(0)
     setNotes('')
     setBookmarked(false)
@@ -133,6 +135,13 @@ function LessonPage() {
     }
   }
 
+  const handleExerciseSubmit = () => {
+    // Mark exercise as completed
+    setExerciseCompleted(true)
+    // You could add API call here to save exercise completion
+    console.log('Exercise submitted and marked as completed')
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-primary)' }}>
@@ -166,10 +175,6 @@ function LessonPage() {
 
   const currentIndex = lessons.findIndex(l => l.id === lessonId)
   const progress = ((currentTime / duration) * 100) || 0
-  
-  // Check if all lessons are completed
-  const completedLessons = lessons.filter(lesson => lesson.completed).length
-  const allLessonsCompleted = completedLessons === lessons.length
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
@@ -297,22 +302,22 @@ function LessonPage() {
                   </div>
                 </div>
                 
-                {/* Progress Indicator */}
+                {/* Lesson Progress */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-                      Course Progress
+                      Lesson Progress
                     </span>
                     <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                      {completedLessons} of {lessons.length} lessons completed
+                      Lesson {currentIndex + 1} of {lessons.length}
                     </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2" style={{ background: 'var(--bg-tertiary)' }}>
                     <div 
                       className="h-2 rounded-full transition-all duration-300"
                       style={{ 
-                        width: `${(completedLessons / lessons.length) * 100}%`,
-                        background: allLessonsCompleted ? 'var(--accent-green)' : 'var(--gradient-primary)'
+                        width: `${((currentIndex + 1) / lessons.length) * 100}%`,
+                        background: 'var(--gradient-primary)'
                       }}
                     ></div>
                   </div>
@@ -395,9 +400,19 @@ function LessonPage() {
                     ))}
                   </div>
                   <div className="mt-6 flex justify-end">
-                    <button className="btn btn-primary">
-                      Submit Exercise
-                    </button>
+                    {exerciseCompleted ? (
+                      <div className="flex items-center gap-2 text-green-600" style={{ color: 'var(--accent-green)' }}>
+                        <CheckCircle size={20} />
+                        <span className="font-medium">Exercise Completed!</span>
+                      </div>
+                    ) : (
+                      <button 
+                        onClick={handleExerciseSubmit}
+                        className="btn btn-primary"
+                      >
+                        Submit Exercise
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -488,8 +503,8 @@ function LessonPage() {
                 )}
               </button>
               
-              {/* Show Exam button if all lessons completed, otherwise show Next button */}
-              {allLessonsCompleted ? (
+              {/* Show Next button or Exam button based on lesson position */}
+              {currentIndex === lessons.length - 1 ? (
                 <button
                   onClick={() => navigate(`/assessment/${courseId}`)}
                   className="btn btn-primary flex items-center gap-2"
@@ -501,21 +516,17 @@ function LessonPage() {
               ) : (
                 <button
                   onClick={handleNextLesson}
-                  disabled={currentIndex === lessons.length - 1}
                   className="btn btn-primary flex items-center gap-2"
-                  style={{ opacity: currentIndex === lessons.length - 1 ? 0.5 : 1 }}
                 >
-                  <span>Next</span>
+                  <span>Next Lesson</span>
                   <ChevronRight size={16} />
                 </button>
               )}
               
-              {/* Show Feedback button only after exam completion */}
+              {/* Show Feedback button - available after exam */}
               <button
                 onClick={() => navigate(`/feedback/${courseId}`)}
                 className="btn btn-secondary flex items-center gap-2"
-                disabled={!allLessonsCompleted}
-                style={{ opacity: allLessonsCompleted ? 1 : 0.5 }}
               >
                 <MessageCircle size={16} />
                 <span>Course Feedback</span>
