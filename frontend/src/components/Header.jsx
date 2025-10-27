@@ -61,7 +61,7 @@ function Header() {
           {/* Logo */}
           <Link to="/" className="logo">
             <img 
-              src={isDarkMode ? "/logo-dark.png" : "/logo-light.png"} 
+              src={isDarkMode ? "../../public/logo-dark.png" : "../../public/logo-light.png"} 
               alt="Course Builder" 
             />
             <div className="text-container">
