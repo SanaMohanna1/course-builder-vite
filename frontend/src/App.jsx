@@ -89,7 +89,7 @@ function App() {
                 {/* Logo */}
                 <Link to="/" className="logo">
                   <img 
-                    src={isDarkMode ? "/logo-dark.svg" : "/logo-light.svg"} 
+                    src={isDarkMode ? "/logo-dark.png" : "/logo-light.png"} 
                     alt="Course Builder" 
                   />
                   <div className="text-container">
