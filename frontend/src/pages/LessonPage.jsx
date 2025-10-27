@@ -97,6 +97,24 @@ function LessonPage() {
         // Find current lesson
         const currentLesson = lessonsResponse.data.find(l => l.id === lessonId)
         if (currentLesson) {
+          // Add sample exercise data if not present
+          if (!currentLesson.exercise) {
+            currentLesson.exercise = {
+              title: "Practice Exercise",
+              description: "Test your understanding of this lesson with these questions.",
+              questions: [
+                {
+                  question: "What is the main topic covered in this lesson?",
+                  options: ["Option A", "Option B", "Option C", "Option D"]
+                },
+                {
+                  question: "Which concept is most important to remember?",
+                  options: ["Concept 1", "Concept 2", "Concept 3", "Concept 4"]
+                }
+              ]
+            }
+          }
+          console.log('Current lesson with exercise:', currentLesson)
           setLesson(currentLesson)
           
           // Find current topic and module
@@ -544,7 +562,7 @@ function LessonPage() {
             </div>
 
             {/* Exercise Button */}
-            {lesson.exercise && (
+            {lesson && (
               <div className="microservice-card mb-8">
                 <div className="flex items-center justify-between">
                   <div>
@@ -640,7 +658,7 @@ function LessonPage() {
       </div>
 
       {/* Exercise Modal */}
-      {showExerciseModal && lesson.exercise && (
+      {showExerciseModal && lesson && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto" style={{ background: 'var(--bg-card)' }}>
             <div className="p-6">
@@ -648,7 +666,7 @@ function LessonPage() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
                   <BookOpen className="inline mr-2" size={24} />
-                  {lesson.exercise.title || 'Practice Exercise'}
+                  {lesson.exercise?.title || 'Practice Exercise'}
                 </h2>
                 <button
                   onClick={() => setShowExerciseModal(false)}
@@ -661,12 +679,21 @@ function LessonPage() {
 
               {/* Exercise Description */}
               <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>
-                {lesson.exercise.description || 'Complete this exercise to reinforce your learning.'}
+                {lesson.exercise?.description || 'Complete this exercise to reinforce your learning.'}
               </p>
 
               {/* Exercise Questions */}
               <div className="space-y-4 mb-6">
-                {lesson.exercise.questions?.map((question, index) => (
+                {(lesson.exercise?.questions || [
+                  {
+                    question: "What is the main topic covered in this lesson?",
+                    options: ["Option A", "Option B", "Option C", "Option D"]
+                  },
+                  {
+                    question: "Which concept is most important to remember?",
+                    options: ["Concept 1", "Concept 2", "Concept 3", "Concept 4"]
+                  }
+                ]).map((question, index) => (
                   <div key={index} className="border rounded-lg p-4" style={{ 
                     borderColor: 'var(--bg-tertiary)',
                     background: 'var(--bg-secondary)'
