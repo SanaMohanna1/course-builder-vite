@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useUserStore from '../store/useUserStore'
+import { Star, CheckCircle, ArrowLeft, MessageSquare } from 'lucide-react'
 
 function Feedback() {
   const { id } = useParams()
@@ -27,147 +28,123 @@ function Feedback() {
 
   if (submitted) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow p-8 text-center">
-          <div className="text-green-600 text-6xl mb-4">🎉</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Thank You!</h1>
-          <p className="text-gray-600 mb-6">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-primary)' }}>
+        <div className="microservice-card max-w-md w-full text-center">
+          <div className="service-icon mx-auto mb-4" style={{ background: 'var(--gradient-secondary)' }}>
+            <CheckCircle size={32} />
+          </div>
+          <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>Thank You!</h1>
+          <p className="hero-content p mb-6" style={{ color: 'var(--text-secondary)' }}>
             Your feedback has been submitted successfully. We appreciate your input!
           </p>
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-2 text-sm text-gray-500">Redirecting to home page...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto" style={{ borderColor: 'var(--primary-cyan)' }}></div>
+          <p className="mt-2 text-sm" style={{ color: 'var(--text-muted)' }}>Redirecting to home page...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Course Feedback</h1>
-          <p className="text-gray-600">
-            Help us improve by sharing your experience with this course.
-          </p>
+    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
+      <div className="container py-8">
+        {/* Back Button */}
+        <div className="mb-8">
+          <button
+            onClick={() => navigate(-1)}
+            className="inline-flex items-center gap-2 text-sm font-medium transition-colors"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            <ArrowLeft size={16} />
+            Back
+          </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Rating */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-4">
-              How would you rate this course?
-            </label>
-            <div className="flex justify-center space-x-2">
-              {[1, 2, 3, 4, 5].map((star) => (
+        <div className="max-w-2xl mx-auto">
+          <div className="microservice-card">
+            <div className="text-center mb-8">
+              <div className="service-icon mx-auto mb-4" style={{ background: 'var(--gradient-primary)' }}>
+                <MessageSquare size={32} />
+              </div>
+              <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>Course Feedback</h1>
+              <p className="hero-content p" style={{ color: 'var(--text-secondary)' }}>
+                Help us improve by sharing your experience with this course.
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Rating Section */}
+              <div>
+                <label className="block text-sm font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                  How would you rate this course?
+                </label>
+                <div className="flex justify-center space-x-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setRating(star)}
+                      className="focus:outline-none transition-transform hover:scale-110"
+                    >
+                      <Star
+                        size={40}
+                        className={`${
+                          star <= rating ? 'text-yellow-400' : 'text-gray-300'
+                        }`}
+                        fill={star <= rating ? 'currentColor' : 'none'}
+                      />
+                    </button>
+                  ))}
+                </div>
+                <div className="text-center mt-2">
+                  <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                    {rating === 0 ? 'Select a rating' : 
+                     rating === 1 ? 'Poor' :
+                     rating === 2 ? 'Fair' :
+                     rating === 3 ? 'Good' :
+                     rating === 4 ? 'Very Good' : 'Excellent'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Comments Section */}
+              <div>
+                <label htmlFor="comments" className="block text-sm font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
+                  Additional Comments (Optional)
+                </label>
+                <textarea
+                  id="comments"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                  rows={6}
+                  className="input resize-none"
+                  placeholder="Tell us about your experience, what you liked, or what could be improved..."
+                />
+              </div>
+
+              {/* Submit Button */}
+              <div className="flex justify-center">
                 <button
-                  key={star}
-                  type="button"
-                  onClick={() => setRating(star)}
-                  className={`text-3xl transition-colors ${
-                    star <= rating 
-                      ? 'text-yellow-400' 
-                      : 'text-gray-300 hover:text-yellow-400'
-                  }`}
+                  type="submit"
+                  disabled={rating === 0 || isLoading}
+                  className="btn btn-primary px-8 py-3"
+                  style={{ opacity: rating === 0 ? 0.5 : 1 }}
                 >
-                  ⭐
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Submitting...
+                    </div>
+                  ) : (
+                    'Submit Feedback'
+                  )}
                 </button>
-              ))}
-            </div>
-            <div className="text-center mt-2 text-sm text-gray-600">
-              {rating === 0 && 'Click a star to rate'}
-              {rating === 1 && 'Poor'}
-              {rating === 2 && 'Fair'}
-              {rating === 3 && 'Good'}
-              {rating === 4 && 'Very Good'}
-              {rating === 5 && 'Excellent'}
-            </div>
+              </div>
+            </form>
           </div>
-
-          {/* Comments */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Additional Comments (Optional)
-            </label>
-            <textarea
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
-              rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Share your thoughts about the course content, instructor, or overall experience..."
-            />
-          </div>
-
-          {/* What did you like? */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              What did you like most about this course?
-            </label>
-            <div className="space-y-2">
-              {[
-                'Clear explanations',
-                'Practical exercises',
-                'Good pacing',
-                'Relevant content',
-                'Interactive elements'
-              ].map((option) => (
-                <label key={option} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    className="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                  />
-                  <span className="ml-2 text-sm text-gray-700">{option}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* What could be improved? */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              What could be improved?
-            </label>
-            <div className="space-y-2">
-              {[
-                'More examples',
-                'Better explanations',
-                'Additional exercises',
-                'Slower pace',
-                'More interactive content'
-              ].map((option) => (
-                <label key={option} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    className="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                  />
-                  <span className="ml-2 text-sm text-gray-700">{option}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Submit Button */}
-          <div className="flex justify-center space-x-4">
-            <button
-              type="button"
-              onClick={() => navigate('/')}
-              className="px-6 py-2 text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-300"
-            >
-              Skip Feedback
-            </button>
-            <button
-              type="submit"
-              disabled={rating === 0 || isLoading}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? 'Submitting...' : 'Submit Feedback'}
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   )
 }
 
 export default Feedback
-
-

@@ -5,6 +5,7 @@ import LoadingSpinner from '../components/LoadingSpinner'
 import Container from '../components/Container'
 import CourseStructure from '../components/CourseStructure'
 import api from '../services/api'
+import { User, Clock, Award, Play, BookOpen, CheckCircle, ArrowLeft } from 'lucide-react'
 
 function StudyCourse() {
   const { id } = useParams()
@@ -62,11 +63,14 @@ function StudyCourse() {
 
   if (!course) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-primary)' }}>
         <Container>
           <div className="text-center">
-            <h1 className="heading-1 mb-4">Course Not Found</h1>
-            <p className="body-text mb-6">The course you're looking for doesn't exist.</p>
+            <div className="service-icon mx-auto mb-4" style={{ background: 'var(--gradient-primary)' }}>
+              <BookOpen size={32} />
+            </div>
+            <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>Course Not Found</h1>
+            <p className="hero-content p mb-6" style={{ color: 'var(--text-secondary)' }}>The course you're looking for doesn't exist.</p>
             <Link to="/" className="btn btn-primary">
               Go Home
             </Link>
@@ -81,33 +85,37 @@ function StudyCourse() {
   const isPersonalized = course.courseType === 'personalized'
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
       <Container className="py-8">
+        {/* Back Button */}
+        <Link 
+          to="/" 
+          className="inline-flex items-center gap-2 mb-6 text-sm font-medium transition-colors"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          <ArrowLeft size={16} />
+          Back to Dashboard
+        </Link>
+
         {/* Course Header */}
-        <div className="card p-8 mb-8">
+        <div className="microservice-card mb-8">
           <div className="flex items-start justify-between mb-6">
             <div className="flex-1">
-              <h1 className="heading-1 mb-4">{course.title}</h1>
-              <p className="body-text-lg mb-4">{course.description}</p>
+              <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>{course.title}</h1>
+              <p className="hero-content p mb-4" style={{ color: 'var(--text-secondary)' }}>{course.description}</p>
               
-              <div className="flex items-center space-x-6 text-sm text-gray-500 mb-6">
+              <div className="flex items-center space-x-6 text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
                 <span className="flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  {course.instructor}
+                  <User size={16} className="mr-2" />
+                  {course.instructor || 'Unknown Instructor'}
                 </span>
                 <span className="flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {course.metadata.duration}
+                  <Clock size={16} className="mr-2" />
+                  {course.metadata?.duration || 'Unknown Duration'}
                 </span>
                 <span className="flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {course.metadata.difficulty}
+                  <Award size={16} className="mr-2" />
+                  {course.metadata?.difficulty || 'Intermediate'}
                 </span>
               </div>
             </div>
@@ -121,14 +129,17 @@ function StudyCourse() {
 
           {/* Progress Bar */}
           <div className="mb-6">
-            <div className="flex justify-between text-sm text-gray-600 mb-2">
+            <div className="flex justify-between text-sm mb-2" style={{ color: 'var(--text-secondary)' }}>
               <span>Course Progress</span>
               <span>{progress.progressPercentage}%</span>
             </div>
-            <div className="progress-bar">
+            <div className="w-full bg-gray-200 rounded-full h-3">
               <div 
-                className="progress-fill" 
-                style={{ width: `${progress.progressPercentage}%` }}
+                className="h-3 rounded-full transition-all duration-300"
+                style={{ 
+                  width: `${progress.progressPercentage}%`,
+                  background: 'var(--gradient-primary)'
+                }}
               ></div>
             </div>
           </div>
@@ -136,8 +147,8 @@ function StudyCourse() {
           {/* Action Buttons */}
           {!isEnrolledInCourse && !isPersonalized ? (
             <div className="text-center py-8">
-              <h3 className="heading-3 mb-4">Enroll to Start Learning</h3>
-              <p className="body-text mb-6">
+              <h3 className="microservice-card h3 mb-4" style={{ color: 'var(--text-primary)' }}>Enroll to Start Learning</h3>
+              <p className="microservice-card p mb-6" style={{ color: 'var(--text-secondary)' }}>
                 Join this course to access all lessons, resources, and assessments.
               </p>
               <button onClick={handleEnroll} className="btn btn-primary">
@@ -146,25 +157,74 @@ function StudyCourse() {
             </div>
           ) : (
             <div className="flex justify-between items-center">
-              <div className="text-sm text-gray-500">
+              <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
                 {isPersonalized ? 'AI-Powered Learning' : 'Enrolled Course'}
               </div>
-              <div className="flex space-x-3">
-                <button onClick={handleTakeExam} className="btn btn-success">
-                  Take Exam
+              <div className="flex gap-3">
+                <button
+                  onClick={handleTakeExam}
+                  className="btn btn-secondary"
+                >
+                  Take Final Exam
                 </button>
-                <Link to={`/course/${id}`} className="btn btn-secondary">
-                  Course Details
+                <Link
+                  to={`/course/${id}/lesson/${lessons[0]?.id || '1'}`}
+                  className="btn btn-primary flex items-center gap-2"
+                >
+                  <Play size={16} />
+                  Start Learning
                 </Link>
               </div>
             </div>
           )}
         </div>
 
-        {/* Course Structure */}
-        {isEnrolledInCourse || isPersonalized ? (
-          <CourseStructure courseId={id} />
-        ) : null}
+        {/* Course Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-3">
+            {/* Course Overview */}
+            <div className="microservice-card mb-8">
+              <h2 className="microservice-card h3 mb-4" style={{ color: 'var(--text-primary)' }}>Course Overview</h2>
+              <div className="prose max-w-none" style={{ color: 'var(--text-secondary)' }}>
+                <p>
+                  This comprehensive course will take you from beginner to advanced level in {course.metadata?.skills?.[0] || 'the subject'}. 
+                  You'll learn through hands-on projects, real-world examples, and interactive exercises.
+                </p>
+                <p>
+                  By the end of this course, you'll have the skills and confidence to build professional-grade applications 
+                  and advance your career in the tech industry.
+                </p>
+              </div>
+            </div>
+
+            {/* Learning Objectives */}
+            <div className="microservice-card">
+              <h2 className="microservice-card h3 mb-4" style={{ color: 'var(--text-primary)' }}>Learning Objectives</h2>
+              <ul className="space-y-3">
+                {[
+                  'Master the fundamentals and core concepts',
+                  'Build real-world projects and applications',
+                  'Learn industry best practices and patterns',
+                  'Get hands-on experience with modern tools',
+                  'Prepare for technical interviews and assessments'
+                ].map((objective, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <CheckCircle size={20} className="mt-0.5 flex-shrink-0" style={{ color: 'var(--accent-green)' }} />
+                    <span style={{ color: 'var(--text-secondary)' }}>{objective}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Sidebar - Course Structure */}
+          <div className="lg:col-span-1">
+            {isEnrolledInCourse || isPersonalized ? (
+              <CourseStructure courseId={id} />
+            ) : null}
+          </div>
+        </div>
       </Container>
     </div>
   )

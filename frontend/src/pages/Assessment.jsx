@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
 import useUserStore from '../store/useUserStore'
 import api from '../services/api'
+import { Clock, CheckCircle, XCircle, ArrowLeft, BookOpen, Award } from 'lucide-react'
 
 function Assessment() {
   const { id } = useParams()
@@ -15,6 +16,7 @@ function Assessment() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
   const [score, setScore] = useState(null)
+  const [timeLeft, setTimeLeft] = useState(60 * 60) // 60 minutes in seconds
 
   useEffect(() => {
     const loadAssessment = async () => {
@@ -47,72 +49,82 @@ function Assessment() {
     loadAssessment()
   }, [id])
 
+  // Timer effect
+  useEffect(() => {
+    if (assessment && !isCompleted && timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            handleSubmitAssessment()
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+
+      return () => clearInterval(timer)
+    }
+  }, [assessment, isCompleted, timeLeft])
+
   const generateAssessmentQuestions = (course) => {
-    // Generate questions based on course content
-    const baseQuestions = [
+    const skills = course.metadata?.skills || ['programming', 'development']
+    return [
       {
-        id: 'q1',
-        question: `What is the main purpose of ${course.metadata?.skills?.[0] || 'this technology'}?`,
+        id: 1,
+        question: `What is the main purpose of ${skills[0] || 'this technology'}?`,
         options: [
-          'To simplify development',
-          'To increase complexity',
-          'To reduce performance',
-          'To limit functionality'
+          'To create user interfaces',
+          'To manage databases',
+          'To handle server-side logic',
+          'To optimize performance'
         ],
-        correctAnswer: 0,
-        explanation: 'This technology is designed to simplify development processes.'
+        correct: 0
       },
       {
-        id: 'q2',
-        question: `Which of the following is a key feature of ${course.metadata?.skills?.[1] || 'this framework'}?`,
+        id: 2,
+        question: `Which of the following is a key feature of ${skills[1] || 'this framework'}?`,
         options: [
           'Component-based architecture',
-          'Server-side rendering only',
-          'No state management',
-          'Limited scalability'
+          'Static typing',
+          'Server-side rendering',
+          'All of the above'
         ],
-        correctAnswer: 0,
-        explanation: 'Component-based architecture is a fundamental feature.'
+        correct: 3
       },
       {
-        id: 'q3',
-        question: `What is the recommended approach for ${course.metadata?.skills?.[2] || 'state management'}?`,
+        id: 3,
+        question: `What is the recommended approach for state management in ${skills[0] || 'modern applications'}?`,
         options: [
-          'Use built-in state management',
-          'Avoid state management',
-          'Use external libraries only',
-          'Manual DOM manipulation'
+          'Global variables',
+          'Local component state only',
+          'Centralized state management',
+          'No state management needed'
         ],
-        correctAnswer: 0,
-        explanation: 'Built-in state management is the recommended approach.'
+        correct: 2
       },
       {
-        id: 'q4',
-        question: `How should you handle ${course.metadata?.skills?.[3] || 'asynchronous operations'}?`,
+        id: 4,
+        question: `Which testing strategy is most effective for ${skills[0] || 'web applications'}?`,
         options: [
-          'Use async/await or Promises',
-          'Use only callbacks',
-          'Avoid async operations',
-          'Use synchronous methods only'
+          'Unit testing only',
+          'Integration testing only',
+          'End-to-end testing only',
+          'Combination of all testing types'
         ],
-        correctAnswer: 0,
-        explanation: 'Async/await and Promises are the modern approaches.'
+        correct: 3
       },
       {
-        id: 'q5',
-        question: `What is the best practice for ${course.metadata?.skills?.[4] || 'component design'}?`,
+        id: 5,
+        question: `What is the primary benefit of using ${skills[1] || 'modern development tools'}?`,
         options: [
-          'Keep components small and focused',
-          'Make components as large as possible',
-          'Avoid component composition',
-          'Use only class components'
+          'Faster development',
+          'Better code quality',
+          'Improved debugging',
+          'All of the above'
         ],
-        correctAnswer: 0,
-        explanation: 'Small, focused components are easier to maintain and test.'
+        correct: 3
       }
     ]
-
-    return baseQuestions
   }
 
   const handleAnswerSelect = (questionId, answerIndex) => {
@@ -122,66 +134,56 @@ function Assessment() {
     }))
   }
 
-  const handleNext = () => {
+  const handleNextQuestion = () => {
     if (currentQuestion < assessment.questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1)
+      setCurrentQuestion(prev => prev + 1)
     }
   }
 
-  const handlePrevious = () => {
+  const handlePreviousQuestion = () => {
     if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1)
+      setCurrentQuestion(prev => prev - 1)
     }
   }
 
-  const handleSubmit = async () => {
+  const handleSubmitAssessment = async () => {
     setIsSubmitting(true)
-    try {
-      // Calculate score
-      let correctAnswers = 0
-      assessment.questions.forEach(question => {
-        if (answers[question.id] === question.correctAnswer) {
-          correctAnswers++
-        }
-      })
+    
+    // Calculate score
+    let correctAnswers = 0
+    assessment.questions.forEach(question => {
+      if (answers[question.id] === question.correct) {
+        correctAnswers++
+      }
+    })
+    
+    const finalScore = Math.round((correctAnswers / assessment.questions.length) * 100)
+    setScore(finalScore)
+    setIsCompleted(true)
+    setIsSubmitting(false)
+  }
 
-      const percentage = Math.round((correctAnswers / assessment.questions.length) * 100)
-      const passed = percentage >= assessment.passingScore
-
-      setScore({
-        correct: correctAnswers,
-        total: assessment.questions.length,
-        percentage,
-        passed
-      })
-
-      setIsCompleted(true)
-
-      // Simulate API call to save assessment results
-      await new Promise(resolve => setTimeout(resolve, 1000))
-    } catch (error) {
-      console.error('Failed to submit assessment:', error)
-    } finally {
-      setIsSubmitting(false)
-    }
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
   }
 
   if (isLoading) {
-    return <LoadingSpinner message="Preparing assessment..." />
+    return <LoadingSpinner message="Loading assessment..." />
   }
 
   if (!course || !assessment) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-primary)' }}>
         <div className="text-center">
-          <div className="text-gray-400 text-6xl mb-4">📝</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Assessment Not Found</h2>
-          <p className="text-gray-600 mb-6">The assessment you're looking for doesn't exist.</p>
-          <Link 
-            to="/library"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
-          >
-            Back to Library
+          <div className="service-icon mx-auto mb-4" style={{ background: 'var(--gradient-primary)' }}>
+            <BookOpen size={32} />
+          </div>
+          <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>Assessment Not Found</h1>
+          <p className="hero-content p mb-6" style={{ color: 'var(--text-secondary)' }}>The assessment you're looking for doesn't exist.</p>
+          <Link to="/" className="btn btn-primary">
+            Go Home
           </Link>
         </div>
       </div>
@@ -189,159 +191,185 @@ function Assessment() {
   }
 
   if (isCompleted) {
+    const passed = score >= assessment.passingScore
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-            <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center ${
-              score.passed ? 'bg-green-100' : 'bg-red-100'
-            }`}>
-              <span className="text-3xl">
-                {score.passed ? '🎉' : '📚'}
-              </span>
-            </div>
-            
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              {score.passed ? 'Congratulations!' : 'Keep Learning!'}
-            </h1>
-            
-            <p className="text-xl text-gray-600 mb-8">
-              {score.passed 
-                ? 'You have successfully completed the assessment!' 
-                : 'You need more practice to pass this assessment.'
-              }
-            </p>
-
-            <div className="bg-gray-50 rounded-lg p-6 mb-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Results</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">{score.correct}</div>
-                  <div className="text-sm text-gray-600">Correct Answers</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-gray-900 mb-2">{score.total}</div>
-                  <div className="text-sm text-gray-600">Total Questions</div>
-                </div>
-                <div className="text-center">
-                  <div className={`text-3xl font-bold mb-2 ${
-                    score.passed ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    {score.percentage}%
-                  </div>
-                  <div className="text-sm text-gray-600">Score</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-x-4">
-              <Link
-                to={`/feedback/${id}`}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-primary)' }}>
+        <div className="microservice-card max-w-md w-full text-center">
+          <div className={`service-icon mx-auto mb-4 ${passed ? 'bg-green-500' : 'bg-red-500'}`}>
+            {passed ? <CheckCircle size={32} /> : <XCircle size={32} />}
+          </div>
+          
+          <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>
+            {passed ? 'Congratulations!' : 'Assessment Complete'}
+          </h1>
+          
+          <div className="text-4xl font-bold mb-4" style={{ color: passed ? 'var(--accent-green)' : 'var(--accent-orange)' }}>
+            {score}%
+          </div>
+          
+          <p className="microservice-card p mb-6" style={{ color: 'var(--text-secondary)' }}>
+            {passed 
+              ? `You passed the assessment! You scored ${score}% and demonstrated mastery of the course material.`
+              : `You scored ${score}%. The passing score is ${assessment.passingScore}%. Review the course material and try again.`
+            }
+          </p>
+          
+          <div className="space-y-3">
+            <Link
+              to={`/study/${id}`}
+              className="btn btn-primary w-full"
+            >
+              Back to Course
+            </Link>
+            {!passed && (
+              <button
+                onClick={() => {
+                  setCurrentQuestion(0)
+                  setAnswers({})
+                  setIsCompleted(false)
+                  setScore(null)
+                  setTimeLeft(60 * 60)
+                }}
+                className="btn btn-secondary w-full"
               >
-                Provide Feedback
-              </Link>
-              <Link
-                to="/library"
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors duration-200"
-              >
-                Back to Library
-              </Link>
-            </div>
+                Retake Assessment
+              </button>
+            )}
           </div>
         </div>
       </div>
     )
   }
 
-  const question = assessment.questions[currentQuestion]
+  const currentQ = assessment.questions[currentQuestion]
   const progress = ((currentQuestion + 1) / assessment.questions.length) * 100
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Assessment Header */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold text-gray-900">{course.title} - Assessment</h1>
-            <div className="text-sm text-gray-600">
+    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
+      <div className="container py-8">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <Link 
+            to={`/study/${id}`}
+            className="inline-flex items-center gap-2 text-sm font-medium transition-colors"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            <ArrowLeft size={16} />
+            Back to Course
+          </Link>
+          
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
+              <Clock size={16} />
+              <span className="font-mono">{formatTime(timeLeft)}</span>
+            </div>
+            <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
               Question {currentQuestion + 1} of {assessment.questions.length}
             </div>
           </div>
-          
+        </div>
+
+        {/* Progress Bar */}
+        <div className="mb-8">
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div 
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
+              className="h-2 rounded-full transition-all duration-300"
+              style={{ 
+                width: `${progress}%`,
+                background: 'var(--gradient-primary)'
+              }}
             ></div>
           </div>
         </div>
 
-        {/* Question */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">
-            {question.question}
-          </h2>
+        {/* Assessment Content */}
+        <div className="max-w-3xl mx-auto">
+          <div className="microservice-card">
+            <div className="mb-8">
+              <h1 className="hero-content h1 mb-4" style={{ color: 'var(--text-primary)' }}>
+                {course.title} - Final Assessment
+              </h1>
+              <p className="hero-content p" style={{ color: 'var(--text-secondary)' }}>
+                Test your knowledge and earn your certificate
+              </p>
+            </div>
 
-          <div className="space-y-3">
-            {question.options.map((option, index) => (
-              <label 
-                key={index}
-                className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-colors duration-200 ${
-                  answers[question.id] === index
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
+            {/* Question */}
+            <div className="mb-8">
+              <h2 className="microservice-card h3 mb-6" style={{ color: 'var(--text-primary)' }}>
+                {currentQ.question}
+              </h2>
+              
+              <div className="space-y-3">
+                {currentQ.options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswerSelect(currentQ.id, index)}
+                    className={`w-full text-left p-4 rounded-lg border transition-all ${
+                      answers[currentQ.id] === index
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                    style={{
+                      background: answers[currentQ.id] === index ? 'var(--bg-secondary)' : 'var(--bg-card)',
+                      borderColor: answers[currentQ.id] === index ? 'var(--primary-cyan)' : 'var(--bg-tertiary)',
+                      color: 'var(--text-primary)'
+                    }}
+                  >
+                    <div className="flex items-center">
+                      <div className={`w-4 h-4 rounded-full border-2 mr-3 ${
+                        answers[currentQ.id] === index ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
+                      }`}>
+                        {answers[currentQ.id] === index && (
+                          <div className="w-2 h-2 bg-white rounded-full mx-auto mt-0.5"></div>
+                        )}
+                      </div>
+                      <span>{option}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation */}
+            <div className="flex justify-between items-center">
+              <button
+                onClick={handlePreviousQuestion}
+                disabled={currentQuestion === 0}
+                className="btn btn-secondary"
+                style={{ opacity: currentQuestion === 0 ? 0.5 : 1 }}
               >
-                <input
-                  type="radio"
-                  name={`question_${question.id}`}
-                  value={index}
-                  checked={answers[question.id] === index}
-                  onChange={() => handleAnswerSelect(question.id, index)}
-                  className="sr-only"
-                />
-                <div className={`w-6 h-6 rounded-full border-2 mr-4 flex items-center justify-center ${
-                  answers[question.id] === index
-                    ? 'border-blue-500 bg-blue-500'
-                    : 'border-gray-300'
-                }`}>
-                  {answers[question.id] === index && (
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  )}
-                </div>
-                <span className="text-gray-700">{option}</span>
-              </label>
-            ))}
-          </div>
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center mt-8">
-            <button
-              onClick={handlePrevious}
-              disabled={currentQuestion === 0}
-              className="px-6 py-3 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-400 text-gray-700 rounded-lg font-medium transition-colors duration-200"
-            >
-              Previous
-            </button>
-
-            <div className="flex space-x-4">
-              {currentQuestion === assessment.questions.length - 1 ? (
-                <button
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
-                  className="px-6 py-3 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors duration-200"
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit Assessment'}
-                </button>
-              ) : (
-                <button
-                  onClick={handleNext}
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200"
-                >
-                  Next
-                </button>
-              )}
+                Previous
+              </button>
+              
+              <div className="flex gap-3">
+                {currentQuestion === assessment.questions.length - 1 ? (
+                  <button
+                    onClick={handleSubmitAssessment}
+                    disabled={isSubmitting}
+                    className="btn btn-primary flex items-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        <Award size={16} />
+                        Submit Assessment
+                      </>
+                    )}
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleNextQuestion}
+                    className="btn btn-primary"
+                  >
+                    Next Question
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -351,4 +379,3 @@ function Assessment() {
 }
 
 export default Assessment
-

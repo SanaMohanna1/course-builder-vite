@@ -146,7 +146,7 @@ function App() {
 
               {/* Mobile Navigation */}
               {isMobileMenuOpen && (
-                <div className="md:hidden bg-white border-t border-gray-200">
+                <div className="md:hidden" style={{ background: 'var(--bg-card)', borderTop: '1px solid var(--bg-tertiary)' }}>
                   <nav className="container py-4">
                     <ul className="space-y-2">
                       {getNavigationItems().map((item) => {
@@ -155,7 +155,11 @@ function App() {
                           <li key={item.href}>
                             <Link
                               to={item.href}
-                              className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-700 hover:text-gray-900"
+                              className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors"
+                              style={{ 
+                                color: 'var(--text-primary)',
+                                ':hover': { background: 'var(--bg-secondary)' }
+                              }}
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               <IconComponent size={20} />
