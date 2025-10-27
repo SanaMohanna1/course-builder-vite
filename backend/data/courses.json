@@ -33,7 +33,33 @@
                   "duration": "15 minutes",
                   "type": "video",
                   "order": 1,
-                  "completed": false
+                  "completed": false,
+                  "exercise": {
+                    "title": "React Fundamentals Quiz",
+                    "description": "Test your understanding of React basics and its key features.",
+                    "questions": [
+                      {
+                        "question": "What is React primarily used for?",
+                        "options": [
+                          "Building user interfaces",
+                          "Database management",
+                          "Server-side programming",
+                          "Mobile app development only"
+                        ],
+                        "correctAnswer": 0
+                      },
+                      {
+                        "question": "Which company created React?",
+                        "options": [
+                          "Google",
+                          "Facebook",
+                          "Microsoft",
+                          "Apple"
+                        ],
+                        "correctAnswer": 1
+                      }
+                    ]
+                  }
                 },
                 {
                   "id": "lesson_002",
@@ -42,7 +68,33 @@
                   "duration": "20 minutes",
                   "type": "tutorial",
                   "order": 2,
-                  "completed": false
+                  "completed": false,
+                  "exercise": {
+                    "title": "Development Environment Quiz",
+                    "description": "Test your knowledge about setting up a React development environment.",
+                    "questions": [
+                      {
+                        "question": "What is the minimum Node.js version recommended for React development?",
+                        "options": [
+                          "Node.js 12",
+                          "Node.js 14",
+                          "Node.js 16",
+                          "Node.js 18"
+                        ],
+                        "correctAnswer": 2
+                      },
+                      {
+                        "question": "Which command is used to create a new React app?",
+                        "options": [
+                          "npm create-react-app",
+                          "npx create-react-app",
+                          "yarn create-react-app",
+                          "create-react-app"
+                        ],
+                        "correctAnswer": 1
+                      }
+                    ]
+                  }
                 }
               ]
             },
@@ -59,7 +111,33 @@
                   "duration": "10 minutes",
                   "type": "video",
                   "order": 1,
-                  "completed": false
+                  "completed": false,
+                  "exercise": {
+                    "title": "Creating React Apps Quiz",
+                    "description": "Test your understanding of creating and managing React applications.",
+                    "questions": [
+                      {
+                        "question": "What command starts the development server?",
+                        "options": [
+                          "npm run dev",
+                          "npm start",
+                          "npm serve",
+                          "npm run serve"
+                        ],
+                        "correctAnswer": 1
+                      },
+                      {
+                        "question": "What does create-react-app provide?",
+                        "options": [
+                          "Modern JavaScript features",
+                          "Pre-configured build tools",
+                          "Hot reloading",
+                          "All of the above"
+                        ],
+                        "correctAnswer": 3
+                      }
+                    ]
+                  }
                 },
                 {
                   "id": "lesson_004",
@@ -68,7 +146,33 @@
                   "duration": "15 minutes",
                   "type": "tutorial",
                   "order": 2,
-                  "completed": false
+                  "completed": false,
+                  "exercise": {
+                    "title": "Project Structure Quiz",
+                    "description": "Test your knowledge of React project structure and key files.",
+                    "questions": [
+                      {
+                        "question": "Which file is the entry point of a React application?",
+                        "options": [
+                          "App.js",
+                          "index.js",
+                          "main.js",
+                          "app.js"
+                        ],
+                        "correctAnswer": 1
+                      },
+                      {
+                        "question": "Where are static assets like images typically stored?",
+                        "options": [
+                          "src/assets",
+                          "public",
+                          "static",
+                          "resources"
+                        ],
+                        "correctAnswer": 1
+                      }
+                    ]
+                  }
                 }
               ]
             }
