@@ -175,6 +175,10 @@ function LessonPage() {
 
   const currentIndex = lessons.findIndex(l => l.id === lessonId)
   const progress = ((currentTime / duration) * 100) || 0
+  
+  // Check if all lessons are completed (for exam access)
+  const completedLessons = lessons.filter(lesson => lesson.completed).length
+  const allLessonsCompleted = completedLessons === lessons.length
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
@@ -302,22 +306,22 @@ function LessonPage() {
                   </div>
                 </div>
                 
-                {/* Lesson Progress */}
+                {/* Course Progress */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-                      Lesson Progress
+                      Course Progress
                     </span>
                     <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                      Lesson {currentIndex + 1} of {lessons.length}
+                      {completedLessons} of {lessons.length} lessons completed
                     </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2" style={{ background: 'var(--bg-tertiary)' }}>
                     <div 
                       className="h-2 rounded-full transition-all duration-300"
                       style={{ 
-                        width: `${((currentIndex + 1) / lessons.length) * 100}%`,
-                        background: 'var(--gradient-primary)'
+                        width: `${(completedLessons / lessons.length) * 100}%`,
+                        background: allLessonsCompleted ? 'var(--accent-green)' : 'var(--gradient-primary)'
                       }}
                     ></div>
                   </div>
@@ -503,8 +507,8 @@ function LessonPage() {
                 )}
               </button>
               
-              {/* Show Next button or Exam button based on lesson position */}
-              {currentIndex === lessons.length - 1 ? (
+              {/* Show Next button or Exam button based on completion status */}
+              {currentIndex === lessons.length - 1 && allLessonsCompleted ? (
                 <button
                   onClick={() => navigate(`/assessment/${courseId}`)}
                   className="btn btn-primary flex items-center gap-2"
@@ -516,21 +520,15 @@ function LessonPage() {
               ) : (
                 <button
                   onClick={handleNextLesson}
+                  disabled={currentIndex === lessons.length - 1 && !allLessonsCompleted}
                   className="btn btn-primary flex items-center gap-2"
+                  style={{ opacity: currentIndex === lessons.length - 1 && !allLessonsCompleted ? 0.5 : 1 }}
                 >
-                  <span>Next Lesson</span>
+                  <span>{currentIndex === lessons.length - 1 ? 'Complete All Lessons First' : 'Next Lesson'}</span>
                   <ChevronRight size={16} />
                 </button>
               )}
               
-              {/* Show Feedback button - available after exam */}
-              <button
-                onClick={() => navigate(`/feedback/${courseId}`)}
-                className="btn btn-secondary flex items-center gap-2"
-              >
-                <MessageCircle size={16} />
-                <span>Course Feedback</span>
-              </button>
             </div>
           </div>
         </div>

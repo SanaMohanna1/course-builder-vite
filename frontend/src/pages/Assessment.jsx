@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
 import useUserStore from '../store/useUserStore'
 import api from '../services/api'
-import { Clock, CheckCircle, XCircle, ArrowLeft, BookOpen, Award } from 'lucide-react'
+import { Clock, CheckCircle, XCircle, ArrowLeft, BookOpen, Award, MessageCircle } from 'lucide-react'
 
 function Assessment() {
   const { id } = useParams()
@@ -216,8 +216,15 @@ function Assessment() {
           
           <div className="space-y-3">
             <Link
+              to={`/feedback/${id}`}
+              className="btn btn-primary w-full flex items-center justify-center gap-2"
+            >
+              <MessageCircle size={16} />
+              Give Course Feedback
+            </Link>
+            <Link
               to={`/study/${id}`}
-              className="btn btn-primary w-full"
+              className="btn btn-secondary w-full"
             >
               Back to Course
             </Link>
@@ -299,7 +306,7 @@ function Assessment() {
                 borderWidth: '1px'
               }}>
                 <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
-                  <strong>Note:</strong> This is the final exam. Complete this assessment to finish the course.
+                  <strong>Note:</strong> This is the final exam. Make sure you have completed all lessons and exercises before taking this assessment.
                 </p>
               </div>
             </div>
