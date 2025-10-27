@@ -240,8 +240,8 @@ function Home() {
         {/* Call to Action */}
         <div className="microservice-card mt-8" style={{ background: 'var(--gradient-primary)' }}>
           <div className="text-center">
-            <h2 className="microservice-card h3 mb-4" style={{ color: 'white' }}>Ready to Start Learning?</h2>
-            <p className="microservice-card p mb-8" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+            <h2 className="microservice-card h3 mb-4" >Ready to Start Learning?</h2>
+            <p className="microservice-card p mb-8" >
               Choose your learning path and begin your journey to mastery
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
