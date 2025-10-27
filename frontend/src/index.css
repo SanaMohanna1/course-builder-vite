@@ -829,6 +829,19 @@ body {
     box-shadow: var(--shadow-card);
 }
 
+/* Light mode button fixes */
+.day-mode .btn-secondary {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--bg-tertiary);
+}
+
+.day-mode .btn-secondary:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--primary-cyan);
+}
+
 .btn-secondary:hover {
     background: var(--bg-secondary);
     border-color: var(--primary-cyan);
@@ -1045,13 +1058,8 @@ body {
     box-shadow: var(--shadow-card);
     backdrop-filter: blur(20px);
     position: relative;
-    animation: floatCard 6s ease-in-out infinite;
 }
 
-@keyframes floatCard {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(2deg); }
-}
 
 .card-header {
     display: flex;

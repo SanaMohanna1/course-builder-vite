@@ -41,20 +41,7 @@ function Header() {
 
   return (
     <>
-      {/* Background Animation */}
-      <div className="bg-animation">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 20}s`,
-              animationDuration: `${20 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
+      {/* Background Animation - Removed particles for cleaner look */}
 
       {/* Header */}
       <header className="header">

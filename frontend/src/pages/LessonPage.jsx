@@ -51,6 +51,11 @@ function LessonPage() {
 
   useEffect(() => {
     console.log('LessonPage mounted with courseId:', courseId, 'lessonId:', lessonId)
+    // Reset lesson state when navigating to a new lesson
+    setIsCompleted(false)
+    setRating(0)
+    setNotes('')
+    setBookmarked(false)
     loadCourseData()
   }, [courseId, lessonId])
 
@@ -272,8 +277,8 @@ function LessonPage() {
         </div>
 
         {/* Lesson Content */}
-        <div className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-4xl mx-auto">
+        <div className="flex-1 overflow-y-auto p-6" style={{ minHeight: '60vh' }}>
+          <div className="max-w-6xl mx-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h2 className="hero-content h1 mb-2" style={{ color: 'var(--text-primary)' }}>{lesson.title}</h2>

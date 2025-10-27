@@ -37,7 +37,7 @@ function App() {
             <Header />
 
             {/* Main Content */}
-            <main className="pt-20">
+            <main className="pt-24">
               <Suspense fallback={
                 <div className="loading">
                   <div className="loading-spinner"></div>
