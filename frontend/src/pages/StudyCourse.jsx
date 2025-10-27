@@ -83,6 +83,7 @@ function StudyCourse() {
   const progress = getCourseProgress(id)
   const isEnrolledInCourse = isEnrolled(id)
   const isPersonalized = course.courseType === 'personalized'
+  const hasStartedLearning = progress.progressPercentage > 0 || progress.completedLessons?.length > 0
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
@@ -166,7 +167,7 @@ function StudyCourse() {
                   className="btn btn-primary flex items-center gap-2"
                 >
                   <Play size={16} />
-                  Start Learning
+                  {hasStartedLearning ? 'Continue Learning' : 'Start Learning'}
                 </Link>
               </div>
             </div>
@@ -174,51 +175,57 @@ function StudyCourse() {
         </div>
 
         {/* Course Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-3">
-            {/* Course Overview */}
-            <div className="microservice-card mb-8">
-              <h2 className="microservice-card h3 mb-4" style={{ color: 'var(--text-primary)' }}>Course Overview</h2>
-              <div className="prose max-w-none" style={{ color: 'var(--text-secondary)' }}>
-                <p>
-                  This comprehensive course will take you from beginner to advanced level in {course.metadata?.skills?.[0] || 'the subject'}. 
-                  You'll learn through hands-on projects, real-world examples, and interactive exercises.
-                </p>
-                <p>
-                  By the end of this course, you'll have the skills and confidence to build professional-grade applications 
-                  and advance your career in the tech industry.
-                </p>
+        {!isEnrolledInCourse && !isPersonalized ? (
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-3">
+              {/* Course Overview */}
+              <div className="microservice-card mb-8">
+                <h2 className="microservice-card h3 mb-4" style={{ color: 'var(--text-primary)' }}>Course Overview</h2>
+                <div className="prose max-w-none" style={{ color: 'var(--text-secondary)' }}>
+                  <p>
+                    This comprehensive course will take you from beginner to advanced level in {course.metadata?.skills?.[0] || 'the subject'}. 
+                    You'll learn through hands-on projects, real-world examples, and interactive exercises.
+                  </p>
+                  <p>
+                    By the end of this course, you'll have the skills and confidence to build professional-grade applications 
+                    and advance your career in the tech industry.
+                  </p>
+                </div>
+              </div>
+
+              {/* Learning Objectives */}
+              <div className="microservice-card">
+                <h2 className="microservice-card h3 mb-4" style={{ color: 'var(--text-primary)' }}>Learning Objectives</h2>
+                <ul className="space-y-3">
+                  {[
+                    'Master the fundamentals and core concepts',
+                    'Build real-world projects and applications',
+                    'Learn industry best practices and patterns',
+                    'Get hands-on experience with modern tools',
+                    'Prepare for technical interviews and assessments'
+                  ].map((objective, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircle size={20} className="mt-0.5 flex-shrink-0" style={{ color: 'var(--accent-green)' }} />
+                      <span style={{ color: 'var(--text-secondary)' }}>{objective}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            {/* Learning Objectives */}
-            <div className="microservice-card">
-              <h2 className="microservice-card h3 mb-4" style={{ color: 'var(--text-primary)' }}>Learning Objectives</h2>
-              <ul className="space-y-3">
-                {[
-                  'Master the fundamentals and core concepts',
-                  'Build real-world projects and applications',
-                  'Learn industry best practices and patterns',
-                  'Get hands-on experience with modern tools',
-                  'Prepare for technical interviews and assessments'
-                ].map((objective, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckCircle size={20} className="mt-0.5 flex-shrink-0" style={{ color: 'var(--accent-green)' }} />
-                    <span style={{ color: 'var(--text-secondary)' }}>{objective}</span>
-                  </li>
-                ))}
-              </ul>
+            {/* Sidebar - Course Structure */}
+            <div className="lg:col-span-1">
+              <CourseStructure courseId={id} />
             </div>
           </div>
-
-          {/* Sidebar - Course Structure */}
-          <div className="lg:col-span-1">
-            {isEnrolledInCourse || isPersonalized ? (
-              <CourseStructure courseId={id} />
-            ) : null}
+        ) : (
+          /* Course Structure for Enrolled Users */
+          <div className="microservice-card">
+            <h2 className="microservice-card h3 mb-6" style={{ color: 'var(--text-primary)' }}>Course Structure</h2>
+            <CourseStructure courseId={id} />
           </div>
-        </div>
+        )}
       </Container>
     </div>
   )

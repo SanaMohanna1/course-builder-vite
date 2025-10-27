@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Star, Clock, Users, Play, Award, BookOpen } from 'lucide-react'
+import useUserStore from '../store/useUserStore'
 
 function CourseCard({ 
   course,
@@ -7,6 +8,11 @@ function CourseCard({
   isPersonalized = false
 }) {
   if (!course) return null
+
+  const { isEnrolled, getCourseProgress } = useUserStore()
+  const isEnrolledInCourse = isEnrolled(course.id)
+  const progress = getCourseProgress(course.id)
+  const hasStartedLearning = progress.progressPercentage > 0 || progress.completedLessons?.length > 0
 
   const {
     id,
@@ -128,7 +134,12 @@ function CourseCard({
             className="btn btn-primary flex items-center gap-2 px-4 py-2"
           >
             <Play size={16} />
-            {courseType === 'personalized' ? 'Start Learning' : 'Enroll Now'}
+            {courseType === 'personalized' 
+              ? (hasStartedLearning ? 'Continue Learning' : 'Start Learning')
+              : (isEnrolledInCourse 
+                  ? (hasStartedLearning ? 'Continue Learning' : 'Start Learning')
+                  : 'Enroll Now')
+            }
           </Link>
         )}
       </div>
