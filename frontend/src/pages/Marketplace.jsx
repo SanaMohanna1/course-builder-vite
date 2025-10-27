@@ -64,7 +64,7 @@ function Marketplace() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="hero-content h1" style={{ color: 'var(--text-primary)' }}>
-            Course Marketplace
+            EDUCORE AI Marketplace
           </h1>
           <p className="hero-content subtitle" style={{ color: 'var(--text-secondary)' }}>
             Discover and enroll in courses created by expert instructors. 

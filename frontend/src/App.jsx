@@ -88,8 +88,11 @@ function App() {
               <div className="nav-container">
                 {/* Logo */}
                 <Link to="/" className="logo">
-                  <BookOpen className="inline-block mr-2" size={24} />
-                  CourseBuilder
+                  <img 
+                    src={isDarkMode ? "/logo-dark.svg" : "/logo-light.svg"} 
+                    alt="EDUCORE AI" 
+                    className="h-8 w-auto"
+                  />
                 </Link>
 
                 {/* Desktop Navigation */}

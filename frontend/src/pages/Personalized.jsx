@@ -45,7 +45,7 @@ function Personalized() {
             <Sparkles size={32} />
           </div>
           <h1 className="hero-content h1" style={{ color: 'var(--text-primary)' }}>
-            Personalized Learning
+            EDUCORE AI Personalized Learning
           </h1>
           <p className="hero-content subtitle" style={{ color: 'var(--text-secondary)' }}>
             AI-powered courses tailored specifically for your learning goals, 

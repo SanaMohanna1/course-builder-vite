@@ -59,7 +59,7 @@ function MyLibrary() {
             <BookOpen size={32} />
           </div>
           <h1 className="hero-content h1" style={{ color: 'var(--text-primary)' }}>
-            My Learning Library
+            My EDUCORE AI Library
           </h1>
           <p className="hero-content subtitle" style={{ color: 'var(--text-secondary)' }}>
             Track your progress and continue your learning journey with all your enrolled courses

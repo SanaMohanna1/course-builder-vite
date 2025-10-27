@@ -59,7 +59,7 @@ function Home() {
         <Container className="py-16">
           <div className="text-center">
             <h1 className="hero-content h1" style={{ color: 'var(--text-primary)' }}>
-              Welcome back, {currentUser?.name || 'Learner'}!
+              Welcome to EDUCORE AI, {currentUser?.name || 'Learner'}!
             </h1>
             <p className="hero-content subtitle" style={{ color: 'var(--text-secondary)' }}>
               Continue your learning journey and discover new skills to advance your career

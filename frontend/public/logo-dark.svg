@@ -1,0 +1,31 @@
+<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark Mode EDUCORE AI Logo -->
+  <defs>
+    <linearGradient id="darkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#14b8a6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d9488;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="darkGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Circular Symbol -->
+  <g transform="translate(100, 25)">
+    <!-- Outer swirling bands -->
+    <path d="M-15,-15 Q-20,-5 -15,5 Q-10,15 0,15 Q10,15 15,5 Q20,-5 15,-15 Q10,-25 0,-25 Q-10,-25 -15,-15 Z" fill="url(#darkGradient)" opacity="0.8"/>
+    <path d="M-12,-12 Q-16,-4 -12,4 Q-8,12 0,12 Q8,12 12,4 Q16,-4 12,-12 Q8,-20 0,-20 Q-8,-20 -12,-12 Z" fill="url(#darkGradient)" opacity="0.6"/>
+    <path d="M-9,-9 Q-12,-3 -9,3 Q-6,9 0,9 Q6,9 9,3 Q12,-3 9,-9 Q6,-15 0,-15 Q-6,-15 -9,-9 Z" fill="url(#darkGradient)" opacity="0.4"/>
+    
+    <!-- Central white circle with glow -->
+    <circle cx="0" cy="0" r="12" fill="url(#darkGlow)"/>
+    <circle cx="0" cy="0" r="8" fill="white"/>
+    
+    <!-- Letter E -->
+    <text x="0" y="3" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0d9488">E</text>
+  </g>
+  
+  <!-- Text -->
+  <text x="100" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">EDUCORE AI</text>
+</svg>
