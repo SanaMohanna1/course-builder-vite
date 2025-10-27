@@ -406,6 +406,57 @@ function LessonPage() {
                       ></div>
                     </div>
                   </div>
+                  
+                  {/* Lesson Navigation */}
+                  <div className="flex items-center justify-between mb-6">
+                    <button
+                      onClick={handlePreviousLesson}
+                      disabled={currentIndex === 0}
+                      className="btn btn-secondary flex items-center gap-2"
+                      style={{ opacity: currentIndex === 0 ? 0.5 : 1 }}
+                    >
+                      <ChevronLeft size={16} />
+                      <span>Previous</span>
+                    </button>
+
+                    <button
+                      onClick={handleMarkComplete}
+                      className={`btn flex items-center gap-2 ${
+                        isCompleted ? 'btn-success' : 'btn-primary'
+                      }`}
+                    >
+                      {isCompleted ? (
+                        <>
+                          <CheckCircle size={16} />
+                          <span>Completed</span>
+                        </>
+                      ) : (
+                        <>
+                          <Circle size={16} />
+                          <span>Mark as Complete</span>
+                        </>
+                      )}
+                    </button>
+
+                    {currentIndex === lessons.length - 1 ? (
+                      <button
+                        onClick={() => navigate(`/assessment/${courseId}`)}
+                        className="btn btn-primary flex items-center gap-2"
+                        style={{ background: 'var(--accent-gold)', border: 'none' }}
+                      >
+                        <BookOpen size={16} />
+                        <span>Take Final Exam</span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleNextLesson}
+                        className="btn btn-primary flex items-center gap-2"
+                      >
+                        <span>Next</span>
+                        <ChevronRight size={16} />
+                      </button>
+                    )}
+                  </div>
                 </div>
                 
                 <div className="flex items-center gap-4">
@@ -586,67 +637,6 @@ function LessonPage() {
           </div>
         </div>
 
-        {/* Fixed Bottom Navigation */}
-        <div className="fixed bottom-0 left-0 right-0 p-6 z-50" style={{ 
-          background: 'var(--bg-card)',
-          borderTop: '1px solid var(--bg-tertiary)',
-          backdropFilter: 'blur(10px)'
-        }}>
-          <div className="max-w-4xl mx-auto flex items-center justify-between">
-            {/* Previous Button */}
-            <button
-              onClick={handlePreviousLesson}
-              disabled={currentIndex === 0}
-              className="btn btn-secondary flex items-center gap-2"
-              style={{ opacity: currentIndex === 0 ? 0.5 : 1 }}
-            >
-              <ChevronLeft size={16} />
-              <span>Previous</span>
-            </button>
-
-            {/* Center Actions */}
-            <div className="flex items-center gap-4">
-              <button
-                onClick={handleMarkComplete}
-                className={`btn flex items-center gap-2 ${
-                  isCompleted ? 'btn-success' : 'btn-primary'
-                }`}
-              >
-                {isCompleted ? (
-                  <>
-                    <CheckCircle size={16} />
-                    <span>Completed</span>
-                  </>
-                ) : (
-                  <>
-                    <Circle size={16} />
-                    <span>Mark as Complete</span>
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* Next Button or Exam Button */}
-            {currentIndex === lessons.length - 1 ? (
-              <button
-                onClick={() => navigate(`/assessment/${courseId}`)}
-                className="btn btn-primary flex items-center gap-2"
-                style={{ background: 'var(--accent-gold)', border: 'none' }}
-              >
-                <BookOpen size={16} />
-                <span>Take Final Exam</span>
-              </button>
-            ) : (
-              <button
-                onClick={handleNextLesson}
-                className="btn btn-primary flex items-center gap-2"
-              >
-                <span>Next</span>
-                <ChevronRight size={16} />
-              </button>
-            )}
-          </div>
-        </div>
       </div>
 
       {/* Exercise Modal */}
