@@ -164,7 +164,7 @@ function CourseDetails() {
                 className="btn btn-primary flex items-center gap-2"
               >
                 <Play size={16} />
-                {isPersonalized ? 'Start Learning' : 'Continue Learning'}
+                {isPersonalized ? 'Start Learning' : 'Start Learning'}
               </Link>
             ) : (
               <button
