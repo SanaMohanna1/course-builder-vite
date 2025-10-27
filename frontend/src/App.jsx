@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Suspense, lazy, useEffect } from 'react'
+import { User } from 'lucide-react'
 import ErrorBoundary from './components/ErrorBoundary'
 import { ToastProvider } from './contexts/ToastContext'
 import Container from './components/Container'
 import Header from './components/Header'
+import useUserStore from './store/useUserStore'
 
 // Lazy load learner-focused pages
 const Home = lazy(() => import('./pages/Home'))
