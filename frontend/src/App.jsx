@@ -29,9 +29,9 @@ function App() {
     }
   }, [currentUser, loginAsLearner])
 
-  // Apply theme class to body
+  // Apply theme class to document element
   useEffect(() => {
-    document.body.className = isDarkMode ? 'night-mode' : 'day-mode'
+    document.documentElement.className = isDarkMode ? 'night-mode' : 'day-mode'
   }, [isDarkMode])
 
   // Toggle dark mode

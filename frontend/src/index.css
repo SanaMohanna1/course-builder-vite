@@ -49,7 +49,8 @@
 }
 
 /* Night Mode Theme */
-.night-mode {
+.night-mode,
+html.night-mode {
     /* Night Mode Colors - Dark & Elegant */
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
@@ -73,7 +74,8 @@
 }
 
 /* Day Mode Theme (Default) */
-.day-mode {
+.day-mode,
+html.day-mode {
     /* Day Mode Colors - Bright & Clean */
     --bg-primary: #f8fafc;
     --bg-secondary: #e2e8f0;
@@ -392,6 +394,18 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ensure proper theme application */
+.day-mode body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.night-mode body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 /* Animated Background - Subtle & Eye-friendly */

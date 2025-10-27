@@ -46,10 +46,10 @@ function CourseCard({
       {/* Course Header */}
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1 mr-4">
-          <h3 className="microservice-card h3 mb-2">
+          <h3 className="microservice-card h3 mb-2" style={{ color: 'var(--text-primary)' }}>
             {title}
           </h3>
-          <p className="microservice-card p text-sm">
+          <p className="microservice-card p text-sm" style={{ color: 'var(--text-secondary)' }}>
             {description}
           </p>
         </div>
@@ -65,9 +65,9 @@ function CourseCard({
       </div>
 
       {/* Course Stats */}
-      <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
+      <div className="flex items-center gap-4 mb-4 text-sm" style={{ color: 'var(--text-muted)' }}>
         <div className="flex items-center gap-1">
-          <Star size={14} className="text-yellow-500" />
+          <Star size={14} style={{ color: 'var(--accent-gold)' }} />
           <span className="font-medium">{courseRating}</span>
         </div>
         <div className="flex items-center gap-1">
@@ -82,7 +82,7 @@ function CourseCard({
 
       {/* Instructor */}
       <div className="mb-4">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           <span className="font-medium">Instructor:</span> {instructor || 'Unknown Instructor'}
         </p>
       </div>
@@ -109,12 +109,12 @@ function CourseCard({
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           {isFree ? (
-            <span className="text-lg font-bold text-green-600">Free</span>
+            <span className="text-lg font-bold" style={{ color: 'var(--accent-green)' }}>Free</span>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="text-lg font-bold text-gray-900">${coursePrice}</span>
+              <span className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>${coursePrice}</span>
               {coursePrice > 0 && (
-                <span className="text-sm text-gray-500 line-through">
+                <span className="text-sm line-through" style={{ color: 'var(--text-muted)' }}>
                   ${Math.round(coursePrice * 1.2)}
                 </span>
               )}
