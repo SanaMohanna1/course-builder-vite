@@ -83,7 +83,13 @@ function StudyCourse() {
   const progress = getCourseProgress(id)
   const isEnrolledInCourse = isEnrolled(id)
   const isPersonalized = course.courseType === 'personalized'
-  const hasStartedLearning = progress.progressPercentage > 0 || progress.completedLessons?.length > 0
+  const hasStartedLearning = progress.progressPercentage > 0 || (progress.completedLessons && progress.completedLessons.length > 0)
+  
+  // Debug logging
+  console.log('Course ID:', id)
+  console.log('Progress:', progress)
+  console.log('Is Enrolled:', isEnrolledInCourse)
+  console.log('Has Started Learning:', hasStartedLearning)
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>

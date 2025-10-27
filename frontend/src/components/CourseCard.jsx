@@ -12,7 +12,13 @@ function CourseCard({
   const { isEnrolled, getCourseProgress } = useUserStore()
   const isEnrolledInCourse = isEnrolled(course.id)
   const progress = getCourseProgress(course.id)
-  const hasStartedLearning = progress.progressPercentage > 0 || progress.completedLessons?.length > 0
+  const hasStartedLearning = progress.progressPercentage > 0 || (progress.completedLessons && progress.completedLessons.length > 0)
+  
+  // Debug logging
+  console.log('CourseCard - Course ID:', course.id)
+  console.log('CourseCard - Progress:', progress)
+  console.log('CourseCard - Is Enrolled:', isEnrolledInCourse)
+  console.log('CourseCard - Has Started Learning:', hasStartedLearning)
 
   const {
     id,
