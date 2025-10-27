@@ -553,41 +553,31 @@ body {
 
 .logo:hover img {
     transform: scale(1.15);
-    filter: 
-        drop-shadow(0 12px 35px rgba(0, 0, 0, 0.2))
-        drop-shadow(0 6px 18px rgba(0, 0, 0, 0.15))
-        drop-shadow(0 3px 8px rgba(0, 0, 0, 0.1))
-        brightness(1.1)
-        contrast(1.2)
-        saturate(1.15);
 }
 
+/* Enhanced hover effects */
+.logo:hover .brand-name {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo:hover .brand-subtitle {
+    opacity: 1;
+}
+
+/* Light mode hover effects */
 .day-mode .logo:hover img {
-    filter: 
-        drop-shadow(0 12px 35px rgba(0, 0, 0, 0.15))
-        drop-shadow(0 6px 18px rgba(0, 0, 0, 0.1))
-        drop-shadow(0 3px 8px rgba(0, 0, 0, 0.08))
-        brightness(1.05)
-        contrast(1.1)
-        saturate(1.12);
-    box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4),
-        0 8px 32px rgba(0, 0, 0, 0.1);
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15)) 
+            drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* Dark mode hover effects */
 .night-mode .logo:hover img {
-    filter: 
-        drop-shadow(0 12px 35px rgba(0, 0, 0, 0.4))
-        drop-shadow(0 6px 18px rgba(0, 0, 0, 0.25))
-        drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2))
-        brightness(1.12)
-        contrast(1.2)
-        saturate(1.18);
-    box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        0 8px 32px rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4)) 
+            drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .logo img {
@@ -595,21 +585,29 @@ body {
     width: auto;
     max-width: 400px;
     transition: all 0.3s ease;
-    filter: 
-        drop-shadow(0 8px 25px rgba(0, 0, 0, 0.15))
-        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1))
-        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08))
-        brightness(1.05)
-        contrast(1.1)
-        saturate(1.1);
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
     transform: scale(1.1);
     border-radius: 8px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
     padding: 4px;
+}
+
+/* Light mode logo styling */
+.day-mode .logo img {
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1)) 
+            drop-shadow(0 1px 3px rgba(0, 0, 0, 0.05));
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Dark mode logo styling */
+.night-mode .logo img {
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)) 
+            drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo .text-container {
@@ -624,6 +622,7 @@ body {
     color: var(--text-primary);
     letter-spacing: 0.5px;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .logo .brand-subtitle {
@@ -634,35 +633,29 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.8px;
     margin-top: 2px;
+    transition: all 0.3s ease;
 }
 
-/* Theme-specific logo styling */
-.day-mode .logo img {
-    filter: 
-        drop-shadow(0 8px 25px rgba(0, 0, 0, 0.12))
-        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.08))
-        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.06))
-        brightness(1.02)
-        contrast(1.05)
-        saturate(1.08);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
-    box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+/* Light mode text styling */
+.day-mode .logo .brand-name {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    color: #1a202c;
 }
 
-.night-mode .logo img {
-    filter: 
-        drop-shadow(0 8px 25px rgba(0, 0, 0, 0.3))
-        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2))
-        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15))
-        brightness(1.08)
-        contrast(1.15)
-        saturate(1.12);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-    box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+.day-mode .logo .brand-subtitle {
+    color: #4a5568;
+    opacity: 0.8;
+}
+
+/* Dark mode text styling */
+.night-mode .logo .brand-name {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.night-mode .logo .brand-subtitle {
+    color: #a0aec0;
+    opacity: 0.9;
 }
 
 /* Mobile responsive logo */
