@@ -212,21 +212,21 @@ function LessonPage() {
         </div>
 
         {/* Video Player */}
-        <div className="relative" style={{ background: 'var(--bg-card)' }}>
+        <div className="relative microservice-card">
           <div className="aspect-video flex items-center justify-center" style={{ background: 'var(--bg-tertiary)' }}>
             {lesson.type === 'video' ? (
-              <div className="text-center text-white">
+              <div className="text-center" style={{ color: 'var(--text-primary)' }}>
                 <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'var(--gradient-primary)' }}>
-                  <Play size={32} />
+                  <Play size={32} style={{ color: 'white' }} />
                 </div>
-                <p className="text-lg">Video Player</p>
-                <p className="text-sm opacity-75">Duration: {lesson.duration}</p>
+                <p className="text-lg font-semibold">Video Player</p>
+                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Duration: {lesson.duration}</p>
               </div>
             ) : (
-              <div className="text-center text-white p-8">
+              <div className="text-center p-8" style={{ color: 'var(--text-primary)' }}>
                 <BookOpen size={64} className="mx-auto mb-4" style={{ color: 'var(--primary-cyan)' }} />
                 <h3 className="text-xl font-semibold mb-2">{lesson.title}</h3>
-                <p className="opacity-75">Interactive Lesson Content</p>
+                <p style={{ color: 'var(--text-secondary)' }}>Interactive Lesson Content</p>
               </div>
             )}
           </div>
@@ -236,7 +236,7 @@ function LessonPage() {
             <div className="flex items-center space-x-4">
               <button
                 onClick={handlePlayPause}
-                className="text-white hover:text-blue-400 transition-colors"
+                className="text-white hover:text-cyan-400 transition-colors"
               >
                 {isPlaying ? <Pause size={24} /> : <Play size={24} />}
               </button>
@@ -259,12 +259,12 @@ function LessonPage() {
               
               <button
                 onClick={handleVolumeToggle}
-                className="text-white hover:text-blue-400 transition-colors"
+                className="text-white hover:text-cyan-400 transition-colors"
               >
                 {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
               </button>
               
-              <button className="text-white hover:text-blue-400 transition-colors">
+              <button className="text-white hover:text-cyan-400 transition-colors">
                 <Maximize size={20} />
               </button>
             </div>
