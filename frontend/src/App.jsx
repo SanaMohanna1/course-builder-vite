@@ -90,14 +90,14 @@ function App() {
                 <Link to="/" className="logo">
                   <img 
                     src={isDarkMode ? "/logo-dark.svg" : "/logo-light.svg"} 
-                    alt="EDUCORE AI" 
+                    alt="Course Builder" 
                   />
                   <div className="text-container">
                     <span className="brand-name">
-                      EDUCORE AI
+                      Course Builder
                     </span>
                     <span className="brand-subtitle">
-                      Course Builder
+                      by EDUCORE AI
                     </span>
                   </div>
                 </Link>
