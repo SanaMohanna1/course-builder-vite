@@ -663,22 +663,39 @@ body {
     background: var(--gradient-primary);
     color: white;
     box-shadow: var(--shadow-glow);
+    border: none;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+    box-shadow: var(--shadow-hover);
+    background: var(--gradient-secondary);
 }
 
 .btn-secondary {
-    background: transparent;
+    background: var(--bg-card);
     color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--bg-tertiary);
+    box-shadow: var(--shadow-card);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: var(--bg-secondary);
+    border-color: var(--primary-cyan);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-success {
+    background: var(--gradient-secondary);
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    background: var(--gradient-accent);
 }
 
 /* Hero Section */
@@ -979,15 +996,16 @@ body {
 }
 
 .microservice-card {
-    background: var(--gradient-card);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: 16px;
     padding: var(--spacing-lg);
-    text-align: center;
+    text-align: left;
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow-card);
 }
 
 .microservice-card::before {
@@ -997,7 +1015,7 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    background: linear-gradient(90deg, transparent, rgba(13, 148, 136, 0.1), transparent);
     transition: left 0.5s ease;
 }
 
@@ -1006,9 +1024,9 @@ body {
 }
 
 .microservice-card:hover {
-    transform: translateY(-8px) scale(1.02);
+    transform: translateY(-4px);
     border-color: var(--primary-cyan);
-    box-shadow: 0 20px 40px rgba(8, 145, 178, 0.3);
+    box-shadow: var(--shadow-hover);
 }
 
 .service-icon {
@@ -1024,6 +1042,188 @@ body {
     color: white;
     animation: float 3s ease-in-out infinite;
     position: relative;
+}
+
+/* Floating Card */
+.floating-card {
+    background: var(--bg-card);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-card);
+}
+
+.floating-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-cyan);
+}
+
+/* Dashboard Card */
+.dashboard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-cyan);
+}
+
+.dashboard-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto var(--spacing-md);
+    background: var(--gradient-primary);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Typography */
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-content h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: var(--spacing-md);
+}
+
+.hero-content h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: var(--spacing-sm);
+}
+
+.hero-content p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+.hero-content .subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+}
+
+.microservice-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.microservice-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.progress-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* Form Elements */
+.input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: 8px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary-cyan);
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+}
+
+.select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: 8px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.select:focus {
+    outline: none;
+    border-color: var(--primary-cyan);
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.badge-blue {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.badge-purple {
+    background: var(--gradient-secondary);
+    color: white;
+}
+
+.badge-green {
+    background: var(--gradient-accent);
+    color: white;
+}
+
+.badge-gold {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+}
+
+.badge-red {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
 }
 
 .service-icon:nth-child(odd) {

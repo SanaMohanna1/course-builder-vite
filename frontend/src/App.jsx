@@ -31,12 +31,24 @@ function App() {
 
   // Apply theme class to document element
   useEffect(() => {
-    document.documentElement.className = isDarkMode ? 'night-mode' : 'day-mode'
+    const themeClass = isDarkMode ? 'night-mode' : 'day-mode'
+    document.documentElement.className = themeClass
+    document.body.className = themeClass
   }, [isDarkMode])
+
+  // Set initial theme on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark')
+    }
+  }, [])
 
   // Toggle dark mode
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode)
+    const newTheme = !isDarkMode
+    setIsDarkMode(newTheme)
+    localStorage.setItem('theme', newTheme ? 'dark' : 'light')
   }
 
   const getNavigationItems = () => {
