@@ -161,12 +161,6 @@ function StudyCourse() {
                 {isPersonalized ? 'AI-Powered Learning' : 'Enrolled Course'}
               </div>
               <div className="flex gap-3">
-                <button
-                  onClick={handleTakeExam}
-                  className="btn btn-secondary"
-                >
-                  Take Final Exam
-                </button>
                 <Link
                   to={`/course/${id}/lesson/${lessons[0]?.id || '1'}`}
                   className="btn btn-primary flex items-center gap-2"
