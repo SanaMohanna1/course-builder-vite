@@ -4,6 +4,7 @@ import CourseCard from '../components/CourseCard'
 import LoadingSpinner from '../components/LoadingSpinner'
 import Container from '../components/Container'
 import api from '../services/api'
+import { Search, Filter, SortAsc } from 'lucide-react'
 
 function Marketplace() {
   const [courses, setCourses] = useState([])
@@ -37,9 +38,9 @@ function Marketplace() {
   const filteredCourses = courses.filter(course => {
     const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         course.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
+                         (course.metadata?.skills || []).some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
     
-    const matchesDifficulty = filterDifficulty === 'all' || course.metadata.difficulty === filterDifficulty
+    const matchesDifficulty = filterDifficulty === 'all' || course.metadata?.difficulty === filterDifficulty
     
     return matchesSearch && matchesDifficulty
   }).sort((a, b) => {
@@ -58,96 +59,129 @@ function Marketplace() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
       <Container className="py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="heading-1 mb-4">
+          <h1 className="hero-content h1" style={{ color: 'var(--text-primary)' }}>
             Course Marketplace
           </h1>
-          <p className="body-text-lg max-w-3xl mx-auto">
+          <p className="hero-content subtitle" style={{ color: 'var(--text-secondary)' }}>
             Discover and enroll in courses created by expert instructors. 
             Build your skills with structured learning paths and earn certificates.
           </p>
         </div>
 
         {/* Filters and Search */}
-        <div className="card p-6 mb-8">
+        <div className="microservice-card mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
                 Search Courses
               </label>
-              <input
-                type="text"
-                placeholder="Search courses, skills, or instructors..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="input"
-              />
+              <div className="relative">
+                <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" style={{ color: 'var(--text-muted)' }} />
+                <input
+                  type="text"
+                  placeholder="Search courses, skills, or instructors..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="input pl-10"
+                />
+              </div>
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
                 Difficulty
               </label>
-              <select
-                value={filterDifficulty}
-                onChange={(e) => setFilterDifficulty(e.target.value)}
-                className="select"
-              >
-                <option value="all">All Levels</option>
-                <option value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
-              </select>
+              <div className="relative">
+                <Filter size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" style={{ color: 'var(--text-muted)' }} />
+                <select
+                  value={filterDifficulty}
+                  onChange={(e) => setFilterDifficulty(e.target.value)}
+                  className="select pl-10"
+                >
+                  <option value="all">All Levels</option>
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
                 Sort By
               </label>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="select"
-              >
-                <option value="title">Title</option>
-                <option value="rating">Rating</option>
-                <option value="price">Price</option>
-              </select>
+              <div className="relative">
+                <SortAsc size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" style={{ color: 'var(--text-muted)' }} />
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="select pl-10"
+                >
+                  <option value="title">Title</option>
+                  <option value="rating">Rating</option>
+                  <option value="price">Price</option>
+                </select>
+              </div>
             </div>
             
             <div className="flex items-end">
-              <div className="text-sm text-gray-500">
-                {filteredCourses.length} course{filteredCourses.length !== 1 ? 's' : ''} found
-              </div>
+              <button
+                onClick={() => {
+                  setSearchTerm('')
+                  setFilterDifficulty('all')
+                  setSortBy('title')
+                }}
+                className="btn btn-secondary w-full"
+              >
+                Clear Filters
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Course Grid */}
-        {filteredCourses.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">
-              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-            </div>
-            <h3 className="heading-3 mb-2">No courses found</h3>
-            <p className="body-text">
-              Try adjusting your search terms or filters to find more courses.
-            </p>
-          </div>
-        ) : (
+        {/* Results Count */}
+        <div className="mb-6">
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+            Showing {filteredCourses.length} of {courses.length} courses
+          </p>
+        </div>
+
+        {/* Courses Grid */}
+        {filteredCourses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCourses.map(course => (
-              <CourseCard 
+              <CourseCard
                 key={course.id}
                 course={course}
                 showEnrollButton={true}
               />
             ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <div className="service-icon mx-auto mb-4" style={{ background: 'var(--gradient-primary)' }}>
+              <Search size={32} />
+            </div>
+            <h3 className="microservice-card h3 mb-2" style={{ color: 'var(--text-primary)' }}>
+              No courses found
+            </h3>
+            <p className="microservice-card p mb-6" style={{ color: 'var(--text-secondary)' }}>
+              Try adjusting your search terms or filters to find what you're looking for.
+            </p>
+            <button
+              onClick={() => {
+                setSearchTerm('')
+                setFilterDifficulty('all')
+                setSortBy('title')
+              }}
+              className="btn btn-primary"
+            >
+              Clear All Filters
+            </button>
           </div>
         )}
       </Container>
